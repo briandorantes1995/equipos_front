@@ -1,0 +1,35 @@
+.item {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: 14px;
+    height: 40px;
+    justify-content: center;
+    width: 40px;
+    margin: 50px;
+}
+
+.pagination-container{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.active {
+    border: solid 1px #1d5991;
+    border-radius: 40px;
+}
+
+.pagination {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    justify-content: center;
+    list-style-type: none;
+    position: relative;
+    width: 1000px;
+}
+
+.pagination-page {
+    font-weight: 700;
+}
