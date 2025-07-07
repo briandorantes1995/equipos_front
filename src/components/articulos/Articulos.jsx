@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
-import obtenerVacantes from "../../functions/obtenerVacantes";
-import { useSelector } from "react-redux";
+import obtenerArticulos from "../../Functions/obtenerArticulos.js";
 import { format, parseISO } from "date-fns";
-import PaginatedVacantes from "../../ui/Paginacion/Paginacion.jsx";
+import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
 import "./Articulos.css"
 
 function Articulos() {
-    const user = useSelector((state) => state.user.value);
-    const [mostrarVacantes, setMostrarVacantes] = useState([]);
+    const [mostrarArticulos, setmostrarArticulos] = useState([]);
     const [empresas, setEmpresas] = useState([]);
-    const [fechas, setFechas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedEmpresa, setSelectedEmpresa] = useState("");
     const [selectedFecha, setSelectedFecha] = useState("");
@@ -18,8 +15,8 @@ function Articulos() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const data = await obtenerVacantes(user.userId);
-                setMostrarVacantes(data);
+                const data = await obtenerArticulos();
+                setmostrarArticulos(data);
 
                 const nombresDeCompanias = data.map(objeto => objeto.compania.name);
                 const nombresEmpresasUnicos = nombresDeCompanias.filter((nombre, index, self) => {
@@ -72,7 +69,7 @@ function Articulos() {
                             ))}
                         </select>
                     </div>
-                    <PaginatedVacantes
+                    <Paginacion
                         items={mostrarVacantes}
                         itemsPerPage={8}
                         selectedEmpresa={selectedEmpresa}

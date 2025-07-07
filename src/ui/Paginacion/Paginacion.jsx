@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import './Paginacion.css'
 
 
-function Paginacion({ items, itemsPerPage, selectedEmpresa, selectedFecha }) {
+function Paginacion({ items, itemsPerPage, selectedCategoria, selectedFecha, selectedProveedor }) {
     const [itemOffset, setItemOffset] = useState(0);
 
     const endOffset = itemOffset + itemsPerPage;
@@ -19,26 +19,36 @@ function Paginacion({ items, itemsPerPage, selectedEmpresa, selectedFecha }) {
         setItemOffset(newOffset);
     };
 
-    const filtrarVacantes = () => {
-        let vacantesFiltradas = currentItems;
+    const filtrarArticulos = () => {
+        let articulosFiltrados = currentItems;
 
-        if (selectedEmpresa !== "") {
-            vacantesFiltradas = vacantesFiltradas.filter(vacante => vacante.compania.name === selectedEmpresa);
+        if (selectedCategoria !== "") {
+            articulosFiltrados = articulosFiltrados.filter(
+                art => art.categoria_id === parseInt(selectedCategoria)
+            );
+        }
+
+        if (selectedProveedor !== "") {
+            articulosFiltrados = articulosFiltrados.filter(
+                art => art.proveedor?.toLowerCase().includes(selectedProveedor.toLowerCase())
+            );
         }
 
         if (selectedFecha !== "") {
-            vacantesFiltradas = vacantesFiltradas.filter(vacante => format(parseISO(vacante.createdAt), 'dd/MM/yyyy') === selectedFecha);
+            articulosFiltrados = articulosFiltrados.filter(
+                art => format(parseISO(art.creada_en), 'dd/MM/yyyy') === selectedFecha
+            );
         }
 
-        return vacantesFiltradas;
+        return articulosFiltrados;
     };
 
     return (
         <>
             <Stack container spacing={3}>
-                {filtrarVacantes().map((vacante, index) => (
-                    <Link to={`/vacantes/${vacante.vacanteId}`} target="_self" key={index}>
-                        <Card vacante={vacante} />
+                {filtrarArticulos().map((articulo, index) => (
+                    <Link to={`/articulos/${articulo.id}`} target="_self" key={index}>
+                        <Card articulo={articulo} />
                     </Link>
                 ))}
             </Stack>
@@ -54,11 +64,11 @@ function Paginacion({ items, itemsPerPage, selectedEmpresa, selectedFecha }) {
                     containerClassName="pagination"
                     activeClassName="active"
                     pageClassName={'item pagination-page '}
-
                 />
             </div>
         </>
     );
 }
+
 
 export default Paginacion;
