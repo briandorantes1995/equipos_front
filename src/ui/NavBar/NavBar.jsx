@@ -1,7 +1,7 @@
 import './NavBar.css'
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { destroy } from "../../store/userSlice.jsx";
+import {clearAuth, setAuth} from "../../store/userSlice.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
@@ -24,22 +24,38 @@ import {
 export default function Navbar() {
     const [showBasic, setShowBasic] = useState(false);
     const [busqueda, setBusqueda] = useState('');
-    const user = useSelector((state) => state.user.value);
+    const user = useSelector(state => state.user.user);
+    const Auth = useSelector(state => state.user.isAuthenticated);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     // Auth0 hooks
-    const { loginWithRedirect, logout, isAuthenticated, user: auth0User } = useAuth0();
+    const { loginWithRedirect, logout, isAuthenticated, user: auth0User,isLoading, getAccessTokenSilently } = useAuth0();
+
+    useEffect(() => {
+        async function syncAuth() {
+            if (isAuthenticated) {
+                const token = await getAccessTokenSilently();
+                dispatch(setAuth({ token, user: auth0User }));
+            } else {
+                dispatch(clearAuth());
+            }
+        }
+        syncAuth();
+    }, [isAuthenticated, getAccessTokenSilently, auth0User, dispatch]);
+
 
     function cerrarSesion() {
         // Limpia Redux y cierra sesión en Auth0
-        dispatch(destroy());
+        dispatch(clearAuth());
         logout({ logoutParams: { returnTo: window.location.origin } });
     }
 
     const handleInputChange = (event) => setBusqueda(event.target.value);
     const handleBuscarClick = () => navigate(`/busqueda/${busqueda}`);
-
+    if (isLoading) {
+        return null;
+    }
     return (
         <MDBNavbar expand='lg' light bgColor='light' className='sticky-navbar'>
             <MDBContainer fluid>
@@ -51,7 +67,7 @@ export default function Navbar() {
                     aria-label='Toggle navigation'
                     onClick={() => setShowBasic(!showBasic)}
                 >
-                    <MDBIcon icon='bars' fas />
+                    <MDBIcon icon='bars' fas/>
                 </MDBNavbarToggler>
 
                 <MDBCollapse navbar show={showBasic}>
@@ -60,10 +76,10 @@ export default function Navbar() {
                             <MDBNavbarLink tag={Link} to="/inicio">Inicio</MDBNavbarLink>
                         </MDBNavbarItem>
                         <MDBNavbarItem>
-                            <MDBNavbarLink tag={Link} to="/vacantes">Productos</MDBNavbarLink>
+                            <MDBNavbarLink tag={Link} to="/articulos">Productos</MDBNavbarLink>
                         </MDBNavbarItem>
 
-                        {isAuthenticated ? (
+                        {Auth ? (
                             <MDBNavbarItem>
                                 <MDBDropdown>
                                     <MDBDropdownToggle tag='a' className='nav-link' role='button'>
@@ -85,18 +101,13 @@ export default function Navbar() {
                             </MDBNavbarItem>
                         )}
                     </MDBNavbarNav>
-
-                    <form className='d-flex input-group w-auto' onSubmit={e => { e.preventDefault(); handleBuscarClick(); }}>
-                        <input
-                            type='text'
-                            className='form-control'
-                            placeholder='Buscar Articulo'
-                            aria-label='Buscar'
-                            onChange={handleInputChange}
-                        />
-                        <MDBBtn color='primary' type="submit">Buscar</MDBBtn>
-                    </form>
                 </MDBCollapse>
+                <form className='d-flex input-group w-auto'>
+                    <input type='search' className='form-control' placeholder='Buscar Articulo'
+                           aria-label='Buscar'
+                           onChange={handleInputChange}/>
+                    <MDBBtn type="submit" color='primary' onClick={handleBuscarClick}>Buscar</MDBBtn>
+                </form>
             </MDBContainer>
         </MDBNavbar>
     );

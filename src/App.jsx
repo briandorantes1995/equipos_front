@@ -6,6 +6,7 @@ function App() {
     return (
         <Routes>
             <Route element={<Layout />}>
+                <Route path="/"/>
                 <Route path="/profile" element={<Profile />} />
             </Route>
         </Routes>

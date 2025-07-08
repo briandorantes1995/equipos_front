@@ -1,25 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit'
-import {decodeToken} from "react-jwt";
-
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    value: {},
-}
+    token: null,
+    isAuthenticated: false,
+    user: null,
+};
 
 export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        destroy: (state) => {
-            state.value =  {}
+        setAuth: (state, action) => {
+            // action.payload = { token, user }
+            state.token = action.payload.token;
+            state.user = action.payload.user;
+            state.isAuthenticated = !!action.payload.token;
         },
-        set: (state, action) => {
-            state.value = decodeToken(action.payload)
-        },
-    },
-})
+        clearAuth: (state) => {
+            state.token = null;
+            state.user = null;
+            state.isAuthenticated = false;
+        }
+    }
+});
 
-// Action creators are generated for each case reducer function
-export const { destroy,set } = userSlice.actions
+export const { setAuth, clearAuth } = userSlice.actions;
+export default userSlice.reducer;
 
-export default userSlice.reducer
