@@ -73,7 +73,7 @@ export default function Navbar() {
                 <MDBCollapse navbar show={showBasic}>
                     <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
                         <MDBNavbarItem>
-                            <MDBNavbarLink tag={Link} to="/inicio">Inicio</MDBNavbarLink>
+                            <MDBNavbarLink tag={Link} to="/">Inicio</MDBNavbarLink>
                         </MDBNavbarItem>
                         <MDBNavbarItem>
                             <MDBNavbarLink tag={Link} to="/articulos">Productos</MDBNavbarLink>

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import { format, parseISO } from "date-fns";
 import Card from '../../components/articulos/Card.jsx';
 import { Link } from "react-router-dom";
 import Stack from "@mui/material/Stack";
-import './Paginacion.css'
+import './Paginacion.css';
 
-
-function Paginacion({ items, itemsPerPage, selectedCategoria, selectedFecha, selectedProveedor }) {
+function Paginacion({ items, itemsPerPage, selectedCategoria, selectedProveedor }) {
     const [itemOffset, setItemOffset] = useState(0);
 
     const endOffset = itemOffset + itemsPerPage;
@@ -22,21 +20,17 @@ function Paginacion({ items, itemsPerPage, selectedCategoria, selectedFecha, sel
     const filtrarArticulos = () => {
         let articulosFiltrados = currentItems;
 
+        // Filtrar por nombre de categoría (asumiendo art.categoria.nombre existe)
         if (selectedCategoria !== "") {
             articulosFiltrados = articulosFiltrados.filter(
-                art => art.categoria_id === parseInt(selectedCategoria)
+                art => art.categoria?.nombre?.toLowerCase() === selectedCategoria.toLowerCase()
             );
         }
 
+        // Filtrar por proveedor (texto en art.proveedor)
         if (selectedProveedor !== "") {
             articulosFiltrados = articulosFiltrados.filter(
                 art => art.proveedor?.toLowerCase().includes(selectedProveedor.toLowerCase())
-            );
-        }
-
-        if (selectedFecha !== "") {
-            articulosFiltrados = articulosFiltrados.filter(
-                art => format(parseISO(art.creada_en), 'dd/MM/yyyy') === selectedFecha
             );
         }
 
@@ -70,5 +64,5 @@ function Paginacion({ items, itemsPerPage, selectedCategoria, selectedFecha, sel
     );
 }
 
-
 export default Paginacion;
+

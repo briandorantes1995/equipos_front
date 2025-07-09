@@ -1,38 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 import obtenerArticulos from "../../Functions/obtenerArticulos.js";
-import { format, parseISO } from "date-fns";
 import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
-import "./Articulos.css"
+import "./Articulos.css";
 
 function Articulos() {
-    const [mostrarArticulos, setmostrarArticulos] = useState([]);
-    const [empresas, setEmpresas] = useState([]);
+    const [mostrarArticulos, setMostrarArticulos] = useState([]);
+    const [categorias, setCategorias] = useState([]);
+    const [proveedores, setProveedores] = useState([]);
+
+    const [selectedCategoria, setSelectedCategoria] = useState("");
+    const [selectedProveedor, setSelectedProveedor] = useState("");
+
     const [isLoading, setIsLoading] = useState(true);
-    const [selectedEmpresa, setSelectedEmpresa] = useState("");
-    const [selectedFecha, setSelectedFecha] = useState("");
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const data = await obtenerArticulos();
-                setmostrarArticulos(data);
+                setMostrarArticulos(data);
+                console.log(data);
+                // Obtener categorías únicas
+                const categoriasUnicas = [
+                    ...new Set(data.map(item => item.categoria_nombre || "Sin categoría"))
+                ];
+                setCategorias(categoriasUnicas);
 
-                const nombresDeCompanias = data.map(objeto => objeto.compania.name);
-                const nombresEmpresasUnicos = nombresDeCompanias.filter((nombre, index, self) => {
-                    return self.indexOf(nombre) === index;
-                });
-                setEmpresas(nombresEmpresasUnicos);
+                // Obtener proveedores únicos
+                const proveedoresUnicos = [
+                    ...new Set(data.map(item => item.proveedor || ""))
+                ].filter(Boolean);
+                setProveedores(proveedoresUnicos);
 
-                const fechasDeCreacion = data.map(objeto => format(parseISO(objeto.createdAt), 'dd/MM/yyyy'));
-                const fechasCreacionUnicas = fechasDeCreacion.filter((fecha, index, self) => {
-                    return self.indexOf(fecha) === index;
-                });
-                setFechas(fechasCreacionUnicas);
 
                 setIsLoading(false);
             } catch (error) {
-                console.error('Error fetching vacantes:', error);
+                console.error('Error al obtener artículos:', error);
                 setIsLoading(false);
             }
         }
@@ -40,8 +43,8 @@ function Articulos() {
         fetchData();
     }, []);
 
-
     return (
+        <div className="main-content">
         <div className="container-fluid v">
             {isLoading ? (
                 <LinearProgress />
@@ -49,34 +52,36 @@ function Articulos() {
                 <div className="container-fluid v">
                     <h5 className='titFil'>FILTROS</h5>
                     <div className='filtro'>
-
-                        <label className='tituloFiltro'>Empresa</label>
-                        <select onChange={(e) => setSelectedEmpresa(e.target.value)}>
+                        <label className='tituloFiltro'>Categoría</label>
+                        <select onChange={(e) => setSelectedCategoria(e.target.value)}>
                             <option value="">Todas</option>
-                            {empresas.map((nombre, index) => (
-                                <option key={index} value={nombre}>
-                                    {nombre}
+                            {categorias.map((cat, index) => (
+                                <option key={index} value={cat}>
+                                    {cat}
                                 </option>
                             ))}
                         </select>
-                        <label className='tituloFiltro'>Fecha de Creación</label>
-                        <select onChange={(e) => setSelectedFecha(e.target.value)}>
-                            <option value="">Todas</option>
-                            {fechas.map((fecha, index) => (
-                                <option key={index} value={fecha}>
-                                    {fecha}
+
+                        <label className='tituloFiltro'>Proveedor</label>
+                        <select onChange={(e) => setSelectedProveedor(e.target.value)}>
+                            <option value="">Todos</option>
+                            {proveedores.map((prov, index) => (
+                                <option key={index} value={prov}>
+                                    {prov}
                                 </option>
                             ))}
                         </select>
                     </div>
+
                     <Paginacion
-                        items={mostrarVacantes}
+                        items={mostrarArticulos}
                         itemsPerPage={8}
-                        selectedEmpresa={selectedEmpresa}
-                        selectedFecha={selectedFecha}
+                        selectedCategoria={selectedCategoria}
+                        selectedProveedor={selectedProveedor}
                     />
                 </div>
             )}
+        </div>
         </div>
     );
 }
