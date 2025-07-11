@@ -2,50 +2,53 @@ import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import Card from '../../components/articulos/Card.jsx';
 import { Link } from "react-router-dom";
-import Stack from "@mui/material/Stack";
 import './Paginacion.css';
+
+import styled from 'styled-components';
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 24px;
+  justify-items: center;
+`;
 
 function Paginacion({ items, itemsPerPage, selectedCategoria, selectedProveedor }) {
     const [itemOffset, setItemOffset] = useState(0);
 
+    // 1. Filtrar antes de paginar
+    const articulosFiltrados = items.filter(art => {
+        const categoriaMatch =
+            selectedCategoria === "" ||
+            (art.categoria_nombre || "Sin categoría").toLowerCase() === selectedCategoria.toLowerCase();
+
+        const proveedorMatch =
+            selectedProveedor === "" ||
+            (art.proveedor || "").toLowerCase().includes(selectedProveedor.toLowerCase());
+
+        return categoriaMatch && proveedorMatch;
+    });
+
+    // 2. Calcular paginación después del filtro
     const endOffset = itemOffset + itemsPerPage;
-    const currentItems = items.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil(items.length / itemsPerPage);
+    const currentItems = articulosFiltrados.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(articulosFiltrados.length / itemsPerPage);
 
     const handlePageClick = (event) => {
         const newOffset = event.selected * itemsPerPage;
         setItemOffset(newOffset);
     };
 
-    const filtrarArticulos = () => {
-        let articulosFiltrados = currentItems;
-
-        // Filtrar por nombre de categoría (asumiendo art.categoria.nombre existe)
-        if (selectedCategoria !== "") {
-            articulosFiltrados = articulosFiltrados.filter(
-                art => art.categoria?.nombre?.toLowerCase() === selectedCategoria.toLowerCase()
-            );
-        }
-
-        // Filtrar por proveedor (texto en art.proveedor)
-        if (selectedProveedor !== "") {
-            articulosFiltrados = articulosFiltrados.filter(
-                art => art.proveedor?.toLowerCase().includes(selectedProveedor.toLowerCase())
-            );
-        }
-
-        return articulosFiltrados;
-    };
-
     return (
         <>
-            <Stack container spacing={3}>
-                {filtrarArticulos().map((articulo, index) => (
-                    <Link to={`/articulos/${articulo.id}`} target="_self" key={index}>
+            <GridContainer>
+                {currentItems.map((articulo, index) => (
+                    <Link to={`/articulos/${articulo.id}`} key={index} style={{ textDecoration: 'none' }}>
                         <Card articulo={articulo} />
                     </Link>
                 ))}
-            </Stack>
+            </GridContainer>
             <div className="pagination-container">
                 <ReactPaginate
                     breakLabel="..."

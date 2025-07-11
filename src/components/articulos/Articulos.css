@@ -96,8 +96,8 @@ select {
 }
 
 .main-content {
-    padding-top: 60px;   /* espacio para navbar fijo */
-    padding-bottom: 80px; /* espacio para footer fijo */
+    padding-top: 60px;
+    padding-bottom: 80px;
     min-height: 100vh;
 }
 

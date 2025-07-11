@@ -3,60 +3,61 @@ import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
 
 const StyledCard = styled.div`
-  min-width: 60%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  width: 280px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
   padding: 16px;
-  background-color: aliceblue;
+  background-color: #fefefe;
   display: flex;
-  gap: 16px;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  }
 `;
 
 const Image = styled.img`
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 180px;
   object-fit: cover;
   border-radius: 8px;
+  margin-bottom: 12px;
 `;
 
 const Content = styled.div`
-  flex: 1;
-`;
-
-const CardHeader = styled(Typography)`
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 `;
 
 const CardTitle = styled(Typography)`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
+  color: #222;
 `;
 
 const SmallInfo = styled(Typography)`
   font-size: 14px;
   color: #666;
-  margin-bottom: 4px;
 `;
 
 const Description = styled(Typography)`
-  font-size: 16px;
+  font-size: 14px;
+  color: #444;
+  margin-top: 8px;
 `;
 
 export default function Card({ articulo }) {
-
     return (
         <StyledCard>
-            {articulo.imagen && (
-                <Image src={articulo.imagen || '../../assets/no_image.jpg'} alt={articulo.nombre} />
-            )}
+            <Image src={(articulo?.imagen || "/no_image.jpg")} alt={articulo?.nombre || 'Sin nombre'} />
             <Content>
-
-                <CardTitle variant="h5" component="div">
-                    {articulo.nombre}
-                </CardTitle>
+                <CardTitle variant="h6">{articulo.nombre}</CardTitle>
 
                 {articulo.categoria?.nombre && (
                     <SmallInfo>Categoría: {articulo.categoria.nombre}</SmallInfo>

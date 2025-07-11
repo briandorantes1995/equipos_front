@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {clearAuth, setAuth} from "../../store/userSlice.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import logo from '../../assets/logo2.png';
 import {
     MDBContainer,
     MDBNavbar,
@@ -52,14 +53,22 @@ export default function Navbar() {
     }
 
     const handleInputChange = (event) => setBusqueda(event.target.value);
-    const handleBuscarClick = () => navigate(`/busqueda/${busqueda}`);
+    const handleBuscarClick = () => navigate(`/articulos/buscar/${busqueda}`);
     if (isLoading) {
         return null;
     }
     return (
         <MDBNavbar expand='lg' light bgColor='light' className='sticky-navbar'>
             <MDBContainer fluid>
-                <MDBNavbarBrand tag={Link} to="/">ATS</MDBNavbarBrand>
+                <MDBNavbarBrand tag={Link} to="/">
+                    <img
+                        src={logo}
+                        alt="ATS Logo"
+                        height="50"
+                        style={{ marginRight: '10px' }}
+                    />
+                </MDBNavbarBrand>
+
 
                 <MDBNavbarToggler
                     aria-controls='navbarSupportedContent'
