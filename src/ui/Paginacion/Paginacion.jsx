@@ -14,7 +14,7 @@ const GridContainer = styled.div`
   justify-items: center;
 `;
 
-function Paginacion({ items, itemsPerPage, selectedCategoria, selectedProveedor }) {
+function Paginacion({ items, itemsPerPage, selectedCategoria = "", selectedProveedor = "" }) {
     const [itemOffset, setItemOffset] = useState(0);
 
     // 1. Filtrar antes de paginar

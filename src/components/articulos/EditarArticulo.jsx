@@ -99,7 +99,6 @@ function EditarArticulo() {
                             descripcion: mostrarArticulo.descripcion || '',
                             precio_venta: mostrarArticulo.precio_venta || '',
                             costo: mostrarArticulo.costo || '',
-                            inventario: mostrarArticulo.inventario || '',
                             codigo_barras: mostrarArticulo.codigo_barras || '',
                             sku: mostrarArticulo.sku || '',
                             categoria_id: mostrarArticulo.categoria_id || '',
@@ -134,7 +133,6 @@ function EditarArticulo() {
                                 <CustomTextArea label="Descripción" name="descripcion" placeholder="Descripción" />
                                 <CustomInput label="Precio de Venta" name="precio_venta" type="number" placeholder="0.00" />
                                 <CustomInput label="Costo" name="costo" type="number" placeholder="0.00" />
-                                <CustomInput label="Inventario" name="inventario" type="number" placeholder="0" />
                                 <CustomInput label="Código de Barras" name="codigo_barras" placeholder="Código de barras" />
                                 <CustomInput label="SKU" name="sku" placeholder="SKU del artículo" />
 

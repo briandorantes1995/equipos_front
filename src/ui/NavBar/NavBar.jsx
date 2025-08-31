@@ -27,17 +27,15 @@ export default function Navbar() {
     const [busqueda, setBusqueda] = useState('');
     const user = useSelector(state => state.user.user);
     const Auth = useSelector(state => state.user.isAuthenticated);
+    const rol = useSelector(state => state.user.rol);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    // Auth0 hooks
     const { loginWithRedirect, logout, isAuthenticated, user: auth0User,isLoading, getAccessTokenSilently } = useAuth0();
-
     useEffect(() => {
         async function syncAuth() {
             if (isAuthenticated) {
                 const token = await getAccessTokenSilently();
-                dispatch(setAuth({ token, user: auth0User }));
+                dispatch(setAuth({ token, user: auth0User}));
             } else {
                 dispatch(clearAuth());
             }
@@ -79,8 +77,8 @@ export default function Navbar() {
                     <MDBIcon icon='bars' fas/>
                 </MDBNavbarToggler>
 
-                <MDBCollapse navbar show={showBasic}>
-                    <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
+                <MDBCollapse navbar show={showBasic ? true : undefined}>
+                <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
                         <MDBNavbarItem>
                             <MDBNavbarLink tag={Link} to="/">Inicio</MDBNavbarLink>
                         </MDBNavbarItem>
@@ -100,6 +98,16 @@ export default function Navbar() {
                                             {auth0User?.email || user?.userEmail || "Usuario"}
                                         </MDBDropdownItem>
                                         <MDBDropdownItem link>Información Personal</MDBDropdownItem>
+                                        {rol === "admin" && (
+                                            <>
+                                            <MDBDropdownItem link href="/agregarArticulo">
+                                                Agregar Articulos
+                                            </MDBDropdownItem>
+                                            <MDBDropdownItem link href="/inventarios">
+                                            Inventarios
+                                            </MDBDropdownItem>
+                                            </>
+                                        )}
                                         <MDBDropdownItem link onClick={cerrarSesion}>Cerrar Sesión</MDBDropdownItem>
                                     </MDBDropdownMenu>
                                 </MDBDropdown>

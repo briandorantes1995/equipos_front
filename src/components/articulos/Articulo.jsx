@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 
+
 const StyledCard = styled.div`
   width: fit-content;
   max-width: 90vw;
@@ -23,11 +24,11 @@ const StyledCard = styled.div`
 `;
 
 function Articulo() {
-    const user = useSelector((state) => state.user.user);
     const token = useSelector(state => state.user.token);
     const [mostrarArticulo, setMostrarArticulo] = useState(null);
     const navigate = useNavigate();
     const { articuloId } = useParams();
+    const rol = useSelector(state => state.user.rol);
 
     useEffect(() => {
         async function cargarArticulo(id) {
@@ -71,7 +72,7 @@ function Articulo() {
                 <StyledCard>
                     <BasicCard articulo={mostrarArticulo}/>
 
-                    {user?.userEmail === mostrarArticulo?.autorEmail && (
+                    {rol === "admin" && (
                         <>
                             <Button
                                 variant="contained"

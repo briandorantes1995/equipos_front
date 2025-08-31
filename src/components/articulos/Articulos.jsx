@@ -18,14 +18,11 @@ function Articulos() {
             try {
                 const data = await obtenerArticulos();
                 setMostrarArticulos(data);
-                console.log(data)
                 // Obtener categorías únicas
                 const categoriasUnicas = [
                     ...new Set(data.map(item => item.categoria_nombre || "Sin categoría"))
                 ];
-                console.log(categoriasUnicas)
                 setCategorias(categoriasUnicas);
-                console.log(categorias)
 
                 // Obtener proveedores únicos
                 const proveedoresUnicos = [

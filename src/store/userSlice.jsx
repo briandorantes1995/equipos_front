@@ -12,13 +12,18 @@ export const userSlice = createSlice({
     reducers: {
         setAuth: (state, action) => {
             // action.payload = { token, user }
+            const user = action.payload.user;
             state.token = action.payload.token;
-            state.user = action.payload.user;
+            state.user = user;
+            state.rol = user["https://tuapp.com/claims/roles"]
+                ? user["https://tuapp.com/claims/roles"][0]
+                : null;
             state.isAuthenticated = !!action.payload.token;
         },
         clearAuth: (state) => {
             state.token = null;
             state.user = null;
+            state.rol = null;
             state.isAuthenticated = false;
         }
     }

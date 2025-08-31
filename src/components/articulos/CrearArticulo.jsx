@@ -17,6 +17,7 @@ function CrearArticulo() {
     const [imagen, setImagen] = useState(null);
     const navigate = useNavigate();
     const token = useSelector(state => state.user.token);
+    const user = useSelector(state => state.user.user);
 
     useEffect(() => {
         async function fetchCategorias() {
@@ -56,7 +57,7 @@ function CrearArticulo() {
             }
 
             const articulo = await agregarArticulo(
-                { ...values, imagen: urlImagen },
+                { ...values, imagen: urlImagen,name: user.name },
                 token // ← token va como segundo parámetro
             );
 
@@ -76,7 +77,7 @@ function CrearArticulo() {
         <MDBContainer className="my-5">
             <MDBCard className="bg-cv">
                 <MDBCardBody className="d-flex flex-column">
-                    <h3 className="fw-bold my-4 pb-3">Crear nuevo artículo</h3>
+                    <h3 className="fw-bold my-4 pb-3">Agregar nuevo artículo</h3>
                     <Formik
                         initialValues={{
                             nombre: "",
@@ -110,7 +111,7 @@ function CrearArticulo() {
                                 <CustomTextArea label="Descripción" name="descripcion" placeholder="Descripción" />
                                 <CustomInput label="Precio de Venta" name="precio_venta" type="number" placeholder="0.00" />
                                 <CustomInput label="Costo" name="costo" type="number" placeholder="0.00" />
-                                <CustomInput label="Inventario" name="inventario" type="number" placeholder="0" />
+                                <CustomInput label="Inventario Inicial" name="inventario" type="number" placeholder="0" />
                                 <CustomInput label="Código de Barras" name="codigo_barras" placeholder="Código de barras" />
                                 <CustomInput label="SKU" name="sku" placeholder="SKU del artículo" />
 

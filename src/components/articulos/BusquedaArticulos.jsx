@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useParams } from "react-router-dom";
 import LinearProgress from '@mui/material/LinearProgress';
 import buscarArticulos from "../../Functions/buscarArticulos.js";
@@ -14,53 +14,44 @@ function BusquedaArticulos() {
     const [selectedCategoria, setSelectedCategoria] = useState("");
     const [selectedProveedor, setSelectedProveedor] = useState("");
     const [isLoading, setIsLoading] = useState(true);
-    const [articulosFiltrados, setArticulosFiltrados] = useState([]);
 
     useEffect(() => {
-        async function fetchData() {
+        const fetchData = async () => {
             setIsLoading(true);
             try {
-                // Obtener datos desde backend con búsqueda
                 const data = await buscarArticulos(busqueda);
+
+                if (!Array.isArray(data)) {
+                    setMostrarArticulos([]);
+                    return;
+                }
 
                 setMostrarArticulos(data);
 
-                // Obtener categorías únicas del resultado
-                const categoriasUnicas = [
-                    ...new Set(data.map(item => item.categoria_nombre || "Sin categoría"))
-                ];
+                const categoriasUnicas = Array.from(new Set(data.map(item => item?.categoria_nombre || "Sin categoría")));
                 setCategorias(categoriasUnicas);
 
-                // Obtener proveedores únicos del resultado
-                const proveedoresUnicos = [
-                    ...new Set(data.map(item => item.proveedor || ""))
-                ].filter(Boolean);
+                const proveedoresUnicos = Array.from(new Set(data.map(item => item?.proveedor).filter(Boolean)));
                 setProveedores(proveedoresUnicos);
 
-                setIsLoading(false);
             } catch (error) {
-                console.error('Error al buscar artículos:', error);
+                console.error("Error al buscar artículos:", error);
+                setMostrarArticulos([]);
+            } finally {
                 setIsLoading(false);
             }
-        }
+        };
 
         fetchData();
     }, [busqueda]);
 
-    // Aplicar filtros de categoría y proveedor a mostrarArticulos
-    useEffect(() => {
-        let filtrados = mostrarArticulos;
-
-        if (selectedCategoria) {
-            filtrados = filtrados.filter(item => (item.categoria_nombre || "Sin categoría") === selectedCategoria);
-        }
-
-        if (selectedProveedor) {
-            filtrados = filtrados.filter(item => item.proveedor === selectedProveedor);
-        }
-
-        setArticulosFiltrados(filtrados);
-    }, [selectedCategoria, selectedProveedor, mostrarArticulos]);
+    const articulosFiltrados = useMemo(() => {
+        return mostrarArticulos.filter(item => {
+            const categoriaMatch = selectedCategoria ? (item?.categoria_nombre || "Sin categoría") === selectedCategoria : true;
+            const proveedorMatch = selectedProveedor ? item?.proveedor === selectedProveedor : true;
+            return categoriaMatch && proveedorMatch;
+        });
+    }, [mostrarArticulos, selectedCategoria, selectedProveedor]);
 
     return (
         <div className="main-content">
@@ -68,16 +59,14 @@ function BusquedaArticulos() {
                 {isLoading ? (
                     <LinearProgress />
                 ) : (
-                    <div className="container-fluid v">
+                    <>
                         <h5 className='titFil'>FILTROS DE BÚSQUEDA</h5>
                         <div className='filtro'>
                             <label className='tituloFiltro'>Categoría</label>
                             <select value={selectedCategoria} onChange={(e) => setSelectedCategoria(e.target.value)}>
                                 <option value="">Todas</option>
                                 {categorias.map((cat, index) => (
-                                    <option key={index} value={cat}>
-                                        {cat}
-                                    </option>
+                                    <option key={index} value={cat}>{cat}</option>
                                 ))}
                             </select>
 
@@ -85,9 +74,7 @@ function BusquedaArticulos() {
                             <select value={selectedProveedor} onChange={(e) => setSelectedProveedor(e.target.value)}>
                                 <option value="">Todos</option>
                                 {proveedores.map((prov, index) => (
-                                    <option key={index} value={prov}>
-                                        {prov}
-                                    </option>
+                                    <option key={index} value={prov}>{prov}</option>
                                 ))}
                             </select>
                         </div>
@@ -101,13 +88,11 @@ function BusquedaArticulos() {
                                     <Paginacion
                                         items={articulosFiltrados}
                                         itemsPerPage={8}
-                                        selectedCategoria={selectedCategoria}
-                                        selectedProveedor={selectedProveedor}
                                     />
                                 </>
                             )}
                         </div>
-                    </div>
+                    </>
                 )}
             </div>
         </div>
