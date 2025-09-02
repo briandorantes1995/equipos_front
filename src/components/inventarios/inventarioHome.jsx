@@ -29,7 +29,9 @@ function InventarioHome() {
                         <Link to="/inventarios/totales" style={{ textDecoration: 'none' }}>
                             <Item>Inventario Total</Item>
                         </Link>
-                        <Item>Movimientos</Item>
+                        <Link to="/movimientos" style={{ textDecoration: 'none' }}>
+                            <Item>Movimientos</Item>
+                        </Link>
                         <Item>Actualizar/Editar</Item>
                         <Item>Registrar Movimiento</Item>
                     </Stack>

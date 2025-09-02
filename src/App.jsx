@@ -8,6 +8,7 @@ import EditarArticulo from "./components/articulos/EditarArticulo.jsx";
 import BusquedaArticulos from "./components/articulos/BusquedaArticulos.jsx";
 import InventarioHome from "./components/inventarios/inventarioHome.jsx";
 import InventarioTotal from "./components/inventarios/inventarioTotal.jsx";
+import MovimientoTotal from "./components/Movimientos/movimientosTotales.jsx";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                     <Route path="/editarArticulo/:articuloId" element={<EditarArticulo />} />
                     <Route path="/inventarios" element={<InventarioHome />} />
                     <Route path="/inventarios/totales" element={<InventarioTotal />} />
+                    <Route path="/movimientos" element={<MovimientoTotal/>} />
                 </Route>
             </Route>
         </Routes>
