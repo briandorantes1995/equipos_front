@@ -4,7 +4,6 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import "./Inventarios.css";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#d0e6ff', // fondo principal equilibrado
@@ -20,22 +19,16 @@ const Item = styled(Paper)(({ theme }) => ({
     }
 }));
 
-function InventarioHome() {
+function ComprasHome() {
     return (
         <div className="main-content">
             <div className="container-fluid v">
-                <h3 className="fw-bold my-4 pb-3">Operaciones Invenario</h3>
+                <h3 className="fw-bold my-4 pb-3">Operaciones Compras</h3>
                 <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
                     <Stack spacing={4} sx={{width: '60%'}}>
-                        <Link to="/inventarios/totales" style={{textDecoration: 'none'}}>
-                            <Item>Inventario Total</Item>
-                        </Link>
-                        <Link to="/movimientos" style={{textDecoration: 'none'}}>
-                            <Item>Movimientos</Item>
-                        </Link>
-                        <Link to="/agregarArticulo" style={{textDecoration: 'none'}}>
-                            <Item>Registrar Articulo</Item>
-                        </Link>
+                        <Item>Registrar una Compra</Item>
+                        <Item>Realizar Inventario</Item>
+                        <Item>Realizar Inventario</Item>
                         <Item>Realizar Inventario</Item>
                     </Stack>
                 </Box>
@@ -44,4 +37,4 @@ function InventarioHome() {
     );
 }
 
-export default InventarioHome;
+export default ComprasHome;

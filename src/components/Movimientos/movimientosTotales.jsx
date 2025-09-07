@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { format } from 'date-fns';
 import { useEffect, useState } from "react";
-import LinearProgress from "@mui/material/LinearProgress";
-import obtenerMovimientos from "../../Functions/obtenerMovimientos.js";
 import { useSelector } from "react-redux";
+import obtenerMovimientos from "../../Functions/obtenerMovimientos.js";
+import editarMovimiento from "../../Functions/editarMovimiento.js";
+import EditarMovimientoModal from "./edicionMovimientoModal.jsx";
+import eliminarMovimiento from "../../Functions/eliminarMovimiento.js";
+import {capitalizeName} from "../../Functions/helpers.jsx";
 import { DataGrid } from '@mui/x-data-grid';
+import LinearProgress from "@mui/material/LinearProgress";
+import EditIcon from '@mui/icons-material/Edit';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import "../inventarios/Inventarios.css";
-import {capitalizeName} from "../../Functions/helpers.jsx";
-import EditIcon from '@mui/icons-material/Edit';
-import EditarMovimientoModal from "./edicionMovimientoModal.jsx";
+import {useNavigate} from "react-router-dom";
 
 
 function MovimientoTotal() {
@@ -19,15 +21,36 @@ function MovimientoTotal() {
     const [selectedMovimiento, setSelectedMovimiento] = useState(null);
     const [openModal, setOpenModal] = useState(false);
     const token = useSelector(state => state.user.token);
+    const navigate = useNavigate();
 
     const handleEdit = (movimiento) => {
         setSelectedMovimiento(movimiento);
         setOpenModal(true);
     };
 
-    const handleSave = (movimientoEditado) => {
-        console.log("Movimiento actualizado:", movimientoEditado);
-        // Aquí puedes llamar tu API para guardar los cambios
+    const handleSave = async (movimientoEditado) => {
+        if (movimientoEditado._action === "update") {
+            try {
+                const data = await editarMovimiento(movimientoEditado, token);
+                if (data) {
+                    console.log("Movimiento actualizado");
+                    navigate('/movimientos');
+                }
+            } catch (error) {
+                console.error('Error al actualizar movimiento:', error);
+            }
+        } else if (movimientoEditado._action === "delete") {
+            try {
+                const data = await eliminarMovimiento(movimientoEditado.id, token);
+                if (data) {
+                    console.log("Movimiento eliminado");
+                    navigate('/movimientos');
+                }
+            } catch (error) {
+                console.error('Error al eliminar movimiento:', error);
+            }
+        }
+        setOpenModal(false);
     };
 
 
@@ -66,7 +89,6 @@ function MovimientoTotal() {
                 });
 
                 setMovimientos(rows);
-                console.log(movimientos);
                 setIsLoading(false);
             } catch (error) {
                 console.error('Error al obtener el inventario:', error);
@@ -77,7 +99,6 @@ function MovimientoTotal() {
     }, [token]);
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 60, headerAlign: 'center', align: 'center' },
         { field: 'nombre', headerName: 'Nombre', width: 200, headerAlign: 'center', align: 'center' },
         { field: 'proveedor', headerName: 'Proveedor', width: 150, headerAlign: 'center', align: 'center' },
         { field: 'tipo_movimiento', headerName: 'Tipo de movimiento', width: 180, headerAlign: 'center', align: 'center' },

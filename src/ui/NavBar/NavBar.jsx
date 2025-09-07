@@ -101,7 +101,7 @@ export default function Navbar() {
                                         {rol === "admin" && (
                                             <>
                                             <MDBDropdownItem link href="/agregarArticulo">
-                                                Agregar Articulos
+                                                Compras
                                             </MDBDropdownItem>
                                             <MDBDropdownItem link href="/inventarios">
                                             Inventarios
