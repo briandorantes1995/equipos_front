@@ -26,10 +26,12 @@ function ComprasHome() {
                 <h3 className="fw-bold my-4 pb-3">Operaciones Compras</h3>
                 <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
                     <Stack spacing={4} sx={{width: '60%'}}>
-                        <Item>Registrar una Compra</Item>
-                        <Item>Realizar Inventario</Item>
-                        <Item>Realizar Inventario</Item>
-                        <Item>Realizar Inventario</Item>
+                        <Link to="/compras/totales" style={{textDecoration: 'none'}}>
+                            <Item>Compras Totales</Item>
+                        </Link>
+                        <Link to="/compras/registro" style={{textDecoration: 'none'}}>
+                            <Item>Registrar Compra</Item>
+                        </Link>
                     </Stack>
                 </Box>
             </div>

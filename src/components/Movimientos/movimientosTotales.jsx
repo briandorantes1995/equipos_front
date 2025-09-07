@@ -112,12 +112,20 @@ function MovimientoTotal() {
             width: 150,
             headerAlign: 'center',
             align: 'center',
-            renderCell: (params) => (
-                <Button variant="outlined" startIcon={<EditIcon/>}
-                    onClick={() => handleEdit(params.row)}
-                >
-                </Button>
-            ),
+            renderCell: (params) => {
+                const tipo = params.row.tipo_movimiento;
+                if (tipo === "venta" || tipo === "compra") {
+                    return null;
+                }
+                return (
+                    <Button
+                        variant="outlined"
+                        startIcon={<EditIcon />}
+                        onClick={() => handleEdit(params.row)}
+                    >
+                    </Button>
+                );
+            },
         },
     ];
 

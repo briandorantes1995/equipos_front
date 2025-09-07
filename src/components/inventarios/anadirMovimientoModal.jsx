@@ -4,8 +4,6 @@ import * as Yup from "yup";
 
 // Tipos de movimiento válidos
 const TIPOS_MOVIMIENTO = [
-    { value: "compra", label: "Compra" },
-    { value: "venta", label: "Venta" },
     { value: "baja", label: "Baja" },
     { value: "robo", label: "Robo" },
     { value: "transferencia_entrada", label: "Transferencia Entrada" },

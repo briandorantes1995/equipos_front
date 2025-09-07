@@ -9,6 +9,8 @@ import BusquedaArticulos from "./components/articulos/BusquedaArticulos.jsx";
 import InventarioHome from "./components/inventarios/inventarioHome.jsx";
 import InventarioTotal from "./components/inventarios/inventarioTotal.jsx";
 import MovimientoTotal from "./components/Movimientos/movimientosTotales.jsx";
+import ComprasHome from "./components/compras/comprasHome.jsx";
+import RegistrarCompra from "./components/compras/registrarCompra.jsx";
 
 function App() {
     return (
@@ -26,6 +28,8 @@ function App() {
                     <Route path="/inventarios" element={<InventarioHome />} />
                     <Route path="/inventarios/totales" element={<InventarioTotal />} />
                     <Route path="/movimientos" element={<MovimientoTotal/>} />
+                    <Route path="/compras" element={<ComprasHome/>} />
+                    <Route path="/compras/registro" element={<RegistrarCompra/>} />
                 </Route>
             </Route>
         </Routes>
