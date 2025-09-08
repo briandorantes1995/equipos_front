@@ -11,6 +11,8 @@ import InventarioTotal from "./components/inventarios/inventarioTotal.jsx";
 import MovimientoTotal from "./components/Movimientos/movimientosTotales.jsx";
 import ComprasHome from "./components/compras/comprasHome.jsx";
 import RegistrarCompra from "./components/compras/registrarCompra.jsx";
+import ComprasTotales from "./components/compras/ComprasTotales.jsx";
+import Compra from "./components/compras/compraDetalle.jsx";
 
 function App() {
     return (
@@ -30,6 +32,8 @@ function App() {
                     <Route path="/movimientos" element={<MovimientoTotal/>} />
                     <Route path="/compras" element={<ComprasHome/>} />
                     <Route path="/compras/registro" element={<RegistrarCompra/>} />
+                    <Route path="/compras/totales" element={<ComprasTotales/>} />
+                    <Route path="/compras/:compraId" element={<Compra />} />
                 </Route>
             </Route>
         </Routes>

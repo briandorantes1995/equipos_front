@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { MDBBtn, MDBContainer, MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
 import { articuloSchema } from '../../functions/validation/validationSchema';
@@ -15,7 +14,6 @@ import './Articulos.css';
 function CrearArticulo() {
     const [categorias, setCategorias] = useState([]);
     const [imagen, setImagen] = useState(null);
-    const navigate = useNavigate();
     const token = useSelector(state => state.user.token);
     const user = useSelector(state => state.user.user);
 
@@ -58,15 +56,13 @@ function CrearArticulo() {
 
             const articulo = await agregarArticulo(
                 { ...values, imagen: urlImagen,name: user.name },
-                token // ← token va como segundo parámetro
+                token
             );
-
             if (articulo) {
-                navigate('/articulos');
+                actions.resetForm();
+                setImagen(null);
             }
 
-            actions.resetForm();
-            setImagen(null);
         } catch (error) {
             console.error('Error durante el envío:', error);
             actions.setSubmitting(false);
