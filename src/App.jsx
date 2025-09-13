@@ -13,6 +13,8 @@ import ComprasHome from "./components/compras/comprasHome.jsx";
 import RegistrarCompra from "./components/compras/registrarCompra.jsx";
 import ComprasTotales from "./components/compras/ComprasTotales.jsx";
 import Compra from "./components/compras/compraDetalle.jsx";
+import EditarCompra from "./components/compras/editarCompra.jsx";
+
 
 function App() {
     return (
@@ -34,6 +36,7 @@ function App() {
                     <Route path="/compras/registro" element={<RegistrarCompra/>} />
                     <Route path="/compras/totales" element={<ComprasTotales/>} />
                     <Route path="/compras/:compraId" element={<Compra />} />
+                    <Route path="/compras/editar/:compraId" element={<EditarCompra />} />
                 </Route>
             </Route>
         </Routes>

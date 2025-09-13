@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import obtenerCompra from "../../Functions/obtenerCompra.js";
 import CardCompraDetalle from "./cardCompra.jsx";
+import eliminarCompra from "../../Functions/eliminarCompra.js";
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -67,17 +68,18 @@ function Compra() {
 
     const borrarCompra = async () => {
         if (!window.confirm("¿Estás seguro de eliminar esta compra?")) return;
-
         try {
-            console.log("Compra eliminada")
-            navigate('/compras');
+            const data = await eliminarCompra(compraId,token);
+            if (data) {
+                navigate('/compras/totales');
+            }
         } catch (error) {
             console.error('No se pudo borrar la compra:', error);
         }
     };
 
     const editarCompra = () => {
-        navigate(`/editarCompra/${compraId}`);
+        navigate(`/compras/editar/${compraId}`, { state: { compra: compraDetalle } });
     };
 
     return (

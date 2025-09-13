@@ -39,7 +39,6 @@ function RegistrarCompra() {
                 articulos: resultado,
                 notas: values.notas
             };
-            console.log("Formulario enviado:", data);
             const compra = await registrarCompra(data,token);
             if (compra){
                 actions.resetForm();
