@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { MDBBtn, MDBContainer, MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
-import { articuloSchema } from '../../Functions/validation/validationSchema.js';
+import { articuloSchema } from '../../Functions/validation/ValidationSchema.js';
 import CustomInput from '../../Functions/validation/customInput';
 import CustomTextArea from '../../Functions/validation/customTextArea';
 import CustomLista from '../../Functions/validation/customLista';
