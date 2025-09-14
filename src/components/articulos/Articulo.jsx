@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import obtenerArticulo from "../../functions/obtenerArticulo.js";
-import eliminarArticulo from "../../functions/eliminarArticulo.js";
+import obtenerArticulo from "../../Functions/obtenerArticulo.js";
+import eliminarArticulo from "../../Functions/eliminarArticulo.js";
 import BasicCard from './Card.jsx'
 import { useNavigate, useParams } from "react-router-dom";
 import LinearProgress from "@mui/material/LinearProgress";

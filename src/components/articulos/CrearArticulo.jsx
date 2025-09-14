@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { MDBBtn, MDBContainer, MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
-import { articuloSchema } from '../../functions/validation/validationSchema';
-import CustomInput from '../../functions/validation/customInput';
-import CustomTextArea from '../../functions/validation/customTextArea';
-import CustomLista from '../../functions/validation/customLista';
+import { articuloSchema } from '../../Functions/validation/validationSchema';
+import CustomInput from '../../Functions/validation/customInput';
+import CustomTextArea from '../../Functions/validation/customTextArea';
+import CustomLista from '../../Functions/validation/customLista';
 import agregarArticulo from '../../Functions/agregarArticulo';
-import obtenerCategorias from '../../functions/obtenerCategorias';
-import { supabase } from '../../functions/supabaseClient';
+import obtenerCategorias from '../../Functions/obtenerCategorias';
+import { supabase } from '../../Functions/supabaseClient';
 import { useSelector } from 'react-redux';
 import './Articulos.css';
 
