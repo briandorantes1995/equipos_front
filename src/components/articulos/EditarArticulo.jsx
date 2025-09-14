@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { MDBBtn, MDBContainer, MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
-import { articuloSchema } from '../../functions/validation/validationSchema';
+import {articuloSchema} from "../../Functions/validation/ValidationSchema.js";
 import CustomInput from '../../functions/validation/customInput';
 import CustomTextArea from '../../functions/validation/customTextArea';
 import CustomLista from '../../functions/validation/customLista';
