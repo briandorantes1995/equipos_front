@@ -7,3 +7,7 @@ label{
     display: inline-block;
     padding-inline-end: 10px;
 }
+
+select {
+    margin-bottom: 20px;
+}

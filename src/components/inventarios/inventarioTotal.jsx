@@ -6,12 +6,12 @@ import LinearProgress from "@mui/material/LinearProgress";
 import obtenerInventario from "../../Functions/obtenerInventario.js";
 import AnadirMovimientoModal from "./anadirMovimientoModal.jsx";
 import { DataGrid } from '@mui/x-data-grid';
+import {useSnackbar} from "../../ui/snackBar/useSnackBar.js";
 import Paper from '@mui/material/Paper';
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
-import "./Inventarios.css";
 import anadirMovimiento from "../../Functions/anadirMovimiento.js";
-import {useNavigate} from "react-router-dom";
+import "./Inventarios.css";
 
 function InventarioTotal() {
     const [inventario, setInventario] = useState([]);
@@ -19,7 +19,7 @@ function InventarioTotal() {
     const [articulo, setArticulo] = useState(null);
     const [openModal, setOpenModal] = useState(false);
     const token = useSelector(state => state.user.token);
-    const navigate = useNavigate();
+    const { showSnackbar } = useSnackbar();
 
     const handleEdit = (articulo) => {
         setArticulo(articulo);
@@ -30,10 +30,20 @@ function InventarioTotal() {
         console.log("Datos recibidos del modal:", nuevoMovimiento);
         try {
             const data = await anadirMovimiento(nuevoMovimiento, token);
-            console.log("Movimiento registrado:", data);
-            navigate('/inventarios/totales');
+            showSnackbar({
+                message: data.message || "Movimiento Agregado",
+                level: "success",
+                vertical: "top",
+                horizontal: "center",
+            });
         } catch (error) {
             console.error("Error al registrar movimiento:", error);
+            showSnackbar({
+                message: "Error al agregar movimiento",
+                level: "error",
+                vertical: "top",
+                horizontal: "center",
+            });
         }
         setOpenModal(false);
     };
@@ -60,7 +70,6 @@ function InventarioTotal() {
                         costo: item.costo,
                         proveedor: item.proveedor,
                         codigo_barras: item.codigo_barras,
-                        sku: item.sku,
                         ultima_actualizacion: fechaFormateada
                     };
                 });
@@ -80,9 +89,8 @@ function InventarioTotal() {
         { field: 'cantidad_actual', headerName: 'Cantidad', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'precio', headerName: 'Precio', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'costo', headerName: 'Costo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
-        { field: 'proveedor', headerName: 'Proveedor', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
+        { field: 'proveedor', headerName: 'Proveedor', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'codigo_barras', headerName: 'Codigo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
-        { field: 'sku', headerName: 'SKU', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         {field: 'ultima_actualizacion', headerName: 'Última actualización', width: 200, headerAlign: 'center', align: 'center',},
         {
             field: 'acciones',
@@ -98,7 +106,6 @@ function InventarioTotal() {
             ),
         },
     ];
-
 
     return (
         <div className="main-content">

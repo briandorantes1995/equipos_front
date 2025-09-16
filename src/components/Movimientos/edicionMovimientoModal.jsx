@@ -1,13 +1,8 @@
 import { Modal, Box, Typography, Button } from "@mui/material";
+import {movimientoSchema} from "../../Functions/validation/ValidationSchema.js";
 import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
 
-const movimientoSchema = Yup.object().shape({
-    cantidad: Yup.number()
-        .typeError("Debe ser un número")
-        .positive("Debe ser mayor a 0")
-        .required("Cantidad requerida"),
-});
+
 
 const style = {
     position: "absolute",
@@ -43,7 +38,6 @@ function EditarMovimientoModal({ open, handleClose, movimiento, onSubmit }) {
                 >
                     {({ errors, touched }) => (
                         <Form>
-                            {/* Cantidad */}
                             <div style={{ marginBottom: "16px" }}>
                                 <label htmlFor="cantidad">Cantidad</label>
                                 <Field

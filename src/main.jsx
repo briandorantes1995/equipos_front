@@ -7,6 +7,8 @@ import { store, persistor } from './store/store.jsx';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import App from './App.jsx'
+import {SnackbarProvider} from "./ui/snackBar/SnackBarProvider.jsx";
+
 
 createRoot(document.getElementById('root')).render(
 <Auth0Provider
@@ -22,7 +24,9 @@ createRoot(document.getElementById('root')).render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
             <BrowserRouter>
-                <App />
+                <SnackbarProvider>
+                    <App />
+                </SnackbarProvider>
             </BrowserRouter>
         </PersistGate>
     </Provider>

@@ -1,25 +1,7 @@
 import { Modal, Box, Typography, Button, MenuItem, TextField } from "@mui/material";
 import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+import {anadirmovimientoSchema,TIPOS_MOVIMIENTO} from "../../Functions/validation/ValidationSchema.js";
 
-// Tipos de movimiento válidos
-const TIPOS_MOVIMIENTO = [
-    { value: "baja", label: "Baja" },
-    { value: "robo", label: "Robo" },
-    { value: "transferencia_entrada", label: "Transferencia Entrada" },
-    { value: "transferencia_salida", label: "Transferencia Salida" },
-];
-
-const movimientoSchema = Yup.object().shape({
-    cantidad: Yup.number()
-        .typeError("Debe ser un número")
-        .positive("Debe ser mayor a 0")
-        .required("Cantidad requerida"),
-    tipo_movimiento: Yup.string()
-        .oneOf(TIPOS_MOVIMIENTO.map((t) => t.value), "Tipo de movimiento no válido")
-        .required("Seleccione un tipo de movimiento"),
-    motivo: Yup.string().max(255, "Máximo 255 caracteres"),
-});
 
 const style = {
     position: "absolute",
@@ -48,7 +30,7 @@ function AnadirMovimientoModal({ open, handleClose, articulo, onSubmit }) {
                         tipo_movimiento: "",
                         motivo: "",
                     }}
-                    validationSchema={movimientoSchema}
+                    validationSchema={anadirmovimientoSchema}
                     onSubmit={(values) => {
                         onSubmit({ ...values, articulo_id: articulo.id });
                         handleClose();

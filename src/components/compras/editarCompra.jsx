@@ -9,14 +9,17 @@ import obtenerCompra from "../../Functions/obtenerCompra.js";
 import { compraSchema } from "../../Functions/validation/ValidationSchema.js";
 import editarCompra from "../../Functions/editarCompra.js";
 import { useSelector } from "react-redux";
+import {useSnackbar} from "../../ui/snackBar/useSnackBar.js";
+
 
 function EditarCompraFormulario() {
-    const { compraId } = useParams(); // obtiene el id de la URL
+    const { compraId } = useParams();
     const token = useSelector(state => state.user.token);
     const navigate = useNavigate();
     const [articulos, setArticulos] = useState([]);
     const [compraExistente, setCompraExistente] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const { showSnackbar } = useSnackbar();
 
     // Obtener lista de artículos
     useEffect(() => {
@@ -78,11 +81,22 @@ function EditarCompraFormulario() {
 
             await editarCompra(values.compra_id, data, token);
             actions.setSubmitting(false);
-            window.alert("¡Compra actualizada correctamente!");
+            showSnackbar({
+                message:"Compra actualizada con éxito",
+                level: "success",
+                vertical: "top",
+                horizontal: "center",
+            });
             navigate(`/compras/${values.compra_id}`);
         } catch (error) {
             console.error("Error al editar la compra:", error);
             actions.setSubmitting(false);
+            showSnackbar({
+                message: "Error al editar la compra",
+                level: "error",
+                vertical: "top",
+                horizontal: "center",
+            });
         }
     };
 

@@ -14,6 +14,7 @@ import RegistrarCompra from "./components/compras/registrarCompra.jsx";
 import ComprasTotales from "./components/compras/ComprasTotales.jsx";
 import Compra from "./components/compras/compraDetalle.jsx";
 import EditarCompra from "./components/compras/editarCompra.jsx";
+import Categorias from "./components/categorias/Categorias.jsx";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                 <Route element={<RequireAuth allowedRoles={["admin"]} />}>
                     <Route path="/agregarArticulo" element={<CrearArticulo />} />
                     <Route path="/editarArticulo/:articuloId" element={<EditarArticulo />} />
+                    <Route path="/categorias" element={<Categorias />} />
                     <Route path="/inventarios" element={<InventarioHome />} />
                     <Route path="/inventarios/totales" element={<InventarioTotal />} />
                     <Route path="/movimientos" element={<MovimientoTotal/>} />

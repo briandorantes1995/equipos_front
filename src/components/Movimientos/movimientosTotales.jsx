@@ -12,7 +12,8 @@ import LinearProgress from "@mui/material/LinearProgress";
 import EditIcon from '@mui/icons-material/Edit';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import {useNavigate} from "react-router-dom";
+import {useSnackbar} from "../../ui/snackBar/useSnackBar.js";
+
 
 
 function MovimientoTotal() {
@@ -21,7 +22,7 @@ function MovimientoTotal() {
     const [selectedMovimiento, setSelectedMovimiento] = useState(null);
     const [openModal, setOpenModal] = useState(false);
     const token = useSelector(state => state.user.token);
-    const navigate = useNavigate();
+    const { showSnackbar } = useSnackbar();
 
     const handleEdit = (movimiento) => {
         setSelectedMovimiento(movimiento);
@@ -33,21 +34,41 @@ function MovimientoTotal() {
             try {
                 const data = await editarMovimiento(movimientoEditado, token);
                 if (data) {
-                    console.log("Movimiento actualizado");
-                    navigate('/movimientos');
+                    showSnackbar({
+                        message:"Movimiento actualizado con éxito",
+                        level: "success",
+                        vertical: "top",
+                        horizontal: "center",
+                    });
                 }
             } catch (error) {
                 console.error('Error al actualizar movimiento:', error);
+                showSnackbar({
+                    message: "Error al actualizar el movimiento",
+                    level: "error",
+                    vertical: "top",
+                    horizontal: "center",
+                });
             }
         } else if (movimientoEditado._action === "delete") {
             try {
                 const data = await eliminarMovimiento(movimientoEditado.id, token);
                 if (data) {
-                    console.log("Movimiento eliminado");
-                    navigate('/movimientos');
+                    showSnackbar({
+                        message: data.message || "Movimiento eliminado con exito",
+                        level: "success",
+                        vertical: "top",
+                        horizontal: "center",
+                    });
                 }
             } catch (error) {
                 console.error('Error al eliminar movimiento:', error);
+                showSnackbar({
+                    message: "Error al eliminar el movimiento",
+                    level: "error",
+                    vertical: "top",
+                    horizontal: "center",
+                });
             }
         }
         setOpenModal(false);

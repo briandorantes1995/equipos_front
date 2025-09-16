@@ -7,16 +7,16 @@ import { Link } from 'react-router-dom';
 import "./Inventarios.css";
 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: '#d0e6ff', // fondo principal equilibrado
+    backgroundColor: '#d0e6ff',
     ...theme.typography.body2,
     padding: theme.spacing(6),
     textAlign: 'center',
-    color: '#1A1A1A', // texto sobre fondo claro
+    color: '#1A1A1A',
     cursor: 'pointer',
 
     '&:hover': {
-        backgroundColor: '#a6c8ff', // hover equilibrado
-        color: '#0d3a75', // texto sobre hover
+        backgroundColor: '#a6c8ff',
+        color: '#0d3a75',
     }
 }));
 
@@ -24,7 +24,7 @@ function InventarioHome() {
     return (
         <div className="main-content">
             <div className="container-fluid v">
-                <h3 className="fw-bold my-4 pb-3">Operaciones Invenario</h3>
+                <h3 className="fw-bold my-4 pb-3">Operaciones Inventario</h3>
                 <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
                     <Stack spacing={4} sx={{width: '60%'}}>
                         <Link to="/inventarios/totales" style={{textDecoration: 'none'}}>
@@ -32,6 +32,9 @@ function InventarioHome() {
                         </Link>
                         <Link to="/movimientos" style={{textDecoration: 'none'}}>
                             <Item>Movimientos</Item>
+                        </Link>
+                        <Link to="/categorias" style={{textDecoration: 'none'}}>
+                            <Item>Agregar Categoria</Item>
                         </Link>
                         <Link to="/agregarArticulo" style={{textDecoration: 'none'}}>
                             <Item>Registrar Articulo</Item>

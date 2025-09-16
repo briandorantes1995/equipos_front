@@ -9,6 +9,7 @@ import agregarArticulo from '../../Functions/agregarArticulo';
 import obtenerCategorias from '../../Functions/obtenerCategorias';
 import { supabase } from '../../Functions/supabaseClient';
 import { useSelector } from 'react-redux';
+import {useSnackbar} from "../../ui/snackBar/useSnackBar.js";
 import './Articulos.css';
 
 function CrearArticulo() {
@@ -16,6 +17,7 @@ function CrearArticulo() {
     const [imagen, setImagen] = useState(null);
     const token = useSelector(state => state.user.token);
     const user = useSelector(state => state.user.user);
+    const { showSnackbar } = useSnackbar();
 
     useEffect(() => {
         async function fetchCategorias() {
@@ -61,11 +63,23 @@ function CrearArticulo() {
             if (articulo) {
                 actions.resetForm();
                 setImagen(null);
+                showSnackbar({
+                    message: "Articulo Agregado con exito",
+                    level: "success",
+                    vertical: "top",
+                    horizontal: "center",
+                });
             }
 
         } catch (error) {
             console.error('Error durante el envío:', error);
             actions.setSubmitting(false);
+            showSnackbar({
+                message: "Error al registrar articulo",
+                level: "error",
+                vertical: "top",
+                horizontal: "center",
+            });
         }
     };
 
@@ -82,7 +96,6 @@ function CrearArticulo() {
                             costo: "",
                             inventario: "",
                             codigo_barras: "",
-                            sku: "",
                             categoria_id: "",
                             proveedor: ""
                         }}
@@ -102,15 +115,6 @@ function CrearArticulo() {
                                         onChange={(e) => setImagen(e.target.files[0])}
                                     />
                                 </div>
-
-                                <CustomInput label="Nombre" name="nombre" placeholder="Nombre del artículo" />
-                                <CustomTextArea label="Descripción" name="descripcion" placeholder="Descripción" />
-                                <CustomInput label="Precio de Venta" name="precio_venta" type="number" placeholder="0.00" />
-                                <CustomInput label="Costo" name="costo" type="number" placeholder="0.00" />
-                                <CustomInput label="Inventario Inicial" name="inventario" type="number" placeholder="0" />
-                                <CustomInput label="Código de Barras" name="codigo_barras" placeholder="Código de barras" />
-                                <CustomInput label="SKU" name="sku" placeholder="SKU del artículo" />
-
                                 <CustomLista label="Categoría" name="categoria_id">
                                     <option value="">Seleccione una categoría</option>
                                     {categorias.map(cat => (
@@ -118,6 +122,12 @@ function CrearArticulo() {
                                     ))}
                                 </CustomLista>
 
+                                <CustomInput label="Nombre" name="nombre" placeholder="Nombre del artículo" />
+                                <CustomTextArea label="Descripción" name="descripcion" placeholder="Descripción" />
+                                <CustomInput label="Precio de Venta" name="precio_venta" type="number" placeholder="0.00" />
+                                <CustomInput label="Costo" name="costo" type="number" placeholder="0.00" />
+                                <CustomInput label="Inventario Inicial" name="inventario" type="number" placeholder="0" />
+                                <CustomInput label="Código de Barras" name="codigo_barras" placeholder="Código de barras" />
                                 <CustomInput label="Proveedor" name="proveedor" placeholder="Proveedor del artículo" />
 
                                 <MDBBtn className="mb-4 px-5" color="dark" size="lg" disabled={isSubmitting} type="submit">

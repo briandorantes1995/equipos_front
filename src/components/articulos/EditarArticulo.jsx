@@ -100,7 +100,6 @@ function EditarArticulo() {
                             precio_venta: mostrarArticulo.precio_venta || '',
                             costo: mostrarArticulo.costo || '',
                             codigo_barras: mostrarArticulo.codigo_barras || '',
-                            sku: mostrarArticulo.sku || '',
                             categoria_id: mostrarArticulo.categoria_id || '',
                             proveedor: mostrarArticulo.proveedor || ''
                         }}
@@ -128,22 +127,19 @@ function EditarArticulo() {
                                         />
                                     )}
                                 </div>
-
-                                <CustomInput label="Nombre" name="nombre" placeholder="Nombre del artículo" />
-                                <CustomTextArea label="Descripción" name="descripcion" placeholder="Descripción" />
-                                <CustomInput label="Precio de Venta" name="precio_venta" type="number" placeholder="0.00" />
-                                <CustomInput label="Costo" name="costo" type="number" placeholder="0.00" />
-                                <CustomInput label="Código de Barras" name="codigo_barras" placeholder="Código de barras" />
-                                <CustomInput label="SKU" name="sku" placeholder="SKU del artículo" />
-
                                 <CustomLista label="Categoría" name="categoria_id">
                                     <option value="">Seleccione una categoría</option>
                                     {categorias.map(cat => (
                                         <option key={cat.id} value={cat.id}>{cat.nombre}</option>
                                     ))}
                                 </CustomLista>
-
+                                <CustomInput label="Nombre" name="nombre" placeholder="Nombre del artículo" />
+                                <CustomTextArea label="Descripción" name="descripcion" placeholder="Descripción" />
+                                <CustomInput label="Precio de Venta" name="precio_venta" type="number" placeholder="0.00" />
+                                <CustomInput label="Costo" name="costo" type="number" placeholder="0.00" />
+                                <CustomInput label="Código de Barras" name="codigo_barras" placeholder="Código de barras" />
                                 <CustomInput label="Proveedor" name="proveedor" placeholder="Proveedor del artículo" />
+
 
                                 <MDBBtn className="mb-4 px-5" color="dark" size="lg" disabled={isSubmitting} type="submit">
                                     Guardar Cambios
