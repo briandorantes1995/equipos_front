@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { Slide } from "@mui/material";
-import { SnackbarContext } from "./SnackbarContext.js";
+import { SnackbarContext } from "./SnackBarContext.js";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
