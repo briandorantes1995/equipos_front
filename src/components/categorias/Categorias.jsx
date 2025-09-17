@@ -129,7 +129,7 @@ function Categorias() {
                 {isLoading ? (
                     <LinearProgress />
                 ) : (
-                    <Paper sx={{ width: '100%', height: 600 }}>
+                    <Paper sx={{ width: '100%', height: '100%' }}>
                         <DataGrid
                             rows={categorias}
                             columns={columns}
