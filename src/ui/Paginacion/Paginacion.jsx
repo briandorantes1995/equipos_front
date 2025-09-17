@@ -21,6 +21,10 @@ const GridContainer = styled.div`
 function Paginacion({ items, itemsPerPage, selectedCategoria = "", selectedProveedor = "" }) {
     const [itemOffset, setItemOffset] = useState(0);
 
+    useEffect(() => {
+        setItemOffset(0);
+    }, [selectedCategoria, selectedProveedor]);
+
     // 1. Filtrar antes de paginar
     const articulosFiltrados = items.filter(art => {
         const categoriaMatch =
