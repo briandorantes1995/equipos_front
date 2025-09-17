@@ -76,7 +76,7 @@ function Articulos() {
                         {Array.isArray(mostrarArticulos) && mostrarArticulos.length > 0 ? (
                             <Paginacion
                                 items={mostrarArticulos}
-                                itemsPerPage={8}
+                                itemsPerPage={10}
                                 selectedCategoria={selectedCategoria}
                                 selectedProveedor={selectedProveedor}
                             />

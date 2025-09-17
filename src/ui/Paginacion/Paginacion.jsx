@@ -14,7 +14,7 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(4, 1fr); /* 🔹 siempre 4 en desktop */
+    grid-template-columns: repeat(5, 1fr);
   }
 `;
 
