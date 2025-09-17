@@ -48,30 +48,42 @@ function Paginacion({ items, itemsPerPage, selectedCategoria = "", selectedProve
         setItemOffset(newOffset);
     };
 
+   
     return (
         <>
-            <GridContainer>
-                {currentItems.map((articulo, index) => (
-                    <Link to={`/articulos/${articulo.id}`} key={index} style={{ textDecoration: 'none' }}>
-                        <Card articulo={articulo} />
-                    </Link>
-                ))}
-            </GridContainer>
-            <div className="pagination-container">
-                <ReactPaginate
-                    breakLabel="..."
-                    nextLabel="Siguiente"
-                    previousLabel="Anterior"
-                    pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageClick}
-                    containerClassName="pagination"
-                    activeClassName="active"
-                    pageClassName={'item pagination-page '}
-                    forcePage={Math.floor(itemOffset / itemsPerPage)}
-                />
-            </div>
+            {articulosFiltrados.length === 0 ? (
+                <p style={{ textAlign: "center", marginTop: "20px", fontSize: "18px" }}>
+                    No hay artículos disponibles
+                </p>
+            ) : (
+                <>
+                    <GridContainer>
+                        {currentItems.map((articulo, index) => (
+                            <Link to={`/articulos/${articulo.id}`} key={index} style={{ textDecoration: 'none' }}>
+                                <Card articulo={articulo} />
+                            </Link>
+                        ))}
+                    </GridContainer>
+
+                    {pageCount > 1 && (
+                        <div className="pagination-container">
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Siguiente"
+                                previousLabel="Anterior"
+                                pageCount={pageCount}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={5}
+                                onPageChange={handlePageClick}
+                                containerClassName="pagination"
+                                activeClassName="active"
+                                pageClassName={'item pagination-page '}
+                                forcePage={Math.floor(itemOffset / itemsPerPage)}
+                            />
+                        </div>
+                    )}
+                </>
+            )}
         </>
     );
 }
