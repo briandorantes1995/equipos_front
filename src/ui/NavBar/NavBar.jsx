@@ -107,7 +107,7 @@ export default function Navbar() {
                                                     Inventarios
                                                     </MDBDropdownItem>
                                                 </>
-                                                ) : null}
+                                                ) : <></>}
                                         <MDBDropdownItem link onClick={cerrarSesion}>Cerrar Sesión</MDBDropdownItem>
                                     </MDBDropdownMenu>
                                 </MDBDropdown>
