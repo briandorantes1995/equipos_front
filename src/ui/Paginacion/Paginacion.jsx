@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import Card from '../../components/articulos/Card.jsx';
 import { Link } from "react-router-dom";
