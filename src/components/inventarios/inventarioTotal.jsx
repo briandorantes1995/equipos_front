@@ -30,13 +30,13 @@ function InventarioTotal() {
         console.log("Datos recibidos del modal:", nuevoMovimiento);
         try {
             const data = await anadirMovimiento(nuevoMovimiento, token);
+            await fetchData();
             showSnackbar({
                 message: data.message || "Movimiento Agregado",
                 level: "success",
                 vertical: "top",
                 horizontal: "center",
             });
-            await fetchData();
         } catch (error) {
             console.error("Error al registrar movimiento:", error);
             showSnackbar({

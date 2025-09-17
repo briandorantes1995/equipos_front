@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { format } from 'date-fns';
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
 import { useSelector } from "react-redux";
 import obtenerMovimientos from "../../Functions/obtenerMovimientos.js";
 import editarMovimiento from "../../Functions/editarMovimiento.js";
@@ -34,6 +34,7 @@ function MovimientoTotal() {
             try {
                 const data = await editarMovimiento(movimientoEditado, token);
                 if (data) {
+                    await fetchData();
                     showSnackbar({
                         message:"Movimiento actualizado con éxito",
                         level: "success",
@@ -54,6 +55,7 @@ function MovimientoTotal() {
             try {
                 const data = await eliminarMovimiento(movimientoEditado.id, token);
                 if (data) {
+                    await fetchData();
                     showSnackbar({
                         message: data.message || "Movimiento eliminado con exito",
                         level: "success",
@@ -75,49 +77,53 @@ function MovimientoTotal() {
     };
 
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await obtenerMovimientos(token);
-                const rows = data.map(item => {
-                    let fechaFormateada = null;
-                    let nombreUsuario = "Usuario sin información";
-                    if (item.fecha && item.fecha !== "0001-01-01T00:00:00Z") {
-                        try {
-                            fechaFormateada = format(new Date(item.fecha), "dd/MM/yyyy");
-                        } catch {
-                            fechaFormateada = null;
-                        }
-                    }
-                    if (item.usuario_nombre && item.usuario_nombre.trim() !== "" && item.usuario_nombre !== "0") {
-                        try {
-                            nombreUsuario = capitalizeName(item.usuario_nombre);
-                        } catch {
-                            nombreUsuario = "Usuario sin Información";
-                        }
-                    }
+   const fetchData = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const data = await obtenerMovimientos(token);
+            const rows = data.map(item => {
+                let fechaFormateada = null;
+                let nombreUsuario = "Usuario sin información";
 
-                    return {
-                        id: item.id,
-                        nombre: item.nombre_articulo,
-                        proveedor: item.proveedor_articulo,
-                        tipo_movimiento: item.tipo_movimiento,
-                        cantidad: item.cantidad,
-                        motivo: item.motivo,
-                        fecha: fechaFormateada,
-                        usuario: nombreUsuario,
-                    };
-                });
+                if (item.fecha && item.fecha !== "0001-01-01T00:00:00Z") {
+                    try {
+                        fechaFormateada = format(new Date(item.fecha), "dd/MM/yyyy");
+                    } catch {
+                        fechaFormateada = null;
+                    }
+                }
 
-                setMovimientos(rows);
-                setIsLoading(false);
-            } catch (error) {
-                console.error('Error al obtener el inventario:', error);
-                setIsLoading(false);
-            }
+                if (item.usuario_nombre && item.usuario_nombre.trim() !== "" && item.usuario_nombre !== "0") {
+                    try {
+                        nombreUsuario = capitalizeName(item.usuario_nombre);
+                    } catch {
+                        nombreUsuario = "Usuario sin Información";
+                    }
+                }
+
+                return {
+                    id: item.id,
+                    nombre: item.nombre_articulo,
+                    proveedor: item.proveedor_articulo,
+                    tipo_movimiento: item.tipo_movimiento,
+                    cantidad: item.cantidad,
+                    motivo: item.motivo,
+                    fecha: fechaFormateada,
+                    usuario: nombreUsuario,
+                };
+            });
+
+            setMovimientos(rows);
+        } catch (error) {
+            console.error('Error al obtener los movimientos:', error);
+        } finally {
+            setIsLoading(false);
         }
-        fetchData();
     }, [token]);
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
     const columns = [
         { field: 'nombre', headerName: 'Nombre', width: 200, headerAlign: 'center', align: 'center' },
