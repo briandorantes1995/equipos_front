@@ -114,7 +114,7 @@ function InventarioTotal() {
                 {isLoading ? (
                     <LinearProgress />
                 ) : (
-                    <Paper sx={{ height: 600, width: '100%' }}>
+                    <Paper sx={{ height: '100%', width: '100%' }}>
                         <DataGrid
                             rows={inventario}
                             columns={columns}
