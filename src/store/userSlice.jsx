@@ -18,7 +18,7 @@ export const userSlice = createSlice({
             state.user = user;
             state.rol = user["https://tuapp.com/claims/roles"]
                 ? user["https://tuapp.com/claims/roles"][0]
-                : null;
+                : "guest";
             state.isAuthenticated = !!action.payload.token;
         },
         clearAuth: (state) => {
