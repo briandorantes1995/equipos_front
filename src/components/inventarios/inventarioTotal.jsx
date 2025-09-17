@@ -21,10 +21,10 @@ function InventarioTotal() {
     const token = useSelector(state => state.user.token);
     const { showSnackbar } = useSnackbar();
 
-    const handleEdit = (articulo) => {
-        setArticulo(articulo);
-        setOpenModal(true);
-    };
+        const handleEdit = async (articulo) => {
+            setArticulo(articulo);
+            setOpenModal(true);
+        };
 
     const handleSave = async (nuevoMovimiento) => {
         console.log("Datos recibidos del modal:", nuevoMovimiento);
@@ -36,6 +36,7 @@ function InventarioTotal() {
                 vertical: "top",
                 horizontal: "center",
             });
+            await fetchData();
         } catch (error) {
             console.error("Error al registrar movimiento:", error);
             showSnackbar({
@@ -47,42 +48,43 @@ function InventarioTotal() {
         }
         setOpenModal(false);
     };
+ const fetchData = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const data = await obtenerInventario(token);
+            const rows = data.map(item => {
+                let fechaFormateada = null;
+                if (item.ultima_actualizacion && item.ultima_actualizacion !== "0001-01-01T00:00:00Z") {
+                    try {
+                        fechaFormateada = format(new Date(item.ultima_actualizacion), "dd/MM/yyyy");
+                    } catch {
+                        fechaFormateada = null;
+                    }
+                }
+
+                return {
+                    id: item.id,
+                    nombre: item.nombre,
+                    cantidad_actual: item.cantidad_actual,
+                    precio: item.precio_venta,
+                    costo: item.costo,
+                    proveedor: item.proveedor,
+                    codigo_barras: item.codigo_barras,
+                    ultima_actualizacion: fechaFormateada
+                };
+            });
+
+            setInventario(rows);
+        } catch (error) {
+            console.error('Error al obtener el inventario:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [token]);
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await obtenerInventario(token);
-                const rows = data.map(item => {
-                    let fechaFormateada = null;
-                    if (item.ultima_actualizacion && item.ultima_actualizacion !== "0001-01-01T00:00:00Z") {
-                        try {
-                            fechaFormateada = format(new Date(item.ultima_actualizacion), "dd/MM/yyyy");
-                        } catch {
-                            fechaFormateada = null;
-                        }
-                    }
-
-                    return {
-                        id: item.id,
-                        nombre: item.nombre,
-                        cantidad_actual: item.cantidad_actual,
-                        precio: item.precio_venta,
-                        costo: item.costo,
-                        proveedor: item.proveedor,
-                        codigo_barras: item.codigo_barras,
-                        ultima_actualizacion: fechaFormateada
-                    };
-                });
-
-                setInventario(rows);
-                setIsLoading(false);
-            } catch (error) {
-                console.error('Error al obtener el inventario:', error);
-                setIsLoading(false);
-            }
-        }
         fetchData();
-    }, [token]);
+    }, [fetchData]);
 
     const columns = [
         { field: 'nombre', headerName: 'Nombre', width: 200, headerAlign: 'center', align: 'center' },
