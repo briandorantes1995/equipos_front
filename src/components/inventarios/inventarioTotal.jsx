@@ -87,7 +87,7 @@ function InventarioTotal() {
     const columns = [
         { field: 'nombre', headerName: 'Nombre', width: 200, headerAlign: 'center', align: 'center' },
         { field: 'cantidad_actual', headerName: 'Cantidad', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
-        { field: 'precio', headerName: 'Precio', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
+        { field: 'precio', headerName: 'Precio Venta', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'costo', headerName: 'Costo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'proveedor', headerName: 'Proveedor', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'codigo_barras', headerName: 'Codigo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
