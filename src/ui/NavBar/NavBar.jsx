@@ -57,119 +57,76 @@ export default function Navbar() {
     }
     return (
         <MDBNavbar expand='lg' light bgColor='light' className='sticky-navbar'>
-  <MDBContainer fluid>
-    <MDBNavbarBrand tag={Link} to="/" onClick={() => setShowBasic(false)}>
-      <img
-        src={logo}
-        alt="ATS Logo"
-        height="50"
-        style={{ marginRight: '10px' }}
-      />
-    </MDBNavbarBrand>
+            <MDBContainer fluid>
+                <MDBNavbarBrand tag={Link} to="/">
+                    <img
+                        src={logo}
+                        alt="Equipos Medicos"
+                        height="50"
+                        style={{ marginRight: '10px' }}
+                    />
+                </MDBNavbarBrand>
 
-    <MDBNavbarToggler
-      aria-controls='navbarSupportedContent'
-      aria-expanded={showBasic}
-      aria-label='Toggle navigation'
-      onClick={() => setShowBasic(!showBasic)}
-    >
-      <MDBIcon icon='bars' fas />
-    </MDBNavbarToggler>
 
-    <MDBCollapse navbar show={showBasic}>
-      <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
-        <MDBNavbarItem>
-          <MDBNavbarLink
-            tag={Link}
-            to="/"
-            onClick={() => setShowBasic(false)}
-          >
-            Inicio
-          </MDBNavbarLink>
-        </MDBNavbarItem>
-        <MDBNavbarItem>
-          <MDBNavbarLink
-            tag={Link}
-            to="/articulos"
-            onClick={() => setShowBasic(false)}
-          >
-            Productos
-          </MDBNavbarLink>
-        </MDBNavbarItem>
+                <MDBNavbarToggler
+                    aria-controls='navbarSupportedContent'
+                    aria-expanded='false'
+                    aria-label='Toggle navigation'
+                    onClick={() => setShowBasic(!showBasic)}
+                >
+                    <MDBIcon icon='bars' fas/>
+                </MDBNavbarToggler>
 
-        {Auth ? (
-          <MDBNavbarItem>
-            <MDBDropdown>
-              <MDBDropdownToggle tag='a' className='nav-link' role='button'>
-                Perfil
-              </MDBDropdownToggle>
-              <MDBDropdownMenu>
-                <MDBDropdownItem>
-                  {auth0User?.email || user?.userEmail || "Usuario"}
-                </MDBDropdownItem>
-                <MDBDropdownItem>Información Personal</MDBDropdownItem>
-                {rol === "admin" && (
-                  <>
-                    <MDBDropdownItem
-                      link
-                      href="/compras"
-                      onClick={() => setShowBasic(false)}
-                    >
-                      Compras
-                    </MDBDropdownItem>
-                    <MDBDropdownItem
-                      link
-                      href="/inventarios"
-                      onClick={() => setShowBasic(false)}
-                    >
-                      Inventarios
-                    </MDBDropdownItem>
-                  </>
-                )}
-                <MDBDropdownItem link onClick={() => { cerrarSesion(); setShowBasic(false); }}>
-                  Cerrar Sesión
-                </MDBDropdownItem>
-              </MDBDropdownMenu>
-            </MDBDropdown>
-          </MDBNavbarItem>
-        ) : (
-          <MDBNavbarItem>
-            <MDBBtn
-              color="primary"
-              onClick={() => {
-                setShowBasic(false);
-                loginWithRedirect();
-              }}
-            >
-              Iniciar Sesión
-            </MDBBtn>
-          </MDBNavbarItem>
-        )}
-      </MDBNavbarNav>
-    </MDBCollapse>
+                <MDBCollapse navbar show={showBasic ? true : undefined}>
+                <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
+                        <MDBNavbarItem>
+                            <MDBNavbarLink tag={Link} to="/">Inicio</MDBNavbarLink>
+                        </MDBNavbarItem>
+                        <MDBNavbarItem>
+                            <MDBNavbarLink tag={Link} to="/articulos">Productos</MDBNavbarLink>
+                        </MDBNavbarItem>
 
-    <form className='d-flex input-group w-auto'>
-      <input
-        type='search'
-        className='form-control'
-        placeholder='Buscar Articulo'
-        aria-label='Buscar'
-        onChange={handleInputChange}
-      />
-      <MDBBtn
-        type="submit"
-        color='primary'
-        onClick={(e) => {
-          e.preventDefault();
-          setShowBasic(false);
-          handleBuscarClick();
-        }}
-      >
-        Buscar
-      </MDBBtn>
-    </form>
-  </MDBContainer>
-</MDBNavbar>
+                        {Auth ? (
+                            <MDBNavbarItem>
+                                <MDBDropdown>
+                                    <MDBDropdownToggle tag='a' className='nav-link' role='button'>
+                                        Perfil
+                                    </MDBDropdownToggle>
+                                    <MDBDropdownMenu>
+                                        <MDBDropdownItem>
+                                            {/* Muestra email de Auth0 si disponible, sino de Redux */}
+                                            {auth0User?.email || user?.userEmail || "Usuario"}
+                                        </MDBDropdownItem>
+                                        <MDBDropdownItem >Información Personal</MDBDropdownItem>
+                                        {rol === "admin" && (
+                                            <>
+                                            <MDBDropdownItem link href="/compras">
+                                                Compras
+                                            </MDBDropdownItem>
+                                            <MDBDropdownItem link href="/inventarios">
+                                            Inventarios
+                                            </MDBDropdownItem>
+                                            </>
+                                        )}
+                                        <MDBDropdownItem link onClick={cerrarSesion}>Cerrar Sesión</MDBDropdownItem>
+                                    </MDBDropdownMenu>
+                                </MDBDropdown>
+                            </MDBNavbarItem>
+                        ) : (
+                            <MDBNavbarItem>
+                                <MDBBtn color="primary" onClick={() => loginWithRedirect()}>Iniciar Sesión</MDBBtn>
+                            </MDBNavbarItem>
+                        )}
+                    </MDBNavbarNav>
+                </MDBCollapse>
+                <form className='d-flex input-group w-auto'>
+                    <input type='search' className='form-control' placeholder='Buscar Articulo'
+                           aria-label='Buscar'
+                           onChange={handleInputChange}/>
+                    <MDBBtn type="submit" color='primary' onClick={handleBuscarClick}>Buscar</MDBBtn>
+                </form>
+            </MDBContainer>
+        </MDBNavbar>
     );
 }
 
