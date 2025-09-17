@@ -8,7 +8,8 @@ import styled from 'styled-components';
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+   grid-template-rows: repeat(2, auto);
   gap: 24px;
   padding: 24px;
   justify-items: center;
