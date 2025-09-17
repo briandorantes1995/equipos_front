@@ -98,7 +98,7 @@ export default function Navbar() {
                                             {auth0User?.email || user?.userEmail || "Usuario"}
                                         </MDBDropdownItem >
                                         <MDBDropdownItem link >Información Personal</MDBDropdownItem>
-                                        {rol === "admin" && (
+                                        {rol && rol === "admin" && (
                                             <>
                                             <MDBDropdownItem link href="/compras">
                                                 Compras

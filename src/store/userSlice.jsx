@@ -4,6 +4,7 @@ const initialState = {
     token: null,
     isAuthenticated: false,
     user: null,
+    rol: null,
 };
 
 export const userSlice = createSlice({
