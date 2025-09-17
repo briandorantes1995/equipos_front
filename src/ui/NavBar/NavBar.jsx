@@ -98,16 +98,16 @@ export default function Navbar() {
                                             {auth0User?.email || user?.userEmail || "Usuario"}
                                         </MDBDropdownItem >
                                         <MDBDropdownItem link >Información Personal</MDBDropdownItem>
-                                        {rol && rol === "admin" && (
-                                            <>
-                                            <MDBDropdownItem link href="/compras">
-                                                Compras
-                                            </MDBDropdownItem>
-                                            <MDBDropdownItem link href="/inventarios">
-                                            Inventarios
-                                            </MDBDropdownItem>
-                                            </>
-                                        )}
+                                                {rol === "admin" ? (
+                                                <>
+                                                    <MDBDropdownItem link href="/compras">
+                                                    Compras
+                                                    </MDBDropdownItem>
+                                                    <MDBDropdownItem link href="/inventarios">
+                                                    Inventarios
+                                                    </MDBDropdownItem>
+                                                </>
+                                                ) : null}
                                         <MDBDropdownItem link onClick={cerrarSesion}>Cerrar Sesión</MDBDropdownItem>
                                     </MDBDropdownMenu>
                                 </MDBDropdown>
