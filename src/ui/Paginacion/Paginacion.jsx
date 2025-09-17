@@ -69,6 +69,7 @@ function Paginacion({ items, itemsPerPage, selectedCategoria = "", selectedProve
                     containerClassName="pagination"
                     activeClassName="active"
                     pageClassName={'item pagination-page '}
+                    forcePage={Math.floor(itemOffset / itemsPerPage)}
                 />
             </div>
         </>
