@@ -100,10 +100,10 @@ export default function Navbar() {
                                         <MDBDropdownItem link tag={Link} to="/#">Información Personal</MDBDropdownItem>
                                                 {rol === "admin" ? (
                                                 <>
-                                                    <MDBDropdownItem tag={Link} to="/compras">
+                                                    <MDBDropdownItem link href="/compras">
                                                     Compras
                                                     </MDBDropdownItem>
-                                                    <MDBDropdownItem tag={Link} to="/inventarios">
+                                                    <MDBDropdownItem link href="/inventarios">
                                                     Inventarios
                                                     </MDBDropdownItem>
                                                 </>

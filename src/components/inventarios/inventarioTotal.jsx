@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { format } from 'date-fns';
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
 import { useSelector } from "react-redux";
 import LinearProgress from "@mui/material/LinearProgress";
 import obtenerInventario from "../../Functions/obtenerInventario.js";
