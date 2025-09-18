@@ -54,6 +54,7 @@ const Description = styled(Typography)`
 `;
 
 export default function Card({ articulo }) {
+  const rol = useSelector(state => state.user.rol);
   console.log('Rendering Card for articulo:', articulo);
     return (
         <StyledCard>
@@ -65,8 +66,13 @@ export default function Card({ articulo }) {
                     <SmallInfo>Categoría: {articulo.categoria.nombre}</SmallInfo>
                 )}
 
-                {articulo.proveedor && (
+                {articulo.proveedor && rol === "admin" && (
                     <SmallInfo>Proveedor: {articulo.proveedor}</SmallInfo>
+                )}
+
+
+                {articulo?.marca && (
+                    <SmallInfo>Marca: {articulo.marca}</SmallInfo>
                 )}
 
                 {articulo.precio_venta !== undefined && (
