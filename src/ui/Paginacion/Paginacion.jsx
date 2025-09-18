@@ -18,12 +18,12 @@ const GridContainer = styled.div`
   }
 `;
 
-function Paginacion({ items, itemsPerPage, selectedCategoria = "", selectedProveedor = "" }) {
+function Paginacion({ items, itemsPerPage, selectedCategoria = "",selectedMarca= "", selectedProveedor = "" }) {
     const [itemOffset, setItemOffset] = useState(0);
 
     useEffect(() => {
         setItemOffset(0);
-    }, [selectedCategoria, selectedProveedor]);
+    }, [selectedCategoria,selectedMarca, selectedProveedor]);
 
     // 1. Filtrar antes de paginar
     const articulosFiltrados = items.filter(art => {
@@ -31,11 +31,17 @@ function Paginacion({ items, itemsPerPage, selectedCategoria = "", selectedProve
             selectedCategoria === "" ||
             (art.categoria_nombre || "Sin categoría").toLowerCase() === selectedCategoria.toLowerCase();
 
+
+         const marcaMatch =
+            selectedMarca === "" ||
+            (art.marca || "Generico").toLowerCase().includes(selectedMarca.toLowerCase()); 
+
         const proveedorMatch =
             selectedProveedor === "" ||
             (art.proveedor || "").toLowerCase().includes(selectedProveedor.toLowerCase());
 
-        return categoriaMatch && proveedorMatch;
+
+        return categoriaMatch && marcaMatch && proveedorMatch;
     });
 
     // 2. Calcular paginación después del filtro
@@ -77,7 +83,7 @@ function Paginacion({ items, itemsPerPage, selectedCategoria = "", selectedProve
                                 onPageChange={handlePageClick}
                                 containerClassName="pagination"
                                 activeClassName="active"
-                                pageClassName={'item pagination-page '}
+                                pageClassName={'item pagination-page'}
                                 forcePage={Math.floor(itemOffset / itemsPerPage)}
                             />
                         </div>

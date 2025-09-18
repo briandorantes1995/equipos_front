@@ -8,8 +8,10 @@ function Articulos() {
     const [mostrarArticulos, setMostrarArticulos] = useState([]);
     const [categorias, setCategorias] = useState([]);
     const [proveedores, setProveedores] = useState([]);
+    const [marcas, setMarcas] = useState([]);
     const [selectedCategoria, setSelectedCategoria] = useState("");
     const [selectedProveedor, setSelectedProveedor] = useState("");
+    const [selectedMarca, setSelectedMarca] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -25,6 +27,11 @@ function Articulos() {
                     ...new Set(safeData.map(item => item.categoria_nombre || "Sin categoría"))
                 ];
                 setCategorias(categoriasUnicas);
+
+                const marcasUnicas = [
+                    ...new Set(safeData.map(item => item.marca || "Generico"))
+                ];
+                setMarcas(marcasUnicas);
 
                 // Obtener proveedores únicos
                 const proveedoresUnicos = [
@@ -62,6 +69,16 @@ function Articulos() {
                                 ))}
                             </select>
 
+                             <label className='tituloFiltro'>Marca</label>
+                            <select onChange={(e) => setSelectedMarca(e.target.value)}>
+                                <option value="">Todas</option>
+                                {marcas.map((marc, index) => (
+                                    <option key={index} value={marc}>
+                                        {marc}
+                                    </option>
+                                ))}
+                            </select>
+
                             <label className='tituloFiltro'>Proveedor</label>
                             <select onChange={(e) => setSelectedProveedor(e.target.value)}>
                                 <option value="">Todos</option>
@@ -78,6 +95,7 @@ function Articulos() {
                                 items={mostrarArticulos}
                                 itemsPerPage={10}
                                 selectedCategoria={selectedCategoria}
+                                selectedMarca={selectedMarca}
                                 selectedProveedor={selectedProveedor}
                             />
                         ) : (
