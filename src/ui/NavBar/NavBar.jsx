@@ -94,10 +94,8 @@ export default function Navbar() {
                                     </MDBDropdownToggle>
                                     <MDBDropdownMenu>
                                         <MDBDropdownItem link tag={Link} to="/#">
-                                            {/* Muestra email de Auth0 si disponible, sino de Redux */}
                                             {auth0User?.email || user?.userEmail || "Usuario"}
                                         </MDBDropdownItem >
-                                        <MDBDropdownItem link tag={Link} to="/#">Información Personal</MDBDropdownItem>
                                                 {rol === "admin" ? (
                                                 <>
                                                     <MDBDropdownItem link tag={Link} to="/compras">

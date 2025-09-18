@@ -147,7 +147,7 @@ function EditarArticulo() {
                                         />
                                     )}
                                 </div>
-                                <CustomLista label="Categoría" name="categoria_id">
+                                <CustomLista className="selectarticulo" label="Categoría" name="categoria_id">
                                     <option value="">Seleccione una categoría</option>
                                     {categorias.map(cat => (
                                         <option key={cat.id} value={cat.id}>{cat.nombre}</option>
