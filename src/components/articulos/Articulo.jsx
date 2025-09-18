@@ -85,7 +85,7 @@ function Articulo() {
                             <Button
                                 variant="contained"
                                 size="large"
-                                className="btn-v"
+                                className="btn-b"
                                 color="error"
                                 onClick={borrar}
                             >
