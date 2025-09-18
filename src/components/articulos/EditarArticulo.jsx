@@ -47,19 +47,28 @@ function EditarArticulo() {
     const onSubmit = async (values, actions) => {
         try {
             let urlImagen = mostrarArticulo?.imagen || null;
+            let archivoAnterior = null;
+
+            if (mostrarArticulo?.imagen) {
+                const partesUrl = mostrarArticulo.imagen.split('/fotosarticulos/');
+                if (partesUrl.length > 1) {
+                    archivoAnterior = partesUrl[1];
+                }
+            }
 
             if (imagen && imagen instanceof File) {
                 const nombreArchivo = `public/${Date.now()}-${imagen.name}`;
-                const { error } = await supabase.storage
+
+                const { error: uploadError } = await supabase.storage
                     .from('fotosarticulos')
                     .upload(nombreArchivo, imagen, {
                         cacheControl: '3600',
                         upsert: true
                     });
 
-                if (error) {
-                    console.error('Error al subir imagen:', error);
-                    throw error;
+                if (uploadError) {
+                    console.error('Error al subir imagen:', uploadError);
+                    throw uploadError;
                 }
 
                 const { data: publicData } = supabase.storage
@@ -67,6 +76,16 @@ function EditarArticulo() {
                     .getPublicUrl(nombreArchivo);
 
                 urlImagen = publicData.publicUrl;
+
+                if (archivoAnterior) {
+                    const { error: removeError } = await supabase.storage
+                        .from('fotosarticulos')
+                        .remove([archivoAnterior]);
+
+                    if (removeError) {
+                        console.error('Error al eliminar la imagen anterior:', removeError);
+                    }
+                }
             }
 
             await editarArticulo(
@@ -75,9 +94,9 @@ function EditarArticulo() {
                 token
             );
 
-            navigate('/articulos');
             actions.resetForm();
             setImagen(null);
+            navigate('/articulos');
         } catch (error) {
             console.error('Error durante el envío:', error);
             actions.setSubmitting(false);
@@ -96,6 +115,7 @@ function EditarArticulo() {
                     <Formik
                         initialValues={{
                             nombre: mostrarArticulo.nombre || '',
+                            marca: mostrarArticulo.marca || '',
                             descripcion: mostrarArticulo.descripcion || '',
                             precio_venta: mostrarArticulo.precio_venta || '',
                             costo: mostrarArticulo.costo || '',
@@ -134,6 +154,7 @@ function EditarArticulo() {
                                     ))}
                                 </CustomLista>
                                 <CustomInput label="Nombre" name="nombre" placeholder="Nombre del artículo" />
+                                <CustomInput label="Marca" name="marca" placeholder="Marca" />
                                 <CustomTextArea label="Descripción" name="descripcion" placeholder="Descripción" />
                                 <CustomInput label="Precio de Venta" name="precio_venta" type="number" placeholder="0.00" />
                                 <CustomInput label="Costo" name="costo" type="number" placeholder="0.00" />

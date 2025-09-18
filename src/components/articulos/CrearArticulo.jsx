@@ -91,6 +91,7 @@ function CrearArticulo() {
                     <Formik
                         initialValues={{
                             nombre: "",
+                            marca: "",
                             descripcion: "",
                             precio_venta: "",
                             costo: "",
@@ -123,6 +124,7 @@ function CrearArticulo() {
                                 </CustomLista>
 
                                 <CustomInput label="Nombre" name="nombre" placeholder="Nombre del artículo" />
+                                <CustomInput label="Marca" name="marca" placeholder="Marca" />
                                 <CustomTextArea label="Descripción" name="descripcion" placeholder="Descripción" />
                                 <CustomInput label="Precio de Venta" name="precio_venta" type="number" placeholder="0.00" />
                                 <CustomInput label="Costo" name="costo" type="number" placeholder="0.00" />

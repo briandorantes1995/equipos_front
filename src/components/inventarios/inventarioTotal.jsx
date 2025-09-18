@@ -27,7 +27,6 @@ function InventarioTotal() {
         };
 
     const handleSave = async (nuevoMovimiento) => {
-        console.log("Datos recibidos del modal:", nuevoMovimiento);
         try {
             const data = await anadirMovimiento(nuevoMovimiento, token);
             await fetchData();
@@ -52,6 +51,7 @@ function InventarioTotal() {
         setIsLoading(true);
         try {
             const data = await obtenerInventario(token);
+            console.log(data)
             const rows = data.map(item => {
                 let fechaFormateada = null;
                 if (item.ultima_actualizacion && item.ultima_actualizacion !== "0001-01-01T00:00:00Z") {
@@ -70,10 +70,10 @@ function InventarioTotal() {
                     costo: item.costo,
                     proveedor: item.proveedor,
                     codigo_barras: item.codigo_barras,
-                    ultima_actualizacion: fechaFormateada
+                    ultima_actualizacion: fechaFormateada,
+                    marca: item.marca ? item.marca : 'Sin Marca'
                 };
             });
-
             setInventario(rows);
         } catch (error) {
             console.error('Error al obtener el inventario:', error);
@@ -91,8 +91,9 @@ function InventarioTotal() {
         { field: 'cantidad_actual', headerName: 'Cantidad', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'precio', headerName: 'Precio Venta', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'costo', headerName: 'Costo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
-        { field: 'proveedor', headerName: 'Proveedor', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'codigo_barras', headerName: 'Codigo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
+        { field: 'proveedor', headerName: 'Proveedor', width: 130, headerAlign: 'center', align: 'center' },
+        { field: 'marca', headerName: 'Marca', width: 130, headerAlign: 'center', align: 'center' },
         {field: 'ultima_actualizacion', headerName: 'Última actualización', width: 200, headerAlign: 'center', align: 'center',},
         {
             field: 'acciones',
