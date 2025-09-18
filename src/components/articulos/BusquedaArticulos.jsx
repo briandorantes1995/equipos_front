@@ -7,12 +7,13 @@ import "./Articulos.css";
 
 function BusquedaArticulos() {
     const { busqueda } = useParams();
-
     const [mostrarArticulos, setMostrarArticulos] = useState([]);
     const [categorias, setCategorias] = useState([]);
     const [proveedores, setProveedores] = useState([]);
+     const [marcas, setMarcas] = useState([]);
     const [selectedCategoria, setSelectedCategoria] = useState("");
     const [selectedProveedor, setSelectedProveedor] = useState("");
+    const [selectedMarca, setSelectedMarca] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -34,6 +35,9 @@ function BusquedaArticulos() {
                 const proveedoresUnicos = Array.from(new Set(data.map(item => item?.proveedor).filter(Boolean)));
                 setProveedores(proveedoresUnicos);
 
+                 const marcasUnicas = [...new Set(data.map(item => item?.marca || "Generico"))];
+                setMarcas(marcasUnicas);
+
             } catch (error) {
                 console.error("Error al buscar artículos:", error);
                 setMostrarArticulos([]);
@@ -48,10 +52,11 @@ function BusquedaArticulos() {
     const articulosFiltrados = useMemo(() => {
         return mostrarArticulos.filter(item => {
             const categoriaMatch = selectedCategoria ? (item?.categoria_nombre || "Sin categoría") === selectedCategoria : true;
+             const marcaMatch = selectedMarca ? (item?.marca || "Generico") === selectedMarca : true;
             const proveedorMatch = selectedProveedor ? item?.proveedor === selectedProveedor : true;
-            return categoriaMatch && proveedorMatch;
+            return categoriaMatch && marcaMatch &&  proveedorMatch;
         });
-    }, [mostrarArticulos, selectedCategoria, selectedProveedor]);
+    }, [mostrarArticulos, selectedCategoria, selectedMarca,selectedProveedor]);
 
     return (
         <div className="main-content">
@@ -67,6 +72,14 @@ function BusquedaArticulos() {
                                 <option value="">Todas</option>
                                 {categorias.map((cat, index) => (
                                     <option key={index} value={cat}>{cat}</option>
+                                ))}
+                            </select>
+
+                             <label className='tituloFiltro'>Marca</label>
+                            <select value={selectedMarca} onChange={(e) => setSelectedMarca(e.target.value)}>
+                                <option value="">Todas</option>
+                                {marcas.map((marc, index) => (
+                                    <option key={index} value={marc}>{marc}</option>
                                 ))}
                             </select>
 
@@ -87,7 +100,7 @@ function BusquedaArticulos() {
                                     <p>Resultado de búsqueda: <strong>{busqueda}</strong></p>
                                     <Paginacion
                                         items={articulosFiltrados}
-                                        itemsPerPage={8}
+                                        itemsPerPage={10}
                                     />
                                 </>
                             )}
