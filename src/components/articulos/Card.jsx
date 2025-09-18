@@ -1,5 +1,4 @@
 import React from 'react';
-import {useSelector} from "react-redux"
 import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
 
@@ -54,9 +53,8 @@ const Description = styled(Typography)`
   margin-top: 8px;
 `;
 
-const rol = useSelector(state => state.user.rol);
-
 export default function Card({ articulo }) {
+  console.log('Rendering Card for articulo:', articulo);
     return (
         <StyledCard>
             <Image src={(articulo?.imagen || "/no_image.jpg")} alt={articulo?.nombre || 'Sin nombre'} />
@@ -67,12 +65,8 @@ export default function Card({ articulo }) {
                     <SmallInfo>Categoría: {articulo.categoria.nombre}</SmallInfo>
                 )}
 
-                {articulo.proveedor && rol === "admin" (
+                {articulo.proveedor && (
                     <SmallInfo>Proveedor: {articulo.proveedor}</SmallInfo>
-                )}
-
-                {articulo.marca !== undefined && (
-                    <SmallInfo>Marca: ${articulo.marca}</SmallInfo>
                 )}
 
                 {articulo.precio_venta !== undefined && (
