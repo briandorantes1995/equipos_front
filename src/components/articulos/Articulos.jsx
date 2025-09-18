@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {useSelector} from "react-redux"
 import LinearProgress from '@mui/material/LinearProgress';
 import obtenerArticulos from "../../Functions/obtenerArticulos.js";
 import Paginacion from "../../ui/Paginacion/Paginacion.jsx";
@@ -13,6 +14,7 @@ function Articulos() {
     const [selectedProveedor, setSelectedProveedor] = useState("");
     const [selectedMarca, setSelectedMarca] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const rol = useSelector(state => state.user.rol);
 
     useEffect(() => {
         async function fetchData() {
@@ -79,15 +81,17 @@ function Articulos() {
                                 ))}
                             </select>
 
+                             {rol === "admin" && (
+                        <>
                             <label className='tituloFiltro'>Proveedor</label>
                             <select onChange={(e) => setSelectedProveedor(e.target.value)}>
                                 <option value="">Todos</option>
                                 {proveedores.map((prov, index) => (
-                                    <option key={index} value={prov}>
-                                        {prov}
-                                    </option>
+                                    <option key={index} value={prov}>{prov}</option>
                                 ))}
                             </select>
+                        </>
+                    )}
                         </div>
 
                         {Array.isArray(mostrarArticulos) && mostrarArticulos.length > 0 ? (
