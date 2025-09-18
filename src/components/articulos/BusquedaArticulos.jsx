@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import {useSelector} from "react-redux"
 import { useParams } from "react-router-dom";
 import LinearProgress from '@mui/material/LinearProgress';
 import buscarArticulos from "../../Functions/buscarArticulos.js";
@@ -15,6 +16,7 @@ function BusquedaArticulos() {
     const [selectedProveedor, setSelectedProveedor] = useState("");
     const [selectedMarca, setSelectedMarca] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const rol = useSelector(state => state.user.rol);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -83,6 +85,8 @@ function BusquedaArticulos() {
                                 ))}
                             </select>
 
+                                 {rol === "admin" && (
+                        <>
                             <label className='tituloFiltro'>Proveedor</label>
                             <select value={selectedProveedor} onChange={(e) => setSelectedProveedor(e.target.value)}>
                                 <option value="">Todos</option>
@@ -90,6 +94,8 @@ function BusquedaArticulos() {
                                     <option key={index} value={prov}>{prov}</option>
                                 ))}
                             </select>
+                        </>
+                    )}
                         </div>
 
                         <div className="error">
