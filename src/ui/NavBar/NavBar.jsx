@@ -77,7 +77,7 @@ export default function Navbar() {
                     <MDBIcon icon='bars' fas/>
                 </MDBNavbarToggler>
 
-                <MDBCollapse navbar show={showBasic} id="navbarSupportedContent">
+                <MDBCollapse navbar open={showBasic} id="navbarSupportedContent">
                 <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
                         <MDBNavbarItem>
                             <MDBNavbarLink tag={Link} to="/">Inicio</MDBNavbarLink>
