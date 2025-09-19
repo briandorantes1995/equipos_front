@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { format } from 'date-fns';
 import { useEffect, useState,useCallback } from "react";
 import { useSelector } from "react-redux";
@@ -11,7 +10,6 @@ import Paper from '@mui/material/Paper';
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import anadirMovimiento from "../../Functions/anadirMovimiento.js";
-import "./Inventarios.css";
 
 function InventarioTotal() {
     const [inventario, setInventario] = useState([]);
