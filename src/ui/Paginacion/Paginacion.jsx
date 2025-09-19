@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import Card from '../../components/articulos/Card.jsx';
 import { Link } from "react-router-dom";
+import useMobile from '../../Functions/useMobile.js';
 import './Paginacion.css';
 
 import styled from 'styled-components';
@@ -20,6 +21,7 @@ const GridContainer = styled.div`
 
 function Paginacion({ items, itemsPerPage, selectedCategoria = "",selectedMarca= "", selectedProveedor = "" }) {
     const [itemOffset, setItemOffset] = useState(0);
+    const isMobile = useMobile(576);
 
     useEffect(() => {
         setItemOffset(0);
@@ -78,8 +80,8 @@ function Paginacion({ items, itemsPerPage, selectedCategoria = "",selectedMarca=
                                 nextLabel="Siguiente"
                                 previousLabel="Anterior"
                                 pageCount={pageCount}
-                                marginPagesDisplayed={2}
-                                pageRangeDisplayed={5}
+                                marginPagesDisplayed={isMobile ? 1 : 2}
+                                pageRangeDisplayed={isMobile ? 2 : 5}
                                 onPageChange={handlePageClick}
                                 containerClassName="pagination"
                                 activeClassName="active"
