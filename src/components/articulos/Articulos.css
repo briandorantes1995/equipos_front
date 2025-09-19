@@ -14,22 +14,24 @@ body {
 .v {
     display: block;
     width: 100%;
-    min-height: 100vh;
     padding-top: 15px;
 }
 
 .vA {
     display: block;
     width: 100%;
-    min-height: 100vh;
     padding-top: 80px;
+}
+
+.v, .vA {
+  min-height: 100dvh;
 }
 
 /* Flex contenedor centrado */
 .c {
     display: flex;
-    min-height: 100vh;
-    min-width: 100vw;
+    min-height: 100dvh;
+    min-width: 100%;
     align-items: center;
 }
 
@@ -107,4 +109,32 @@ select {
     min-height: 100vh;
 }
 
+@media (max-width: 576px) {
+  .filtro {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
 
+    .titFil {
+    padding-left: 10px;
+    padding-top: 20px;
+    font-size: 1.1rem;
+  }
+
+  .tituloFiltro {
+    font-size: 1rem;
+  }
+   .btn-v {
+    margin-top: 10px !important;
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+  .error {
+    padding-top: 15px;
+  }
+    .main-content {
+    padding-top: 50px;
+    padding-bottom: 60px;
+  }
+}
