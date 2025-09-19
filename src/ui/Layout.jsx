@@ -1,13 +1,11 @@
 import {Navigate, Outlet} from "react-router-dom";
 import Navbar from "../ui/NavBar/NavBar.jsx";
 import Footer from "../ui/Footer/Footer.jsx";
-import React from "react";
 import {useSelector} from "react-redux";
-import TestNavbar from "./NavBar/TestNavbar.jsx";
 
 export const Layout = () => (
     <>
-     <TestNavbar />
+     <Navbar />
         <Outlet />
         <Footer />
     </>
