@@ -4,7 +4,6 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import "./Inventarios.css";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#d0e6ff',
