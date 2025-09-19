@@ -56,7 +56,6 @@ const Description = styled(Typography)`
 
 export default function Card({ articulo }) {
   const rol = useSelector(state => state.user.rol);
-  console.log('Rendering Card for articulo:', articulo);
     return (
         <StyledCard>
             <Image src={(articulo?.imagen || "/no_image.jpg")} alt={articulo?.nombre || 'Sin nombre'} />
