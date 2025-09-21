@@ -49,7 +49,6 @@ function InventarioTotal() {
         setIsLoading(true);
         try {
             const data = await obtenerInventario(token);
-            console.log(data)
             const rows = data.map(item => {
                 let fechaFormateada = null;
                 if (item.ultima_actualizacion && item.ultima_actualizacion !== "0001-01-01T00:00:00Z") {

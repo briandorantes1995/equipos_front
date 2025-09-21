@@ -37,7 +37,9 @@ function InventarioHome() {
                         <Link to="/agregarArticulo" style={{textDecoration: 'none'}}>
                             <Item>Registrar Articulo</Item>
                         </Link>
-                        <Item>Realizar Inventario</Item>
+                        <Link to="/inventarios/tomas" style={{textDecoration: 'none'}}>
+                            <Item>Tomas Fisicas</Item>
+                        </Link>
                     </Stack>
                 </Box>
             </div>

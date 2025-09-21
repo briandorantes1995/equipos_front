@@ -118,7 +118,7 @@ function Categorias() {
                         variant="contained"
                         startIcon={<AddIcon />}
                         onClick={() => {
-                            setCategoria(null); // Indica que es nueva categoría
+                            setCategoria(null);
                             setOpenModal(true);
                         }}
                     >

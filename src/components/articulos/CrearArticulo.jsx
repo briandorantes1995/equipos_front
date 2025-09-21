@@ -74,12 +74,7 @@ function CrearArticulo() {
         } catch (error) {
             console.error('Error durante el envío:', error);
             actions.setSubmitting(false);
-            showSnackbar({
-                message: "Error al registrar articulo",
-                level: "error",
-                vertical: "top",
-                horizontal: "center",
-            });
+            showSnackbar({message: "Error al registrar articulo", level: "error", vertical: "top", horizontal: "center",});
         }
     };
 
