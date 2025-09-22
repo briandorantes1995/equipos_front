@@ -66,6 +66,7 @@ function InventarioTotal() {
                     precio: item.precio_venta,
                     costo: item.costo,
                     proveedor: item.proveedor,
+                    inventario_costo: Math.round(item.costo * item.cantidad_actual),
                     codigo_barras: item.codigo_barras,
                     ultima_actualizacion: fechaFormateada,
                     marca: item.marca ? item.marca : 'Sin Marca'
@@ -83,14 +84,20 @@ function InventarioTotal() {
         fetchData();
     }, [fetchData]);
 
+     const totalInventario = inventario.reduce(
+        (acc, item) => acc + item.inventario_costo,
+        0
+    );
+
     const columns = [
         { field: 'nombre', headerName: 'Nombre', width: 200, headerAlign: 'center', align: 'center' },
-        { field: 'cantidad_actual', headerName: 'Cantidad', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
-        { field: 'precio', headerName: 'Precio Venta', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
-        { field: 'costo', headerName: 'Costo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'codigo_barras', headerName: 'Codigo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'proveedor', headerName: 'Proveedor', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'marca', headerName: 'Marca', width: 130, headerAlign: 'center', align: 'center' },
+         { field: 'cantidad_actual', headerName: 'Cantidad', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
+        { field: 'precio', headerName: 'Precio Venta', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
+        { field: 'costo', headerName: 'Costo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
+         { field: 'inventario_costo', headerName: 'Inventario_Costo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         {field: 'ultima_actualizacion', headerName: 'Última actualización', width: 200, headerAlign: 'center', align: 'center',},
         {
             field: 'acciones',
@@ -114,15 +121,26 @@ function InventarioTotal() {
                 {isLoading ? (
                     <LinearProgress />
                 ) : (
-                    <Paper sx={{ height: '100%', width: '100%' }}>
-                        <DataGrid
-                            rows={inventario}
-                            columns={columns}
-                            pageSizeOptions={[5, 10, 25, 50, 100]}
-                            checkboxSelection
-                            sx={{ border: 0 }}
-                        />
-                    </Paper>
+                    <>
+                        <Box sx={{ mb: 2 }}>
+                            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                                Valor Total del Inventario: $
+                                {inventario.length > 0
+                                    ? totalInventario.toLocaleString()
+                                    : 0}
+                            </Typography>
+                        </Box>
+
+                        <Paper sx={{ height: '100%', width: '100%' }}>
+                            <DataGrid
+                                rows={inventario}
+                                columns={columns}
+                                pageSizeOptions={[5, 10, 25, 50, 100]}
+                                checkboxSelection
+                                sx={{ border: 0 }}
+                            />
+                        </Paper>
+                    </>
                 )}
                 <AnadirMovimientoModal
                     open={openModal}
