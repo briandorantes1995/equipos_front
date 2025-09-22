@@ -148,7 +148,6 @@ function MovimientoTotal() {
                             rows={movimientos}
                             columns={columns}
                             pageSizeOptions={[5, 10, 25, 50, 100]}
-                            checkboxSelection
                             sx={{ border: 0 }}
                         />
                     </Paper>

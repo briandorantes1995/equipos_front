@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import Box  from "@mui/material";
+import Typography from "@mui/material/Typography";
 import anadirMovimiento from "../../Functions/anadirMovimiento.js";
 
 
