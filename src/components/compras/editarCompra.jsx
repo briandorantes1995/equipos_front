@@ -103,7 +103,7 @@ function EditarCompraFormulario() {
     if (isLoading || !compraExistente) return <p>Cargando compra...</p>;
 
     return (
-        <MDBContainer className="my-5">
+        <MDBContainer className="my-5 compras-form">
             <MDBCard className="bg-cv">
                 <MDBCardBody>
                     <h3 className="fw-bold my-4 pb-3">Editar Compra</h3>

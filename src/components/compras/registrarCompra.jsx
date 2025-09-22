@@ -53,7 +53,7 @@ function RegistrarCompra() {
     if (isLoading) return <p>Cargando...</p>;
 
     return (
-        <MDBContainer className="my-5 registrar-compra">
+        <MDBContainer className="my-5 compras-form">
             <MDBCard className="bg-cv">
                 <MDBCardBody>
                     <h3 className="fw-bold my-4 pb-3">Agregar Compra</h3>

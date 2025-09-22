@@ -1,28 +1,37 @@
-.registrar-compra label {
+/* Normaliza inputs, selects y labels solo dentro de compras */
+.compras-form label {
   font-size: 0.875rem;
   margin-bottom: 4px;
   display: block;
 }
 
-.registrar-compra select,
-.registrar-compra input {
-  height: 38px; 
+.compras-form input,
+.compras-form select,
+.compras-form textarea {
+  height: 38px;
   padding: 6px 8px;
   border-radius: 6px;
   border: 1px solid #ced4da;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.registrar-compra .row .col-md-1,
-.registrar-compra .row .col-md-2,
-.registrar-compra .row .col-md-3 {
+.compras-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Filas ordenadas y alineadas */
+.compras-form .row > [class*="col-"] {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.registrar-compra .error {
+.compras-form .error {
   margin-top: 2px;
   font-size: 0.8rem;
   color: #dc3545;
+  min-height: 16px; /* evita saltos al aparecer */
 }
 
