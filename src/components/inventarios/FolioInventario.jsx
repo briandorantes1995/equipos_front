@@ -154,7 +154,7 @@ function FolioInventario() {
                         </Paper>
 
                             {estado === "cerrada" && (
-                            <Box mt={2} display="flex" justifyContent="flex-end">
+                            <Box mt={2} display="flex" justifyContent="center">
                                 <Typography variant="subtitle1" fontWeight="bold">
                                 Diferencia total de piezas: {totalDiferencia}
                                 </Typography>
