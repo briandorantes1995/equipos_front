@@ -17,7 +17,7 @@ import EditarCompra from "./components/compras/editarCompra.jsx";
 import Categorias from "./components/categorias/Categorias.jsx";
 import TomaFisica from "./components/inventarios/TomaFisica.jsx";
 import FolioInventario from "./components/inventarios/FolioInventario.jsx";
-
+import Carrito from "./components/articulos/Carrito.jsx";
 
 function App() {
     return (
@@ -26,6 +26,7 @@ function App() {
                 <Route path="/" element={<Articulos />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/articulos" element={<Articulos />} />
+                <Route path="/carrito" element={<Carrito />} />
                 <Route path="/articulos/:articuloId" element={<Articulo />} />
                 <Route path="/articulos/buscar/:busqueda" element={<BusquedaArticulos />} />
 
