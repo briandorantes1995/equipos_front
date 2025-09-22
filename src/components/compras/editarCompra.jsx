@@ -10,6 +10,7 @@ import { compraSchema } from "../../Functions/validation/ValidationSchema.js";
 import editarCompra from "../../Functions/editarCompra.js";
 import { useSelector } from "react-redux";
 import {useSnackbar} from "../../ui/snackBar/useSnackBar.js";
+import "./compras.css";
 
 
 function EditarCompraFormulario() {

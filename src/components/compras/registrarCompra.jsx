@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { MDBBtn, MDBCard, MDBCardBody, MDBContainer } from "mdb-react-ui-kit";
 import { Formik, Form, FieldArray } from "formik";
+import { useSelector } from "react-redux";
+import {useSnackbar} from "../../ui/snackBar/useSnackBar.js";
 import CustomInput from "../../Functions/validation/customInput.jsx";
 import CustomLista from "../../Functions/validation/customLista.jsx";
 import obtenerArticulos from "../../Functions/obtenerArticulos.js";
 import { compraSchema } from "../../Functions/validation/ValidationSchema.js";
 import registrarCompra from "../../Functions/registrarCompra.js";
-import { useSelector } from "react-redux";
 import "./compras.css";
 
 function RegistrarCompra() {
   const [articulos, setArticulos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { showSnackbar } = useSnackbar();
   const token = useSelector((state) => state.user.token);
 
   useEffect(() => {
@@ -44,10 +46,12 @@ function RegistrarCompra() {
       const compra = await registrarCompra(data, token);
       if (compra) {
         actions.resetForm();
+        showSnackbar({message: "Compra registrada con exito",level: "success",vertical: "top",horizontal: "center",});
       }
     } catch (error) {
       console.error("Error durante el envío:", error);
       actions.setSubmitting(false);
+      showSnackbar({message: "Error a registrar Compra",level: "error",vertical: "top",horizontal: "center",});
     }
   };
 
@@ -134,7 +138,7 @@ function RegistrarCompra() {
                                     selectedId
                                   );
 
-                                  // Buscar el artículo elegido
+                                  // Buscar el articulo elegido
                                   const articuloSeleccionado = articulos.find(
                                     (a) => a.id === Number(selectedId)
                                   );
