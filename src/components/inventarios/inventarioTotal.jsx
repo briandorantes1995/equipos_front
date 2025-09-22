@@ -9,7 +9,9 @@ import {useSnackbar} from "../../ui/snackBar/useSnackBar.js";
 import Paper from '@mui/material/Paper';
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
+import Box  from "@mui/material";
 import anadirMovimiento from "../../Functions/anadirMovimiento.js";
+
 
 function InventarioTotal() {
     const [inventario, setInventario] = useState([]);
