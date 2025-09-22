@@ -83,21 +83,12 @@ function EditarCompraFormulario() {
 
       await editarCompra(values.compra_id, data, token);
       actions.setSubmitting(false);
-      showSnackbar({
-        message: "Compra actualizada con éxito",
-        level: "success",
-        vertical: "top",
-        horizontal: "center",
-      });
+      showSnackbar({message: "Compra actualizada con éxito",level: "success",vertical: "top",horizontal: "center",});
       navigate(`/compras/${values.compra_id}`);
     } catch (error) {
       console.error("Error al editar la compra:", error);
       actions.setSubmitting(false);
-      showSnackbar({
-        message: "Error al editar la compra",
-        level: "error",
-        vertical: "top",
-        horizontal: "center",
+      showSnackbar({message: "Error al editar la compra",level: "error",vertical: "top",horizontal: "center",
       });
     }
   };
