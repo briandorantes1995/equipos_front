@@ -59,6 +59,7 @@ function Articulo() {
     }
 
        function agregarAlCarrito() {
+        console.log("Agregar al carrito:", mostrarArticulo);
         if (!mostrarArticulo) return;
         dispatch(addItem({
             id: mostrarArticulo.id,
