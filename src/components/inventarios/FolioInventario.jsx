@@ -96,14 +96,41 @@ function FolioInventario() {
         }
     };
 
-  const columns = [
-  { field: 'nombre', headerName: 'Artículo', width: 300 },
-  { field: 'proveedor', headerName: 'Proveedor', width: 150 },
-  { field: 'marca', headerName: 'Marca', width: 130 },
-  { field: 'codigo_barras', headerName: 'Código', width: 150 },
-  { field: 'cantidad_teorica', headerName: 'Cantidad Teórica', type: 'number', width: 150 },
-  { field: 'cantidad_real',headerName: 'Cantidad Real',type: 'number',width: 150,editable: estado === "abierta",},
-];
+  // Definimos columnas base
+  const baseColumns = [
+    { field: 'nombre', headerName: 'Artículo', width: 300 },
+    { field: 'proveedor', headerName: 'Proveedor', width: 150 },
+    { field: 'marca', headerName: 'Marca', width: 130 },
+    { field: 'codigo_barras', headerName: 'Código', width: 150 },
+    { field: 'cantidad_teorica', headerName: 'Cantidad Teórica', type: 'number', width: 150 },
+    {
+      field: 'cantidad_real',
+      headerName: 'Cantidad Real',
+      type: 'number',
+      width: 150,
+      editable: estado === "abierta",
+    },
+  ];
+
+  // Si es cerrada, se agregar la columna de diferencia
+  const columns =
+    estado === "cerrada"
+      ? [
+          ...baseColumns,
+          {
+            field: 'diferencia',
+            headerName: 'Diferencia',
+            type: 'number',
+            width: 150,
+          },
+        ]
+      : baseColumns;
+
+  // Calcular total de diferencias
+  const totalDiferencia = estado === "cerrada"
+    ? detalle.reduce((acc, d) => acc + (Number(d.diferencia) || 0), 0)
+    : 0;
+
 
     return (
         <div className="main-content">
@@ -125,6 +152,14 @@ function FolioInventario() {
                                 processRowUpdate={estado === "abierta" ? handleProcessRowUpdate : undefined}
                             />
                         </Paper>
+
+                            {estado === "cerrada" && (
+                            <Box mt={2} display="flex" justifyContent="flex-end">
+                                <Typography variant="subtitle1" fontWeight="bold">
+                                Diferencia total de piezas: {totalDiferencia}
+                                </Typography>
+                            </Box>
+                            )}
 
                         {estado === "abierta" && (
                         <Box display="flex" justifyContent="flex-end" gap={2}>
