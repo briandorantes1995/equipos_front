@@ -1,16 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeItem, updateCantidad, clearCart } from "../../store/cartSlice";
-import {
-  Card,
-  CardContent,
-  Typography,
-  IconButton,
-  Button,
-  TextField,
-  Box,
-  Divider
-} from "@mui/material";
+import {Card,CardContent,Typography,IconButton,Button,TextField,Box,Divider} from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
 function Carrito() {

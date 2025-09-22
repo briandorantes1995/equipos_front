@@ -4,7 +4,7 @@ import { useEffect, useState,useCallback } from "react";
 import { useSelector } from "react-redux";
 import obtenerMovimientos from "../../Functions/obtenerMovimientos.js";
 import editarMovimiento from "../../Functions/editarMovimiento.js";
-import EditarMovimientoModal from "./edicionMovimientoModal.jsx";
+import EditarMovimientoModal from './edicionMovimientoModal.jsx';
 import eliminarMovimiento from "../../Functions/eliminarMovimiento.js";
 import {capitalizeName} from "../../Functions/helpers.jsx";
 import { DataGrid } from '@mui/x-data-grid';

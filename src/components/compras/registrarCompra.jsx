@@ -7,6 +7,7 @@ import obtenerArticulos from "../../Functions/obtenerArticulos.js";
 import { compraSchema } from "../../Functions/validation/ValidationSchema.js";
 import registrarCompra from "../../Functions/registrarCompra.js";
 import {useSelector} from "react-redux";
+import "./compras.css"
 
 
 function RegistrarCompra() {
@@ -69,120 +70,166 @@ function RegistrarCompra() {
                         {({ values, setFieldValue, isSubmitting }) => (
                             <Form>
                                 <FieldArray name="articulos">
-                                    {({push, remove}) => (
-                                        <>
-                                            {values.articulos.map((item, index) => {
-                                                let articulosFiltrados = [...articulos];
-                                                if (item.categoria) {
-                                                    articulosFiltrados = articulosFiltrados.filter(a => a.categoria_nombre === item.categoria);
+                                {({ push, remove }) => (
+                                    <>
+                                    {values.articulos.map((item, index) => {
+                                        let articulosFiltrados = [...articulos];
+                                        if (item.categoria) {
+                                        articulosFiltrados = articulosFiltrados.filter(
+                                            (a) => a.categoria_nombre === item.categoria
+                                        );
+                                        }
+                                        if (item.proveedor) {
+                                        articulosFiltrados = articulosFiltrados.filter(
+                                            (a) => a.proveedor === item.proveedor
+                                        );
+                                        }
+
+                                        // Listado disponible de categorías y proveedores
+                                        const categoriasDisponibles = [
+                                        ...new Set(
+                                            articulos
+                                            .filter(
+                                                (a) => !item.proveedor || a.proveedor === item.proveedor
+                                            )
+                                            .map((a) => a.categoria_nombre)
+                                        ),
+                                        ];
+                                        const proveedoresDisponibles = [
+                                        ...new Set(
+                                            articulos
+                                            .filter(
+                                                (a) =>
+                                                !item.categoria || a.categoria_nombre === item.categoria
+                                            )
+                                            .map((a) => a.proveedor)
+                                        ),
+                                        ];
+
+                                        return (
+                                        <div key={index} className="row g-2 align-items-end mb-3">
+                                            {/* Artículo */}
+                                            <div className="col-md-3">
+                                            <CustomLista
+                                                label="Artículo"
+                                                name={`articulos[${index}].articulo`}
+                                                value={item.articulo}
+                                                onChange={(e) =>
+                                                setFieldValue(
+                                                    `articulos[${index}].articulo`,
+                                                    e.target.value
+                                                )
                                                 }
-                                                if (item.proveedor) {
-                                                    articulosFiltrados = articulosFiltrados.filter(a => a.proveedor === item.proveedor);
-                                                }
-
-                                                // Listado disponible de categorías y proveedores
-                                                const categoriasDisponibles = [
-                                                    ...new Set(
-                                                        articulos
-                                                            .filter(a => !item.proveedor || a.proveedor === item.proveedor)
-                                                            .map(a => a.categoria_nombre)
-                                                    )
-                                                ];
-                                                const proveedoresDisponibles = [
-                                                    ...new Set(
-                                                        articulos
-                                                            .filter(a => !item.categoria || a.categoria_nombre === item.categoria)
-                                                            .map(a => a.proveedor)
-                                                    )
-                                                ];
-
-                                                return (
-                                                    <div key={index} className="d-flex align-items-end mb-3"
-                                                         style={{gap: "10px"}}>
-                                                        {/* Artículo */}
-                                                        <CustomLista
-                                                            label="Artículo"
-                                                            name={`articulos[${index}].articulo`}
-                                                            value={item.articulo}
-                                                            onChange={e => setFieldValue(`articulos[${index}].articulo`, e.target.value)}
-                                                            style={{width: "200px"}}
-                                                        >
-                                                            <option value="">Seleccione un artículo</option>
-                                                            {articulosFiltrados.map(a => (
-                                                                <option key={a.id} value={a.id}>{a.nombre}</option>
-                                                            ))}
-                                                        </CustomLista>
-
-                                                        {/* Categoría */}
-                                                        <CustomLista
-                                                            label="Categoría"
-                                                            name={`articulos[${index}].categoria`}
-                                                            value={item.categoria}
-                                                            onChange={e => setFieldValue(`articulos[${index}].categoria`, e.target.value)}
-                                                            style={{width: "150px"}}
-                                                        >
-                                                            <option value="">Todos</option>
-                                                            {categoriasDisponibles.map((c, idx) => (
-                                                                <option key={idx} value={c}>{c}</option>
-                                                            ))}
-                                                        </CustomLista>
-
-                                                        {/* Proveedor */}
-                                                        <CustomLista
-                                                            label="Proveedor"
-                                                            name={`articulos[${index}].proveedor`}
-                                                            value={item.proveedor}
-                                                            onChange={e => setFieldValue(`articulos[${index}].proveedor`, e.target.value)}
-                                                            style={{width: "150px"}}
-                                                        >
-                                                            <option value="">Todos</option>
-                                                            {proveedoresDisponibles.map((p, idx) => (
-                                                                <option key={idx} value={p}>{p}</option>
-                                                            ))}
-                                                        </CustomLista>
-
-                                                        {/* Cantidad y Precio */}
-                                                        <CustomInput
-                                                            label="Cantidad"
-                                                            name={`articulos[${index}].cantidad`}
-                                                            placeholder="Cantidad"
-                                                            style={{width: "100px"}}
-                                                        />
-                                                        <CustomInput
-                                                            label="Precio Unitario"
-                                                            name={`articulos[${index}].precio_unitario`}
-                                                            placeholder="Precio"
-                                                            style={{width: "100px"}}
-                                                        />
-                                                        <MDBBtn color="danger" onClick={() => remove(index)}
-                                                                type="button">-</MDBBtn>
-                                                    </div>
-                                                );
-                                            })}
-
-                                            <MDBBtn
-                                                color="success"
-                                                type="button"
-                                                onClick={() => push({
-                                                    articulo: "",
-                                                    categoria: "",
-                                                    proveedor: "",
-                                                    cantidad: "",
-                                                    precio_unitario: ""
-                                                })}
                                             >
-                                                + Agregar artículo
-                                            </MDBBtn>
-                                        </>
-                                    )}
-                                </FieldArray>
+                                                <option value="">Seleccione un artículo</option>
+                                                {articulosFiltrados.map((a) => (
+                                                <option key={a.id} value={a.id}>
+                                                    {a.nombre}
+                                                </option>
+                                                ))}
+                                            </CustomLista>
+                                            </div>
 
+                                            {/* Categoría */}
+                                            <div className="col-md-2">
+                                            <CustomLista
+                                                label="Categoría"
+                                                name={`articulos[${index}].categoria`}
+                                                value={item.categoria}
+                                                onChange={(e) =>
+                                                setFieldValue(
+                                                    `articulos[${index}].categoria`,
+                                                    e.target.value
+                                                )
+                                                }
+                                            >
+                                                <option value="">Todos</option>
+                                                {categoriasDisponibles.map((c, idx) => (
+                                                <option key={idx} value={c}>
+                                                    {c}
+                                                </option>
+                                                ))}
+                                            </CustomLista>
+                                            </div>
+
+                                            {/* Proveedor */}
+                                            <div className="col-md-2">
+                                            <CustomLista
+                                                label="Proveedor"
+                                                name={`articulos[${index}].proveedor`}
+                                                value={item.proveedor}
+                                                onChange={(e) =>
+                                                setFieldValue(
+                                                    `articulos[${index}].proveedor`,
+                                                    e.target.value
+                                                )
+                                                }
+                                            >
+                                                <option value="">Todos</option>
+                                                {proveedoresDisponibles.map((p, idx) => (
+                                                <option key={idx} value={p}>
+                                                    {p}
+                                                </option>
+                                                ))}
+                                            </CustomLista>
+                                            </div>
+
+                                            {/* Cantidad */}
+                                            <div className="col-md-1">
+                                            <CustomInput
+                                                label="Cantidad"
+                                                name={`articulos[${index}].cantidad`}
+                                                placeholder="Cantidad"
+                                            />
+                                            </div>
+
+                                            {/* Precio */}
+                                            <div className="col-md-2">
+                                            <CustomInput
+                                                label="Precio Unitario"
+                                                name={`articulos[${index}].precio_unitario`}
+                                                placeholder="Precio"
+                                            />
+                                            </div>
+
+                                            {/* Boton eliminar */}
+                                            <div className="col-md-1 d-flex align-items-end">
+                                            <MDBBtn
+                                                color="danger"
+                                                onClick={() => remove(index)}
+                                                type="button"
+                                            >
+                                                -
+                                            </MDBBtn>
+                                            </div>
+                                        </div>
+                                        );
+                                    })}
+
+                                    <MDBBtn
+                                        color="success"
+                                        type="button"
+                                        onClick={() =>
+                                        push({
+                                            articulo: "",
+                                            categoria: "",
+                                            proveedor: "",
+                                            cantidad: "",
+                                            precio_unitario: "",
+                                        })
+                                        }
+                                    >
+                                        + Agregar artículo
+                                    </MDBBtn>
+                                    </>
+                                )}
+                                </FieldArray>
                                 <div className="mt-4">
                                     <CustomInput
                                         label="Notas"
                                         name="notas"
                                         placeholder="Escribe notas adicionales sobre la compra"
-                                        as="textarea"   // <-- si tu CustomInput lo soporta
+                                        as="textarea"
                                         style={{width: "100%", minHeight: "80px"}}
                                     />
                                 </div>
