@@ -36,6 +36,7 @@ function Articulo() {
         async function cargarArticulo(id) {
             try {
                 const data = await obtenerArticulo(id);
+                console.log("Artículo cargado:", data);
                 setMostrarArticulo(data);
             } catch (error) {
                 console.error('Error al obtener el artículo:', error);
@@ -65,7 +66,7 @@ function Articulo() {
             id: mostrarArticulo.id,
             nombre: mostrarArticulo.nombre,
             descripcion: mostrarArticulo.descripcion,
-            precio: mostrarArticulo.precio,
+            precio: mostrarArticulo.precio_venta,
             cantidad: 1
         }));
     }
