@@ -35,42 +35,22 @@ function MovimientoTotal() {
                 const data = await editarMovimiento(movimientoEditado, token);
                 if (data) {
                     await fetchData();
-                    showSnackbar({
-                        message:"Movimiento actualizado con éxito",
-                        level: "success",
-                        vertical: "top",
-                        horizontal: "center",
-                    });
+                    showSnackbar({message:"Movimiento actualizado con éxito", level: "success", vertical: "top", horizontal: "center",});
                 }
             } catch (error) {
                 console.error('Error al actualizar movimiento:', error);
-                showSnackbar({
-                    message: "Error al actualizar el movimiento",
-                    level: "error",
-                    vertical: "top",
-                    horizontal: "center",
-                });
+                showSnackbar({message: "Error al actualizar el movimiento", level: "error", vertical: "top", horizontal: "center",});
             }
         } else if (movimientoEditado._action === "delete") {
             try {
                 const data = await eliminarMovimiento(movimientoEditado.id, token);
                 if (data) {
                     await fetchData();
-                    showSnackbar({
-                        message: data.message || "Movimiento eliminado con exito",
-                        level: "success",
-                        vertical: "top",
-                        horizontal: "center",
-                    });
+                    showSnackbar({message: data.message || "Movimiento eliminado con exito", level: "success", vertical: "top", horizontal: "center",});
                 }
             } catch (error) {
                 console.error('Error al eliminar movimiento:', error);
-                showSnackbar({
-                    message: "Error al eliminar el movimiento",
-                    level: "error",
-                    vertical: "top",
-                    horizontal: "center",
-                });
+                showSnackbar({message: "Error al eliminar el movimiento", level: "error", vertical: "top", horizontal: "center",});
             }
         }
         setOpenModal(false);
