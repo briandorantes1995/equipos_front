@@ -63,12 +63,7 @@ function CrearArticulo() {
             if (articulo) {
                 actions.resetForm();
                 setImagen(null);
-                showSnackbar({
-                    message: "Articulo Agregado con exito",
-                    level: "success",
-                    vertical: "top",
-                    horizontal: "center",
-                });
+                showSnackbar({message: "Articulo Agregado con exito",level: "success",vertical: "top",horizontal: "center",});
             }
 
         } catch (error) {

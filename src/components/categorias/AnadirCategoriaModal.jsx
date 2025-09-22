@@ -70,7 +70,7 @@ function AnadirCategoriaModal({ open, handleClose, categoria, onSubmit }) {
                             </div>
 
                             <Box display="flex" justifyContent="flex-end" gap={2} mt={3}>
-                                <Button variant="contained" color="secondary" onClick={handleClose}>
+                                <Button variant="contained" color="error" onClick={handleClose}>
                                     Cancelar
                                 </Button>
                                 <Button type="submit" variant="contained" color="primary">

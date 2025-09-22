@@ -11,6 +11,7 @@ import obtenerArticulo from '../../Functions/obtenerArticulo';
 import editarArticulo from '../../Functions/editarArticulo';
 import { supabase } from '../../Functions/supabaseClient';
 import { useSelector } from 'react-redux';
+import {useSnackbar} from "../../ui/snackBar/useSnackBar.js";
 import './Articulos.css';
 
 function EditarArticulo() {
@@ -19,7 +20,8 @@ function EditarArticulo() {
     const [imagen, setImagen] = useState(null);
     const navigate = useNavigate();
     const { articuloId } = useParams();
-    const token = useSelector(state => state.user.token);
+    const { showSnackbar } = useSnackbar();
+     const token = useSelector(state => state.user.token);
 
     useEffect(() => {
         async function fetchCategorias() {
@@ -96,10 +98,12 @@ function EditarArticulo() {
 
             actions.resetForm();
             setImagen(null);
+             showSnackbar({message: "Articulo Editado con exito",level: "success",vertical: "top",horizontal: "center",});
             navigate('/articulos');
         } catch (error) {
             console.error('Error durante el envío:', error);
             actions.setSubmitting(false);
+            showSnackbar({message: "Error al editar Articulo",level: "error",vertical: "top",horizontal: "center",});
         }
     };
 
