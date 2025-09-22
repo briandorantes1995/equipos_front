@@ -5,7 +5,8 @@ import BasicCard from './Card.jsx'
 import { useNavigate, useParams } from "react-router-dom";
 import LinearProgress from "@mui/material/LinearProgress";
 import Button from '@mui/material/Button';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem } from "../../store/cartSlice.jsx";
 import styled from "styled-components";
 
 
@@ -26,6 +27,7 @@ const StyledCard = styled.div`
 function Articulo() {
     const token = useSelector(state => state.user.token);
     const [mostrarArticulo, setMostrarArticulo] = useState(null);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const { articuloId } = useParams();
     const rol = useSelector(state => state.user.rol);
@@ -56,6 +58,17 @@ function Articulo() {
         navigate(`/editarArticulo/${articuloId}`);
     }
 
+       function agregarAlCarrito() {
+        if (!mostrarArticulo) return;
+        dispatch(addItem({
+            id: mostrarArticulo.id,
+            nombre: mostrarArticulo.nombre,
+            descripcion: mostrarArticulo.descripcion,
+            precio: mostrarArticulo.precio,
+            cantidad: 1
+        }));
+    }
+
     return (
         <div
             className="container-fluid v"
@@ -71,13 +84,11 @@ function Articulo() {
             {mostrarArticulo ? (
                 <StyledCard>
                     <BasicCard articulo={mostrarArticulo}/>
-
-                    {rol === "admin" && (
+                   {rol === "admin" ? (
                         <>
                             <Button
                                 variant="contained"
                                 size="large"
-                                className="btn-v"
                                 onClick={editar}
                             >
                                 Editar
@@ -85,13 +96,21 @@ function Articulo() {
                             <Button
                                 variant="contained"
                                 size="large"
-                                className="btn-b"
                                 color="error"
                                 onClick={borrar}
                             >
                                 Borrar
                             </Button>
                         </>
+                    ) : (
+                        <Button
+                            variant="contained"
+                            size="large"
+                            color="primary"
+                            onClick={agregarAlCarrito}
+                        >
+                            Agregar al carrito
+                        </Button>
                     )}
                 </StyledCard>
             ) : (

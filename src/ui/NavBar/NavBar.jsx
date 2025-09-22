@@ -1,6 +1,7 @@
-import './NavBar.css'
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { MDBBadge } from 'mdb-react-ui-kit';
+import { ShoppingCart } from "lucide-react";
 import {clearAuth, setAuth} from "../../store/userSlice.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -21,6 +22,7 @@ import {
     MDBDropdownItem,
     MDBCollapse,
 } from 'mdb-react-ui-kit';
+import './NavBar.css'
 
 export default function Navbar() {
     const [showBasic, setShowBasic] = useState(false);
@@ -28,6 +30,7 @@ export default function Navbar() {
     const user = useSelector(state => state.user.user);
     const Auth = useSelector(state => state.user.isAuthenticated);
     const rol = useSelector(state => state.user.rol);
+    const totalCantidad = useSelector(state => state.cart.totalCantidad);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { loginWithRedirect, logout, isAuthenticated, user: auth0User,isLoading, getAccessTokenSilently } = useAuth0();
@@ -115,6 +118,21 @@ export default function Navbar() {
                                 <MDBBtn color="primary" onClick={() => loginWithRedirect()}>Iniciar Sesión</MDBBtn>
                             </MDBNavbarItem>
                         )}
+
+                        <MDBNavbarItem>
+                    <Link to="/carrito" className="nav-link position-relative">
+                        <ShoppingCart size={24} />
+                        {totalCantidad > 0 && (
+                        <MDBBadge
+                            color="danger"
+                            pill
+                            className="position-absolute top-0 start-100 translate-middle"
+                        >
+                            {totalCantidad}
+                        </MDBBadge>
+                        )}
+                    </Link>
+                    </MDBNavbarItem>
                     </MDBNavbarNav>
                 </MDBCollapse>
                 <form className='d-flex input-group w-auto'>
