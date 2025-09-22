@@ -67,7 +67,8 @@ function Articulo() {
             nombre: mostrarArticulo.nombre,
             descripcion: mostrarArticulo.descripcion,
             precio: mostrarArticulo.precio_venta,
-            cantidad: 1
+            cantidad: 1,
+             ...(mostrarArticulo.marca && { marca: mostrarArticulo.marca })
         }));
     }
 
