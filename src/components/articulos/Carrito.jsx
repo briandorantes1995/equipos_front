@@ -112,7 +112,7 @@ function Carrito() {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => alert("Aquí iría el checkout con Stripe 😎")}
+              onClick={() => alert("En Proceso")}
             >
               Proceder al Pago
             </Button>

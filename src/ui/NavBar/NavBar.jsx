@@ -119,20 +119,23 @@ export default function Navbar() {
                             </MDBNavbarItem>
                         )}
 
-                        <MDBNavbarItem>
-                    <Link to="/carrito" className="nav-link position-relative">
+                    <MDBNavbarItem>
+                    <Link to="/carrito" className="nav-link">
+                        <div style={{ position: "relative", display: "inline-block" }}>
                         <ShoppingCart size={24} />
                         {totalCantidad > 0 && (
-                        <MDBBadge
+                            <MDBBadge
                             color="danger"
                             pill
                             className="position-absolute top-0 start-100 translate-middle"
-                        >
+                            >
                             {totalCantidad}
-                        </MDBBadge>
+                            </MDBBadge>
                         )}
+                        </div>
                     </Link>
                     </MDBNavbarItem>
+                    
                     </MDBNavbarNav>
                 </MDBCollapse>
                 <form className='d-flex input-group w-auto'>
