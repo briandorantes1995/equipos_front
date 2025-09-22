@@ -11,7 +11,7 @@ import guardarToma from "../../Functions/guardarToma.js";
 import finalizarToma from "../../Functions/finalizarToma.js";
 
 function FolioInventario() {
-    const { folio, categoria } = useParams();
+    const { folio, categoria, estado } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const [detalle, setDetalle] = useState([]);
     const { showSnackbar } = useSnackbar();
@@ -96,14 +96,14 @@ function FolioInventario() {
         }
     };
 
-    const columns = [
-        { field: 'nombre', headerName: 'Artículo', width: 300 },
-        { field: 'proveedor', headerName: 'Proveedor', width: 150 },
-        { field: 'marca', headerName: 'Marca', width: 130 },
-        { field: 'codigo_barras', headerName: 'Código', width: 150 },
-        { field: 'cantidad_teorica', headerName: 'Cantidad Teórica', type: 'number', width: 150 },
-        { field: 'cantidad_real', headerName: 'Cantidad Real', type: 'number', width: 150, editable: true },
-    ];
+  const columns = [
+  { field: 'nombre', headerName: 'Artículo', width: 300 },
+  { field: 'proveedor', headerName: 'Proveedor', width: 150 },
+  { field: 'marca', headerName: 'Marca', width: 130 },
+  { field: 'codigo_barras', headerName: 'Código', width: 150 },
+  { field: 'cantidad_teorica', headerName: 'Cantidad Teórica', type: 'number', width: 150 },
+  { field: 'cantidad_real',headerName: 'Cantidad Real',type: 'number',width: 150,editable: estado === "abierta",},
+];
 
     return (
         <div className="main-content">
@@ -122,21 +122,23 @@ function FolioInventario() {
                                 rows={detalle}
                                 columns={columns}
                                 pageSizeOptions={[10, 25, 50]}
-                                processRowUpdate={handleProcessRowUpdate} // Usar la nueva prop
+                                processRowUpdate={estado === "abierta" ? handleProcessRowUpdate : undefined}
                             />
                         </Paper>
 
+                        {estado === "abierta" && (
                         <Box display="flex" justifyContent="flex-end" gap={2}>
                             <Button variant="contained" color="error" onClick={handleCancelar}>
-                                Cancelar Toma Fisica
+                            Cancelar Toma Fisica
                             </Button>
                             <Button variant="contained" color="primary" onClick={handleGuardar}>
-                                Guardar Toma Física
+                            Guardar Toma Física
                             </Button>
                             <Button variant="contained" color="success" onClick={handleTerminar}>
-                                Finalizar Toma Física
+                            Finalizar Toma Física
                             </Button>
                         </Box>
+                        )}
                     </>
                 )}
             </div>

@@ -117,10 +117,9 @@ function TomaFisica() {
                             columns={columns}
                             pageSizeOptions={[5, 10, 25]}
                             sx={{ border: 0 }}
-                            onRowClick={(params) =>
-                                navigate(`/inventarios/tomas/${params.row.folio}/${params.row.categoria_nombre || 'todas'}`)
-                            }
-
+                           onRowClick={(params) =>
+                                    navigate(`/inventarios/tomas/${params.row.folio}/${params.row.categoria_nombre || 'todas'}/${params.row.estado}`)
+                                    }
                         />
                     </Paper>
                 )}

@@ -36,7 +36,7 @@ function App() {
                     <Route path="/categorias" element={<Categorias />} />
                     <Route path="/inventarios" element={<InventarioHome />} />
                     <Route path="/inventarios/tomas" element={<TomaFisica />} />
-                    <Route path="/inventarios/tomas/:folio/:categoria" element={<FolioInventario/>} />
+                    <Route path="/inventarios/tomas/:folio/:categoria/:estado" element={<FolioInventario/>} />
                     <Route path="/inventarios/totales" element={<InventarioTotal />} />
                     <Route path="/movimientos" element={<MovimientoTotal/>} />
                     <Route path="/compras" element={<ComprasHome/>} />
