@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import obtenerCompra from "../../Functions/obtenerCompra.js";
-import CardCompraDetalle from "./cardCompra.jsx";
+import CardCompraDetalle from "./CardCompra.jsx";
 import eliminarCompra from "../../Functions/eliminarCompra.js";
 
 const StyledContainer = styled.div`

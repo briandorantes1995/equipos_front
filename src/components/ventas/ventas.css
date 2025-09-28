@@ -1,0 +1,45 @@
+.ventas-form label {
+    font-size: 0.875rem;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.ventas-form input,
+.ventas-form select,
+.ventas-form textarea {
+    height: 38px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.875rem;
+}
+
+.ventas-form textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Filas ordenadas y alineadas */
+.ventas-form .row > [class*="col-"] {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Estilo de errores de validación */
+.ventas-form .error {
+    margin-top: 2px;
+    font-size: 0.8rem;
+    color: #dc3545;
+    min-height: 16px; /* evita saltos al aparecer */
+}
+
+/* Botones dentro del formulario */
+.ventas-form .btn {
+    height: 38px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+}

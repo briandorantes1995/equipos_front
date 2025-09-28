@@ -32,6 +32,6 @@
   margin-top: 2px;
   font-size: 0.8rem;
   color: #dc3545;
-  min-height: 16px; /* evita saltos al aparecer */
+  min-height: 16px;
 }
 

@@ -104,6 +104,9 @@ export default function Navbar() {
                                                     <MDBDropdownItem link tag={Link} to="/compras">
                                                     Compras
                                                     </MDBDropdownItem>
+                                                    <MDBDropdownItem link tag={Link} to="/ventas">
+                                                        Ventas
+                                                    </MDBDropdownItem>
                                                     <MDBDropdownItem link tag={Link} to="/inventarios">
                                                     Inventarios
                                                     </MDBDropdownItem>

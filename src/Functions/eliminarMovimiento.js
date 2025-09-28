@@ -12,7 +12,7 @@ async function eliminarMovimiento(id, token) {
         });
         return response.data;
     } catch (error) {
-        console.error('Error al eliminar artículo:', error.response?.data || error.message);
+        console.error('Error al eliminar movimiento:', error.response?.data || error.message);
         throw error;
     }
 }

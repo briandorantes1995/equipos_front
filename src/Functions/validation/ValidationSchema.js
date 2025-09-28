@@ -47,3 +47,29 @@ export const categoriaSchema = Yup.object().shape({
     nombre: Yup.string().required("Requerido"),
     descripcion: Yup.string().required("Requerido"),
 });
+
+
+export const ventaSchema = Yup.object().shape({
+    cliente_nombre: Yup.string().max(100, "Máximo 100 caracteres").nullable(),
+    cliente_razon_social: Yup.string().max(150, "Máximo 150 caracteres").nullable(),
+    cliente_direccion: Yup.string().max(250, "Máximo 250 caracteres").nullable(),
+    cliente_telefono: Yup.string().matches(/^\+?[0-9\s\-]*$/, "Teléfono inválido").nullable(),
+    cliente_correo: Yup.string().email("Correo inválido").nullable(),
+    requiere_factura: Yup.boolean(),
+
+    articulos: Yup.array()
+        .of(
+            Yup.object().shape({
+                articulo: Yup.object()
+                    .nullable()
+                    .required("Seleccione un artículo"),
+                cantidad: Yup.number()
+                    .typeError("Cantidad debe ser un número")
+                    .positive("Cantidad debe ser mayor a 0")
+                    .required("Cantidad requerida"),
+            })
+        )
+        .min(1, "Debe agregar al menos un artículo"),
+
+    notas: Yup.string().max(500, "Máximo 500 caracteres").nullable(),
+});

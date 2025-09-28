@@ -14,8 +14,8 @@ const Item = styled(Paper)(({ theme }) => ({
     cursor: 'pointer',
 
     '&:hover': {
-        backgroundColor: '#a6c8ff', // hover equilibrado
-        color: '#0d3a75', // texto sobre hover
+        backgroundColor: '#a6c8ff',
+        color: '#0d3a75',
     }
 }));
 
