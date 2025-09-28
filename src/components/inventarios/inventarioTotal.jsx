@@ -3,46 +3,62 @@ import { useEffect, useState,useCallback } from "react";
 import { useSelector } from "react-redux";
 import LinearProgress from "@mui/material/LinearProgress";
 import obtenerInventario from "../../Functions/obtenerInventario.js";
-import AnadirMovimientoModal from "./anadirMovimientoModal.jsx";
+import AnadirMovimientoModal from "./AnadirMovimientoModal.jsx";
+import CambiarEstadoModal from "./CambiarEstadoModal.jsx";
+import anadirMovimiento from "../../Functions/anadirMovimiento.js";
+import inactivarArticulo from "../../Functions/inactivarArticulo.js";
 import { DataGrid } from '@mui/x-data-grid';
 import {useSnackbar} from "../../ui/snackBar/useSnackBar.js";
 import Paper from '@mui/material/Paper';
 import EditIcon from "@mui/icons-material/Edit";
 import {Typography,Button,Box,} from "@mui/material";
-import anadirMovimiento from "../../Functions/anadirMovimiento.js";
+
 
 
 function InventarioTotal() {
     const [inventario, setInventario] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [articulo, setArticulo] = useState(null);
+    const [openEstadoModal, setOpenEstadoModal] = useState(false);
+    const [articuloSeleccionado, setArticuloSeleccionado] = useState(null);
     const [openModal, setOpenModal] = useState(false);
     const token = useSelector(state => state.user.token);
     const { showSnackbar } = useSnackbar();
 
-        const handleEdit = async (articulo) => {
+    const handleEdit = async (articulo) => {
             setArticulo(articulo);
             setOpenModal(true);
-        };
+    };
+
+    const handleEstadoClick = (articulo) => {
+        setArticuloSeleccionado(articulo);
+        setOpenEstadoModal(true);
+    };
+
+    const handleCambiarEstado = async (nuevoEstado) => {
+        if (!articuloSeleccionado) return;
+        try {
+            await inactivarArticulo(articuloSeleccionado, nuevoEstado, token);
+            await fetchData(); // recarga inventario
+            showSnackbar({message: `Estado de ${articuloSeleccionado.nombre} actualizado a ${nuevoEstado}`, level: "success", vertical: "top", horizontal: "center",});
+        } catch (error) {
+            console.error("Error al cambiar estado:", error);
+            showSnackbar({message: "Error al cambiar estado", level: "error", vertical: "top", horizontal: "center",});
+        } finally {
+            setOpenEstadoModal(false);
+            setArticuloSeleccionado(null);
+        }
+    };
+
 
     const handleSave = async (nuevoMovimiento) => {
         try {
             const data = await anadirMovimiento(nuevoMovimiento, token);
             await fetchData();
-            showSnackbar({
-                message: data.message || "Movimiento Agregado",
-                level: "success",
-                vertical: "top",
-                horizontal: "center",
-            });
+            showSnackbar({message: data.message || "Movimiento Agregado", level: "success", vertical: "top", horizontal: "center",});
         } catch (error) {
             console.error("Error al registrar movimiento:", error);
-            showSnackbar({
-                message: "Error al agregar movimiento",
-                level: "error",
-                vertical: "top",
-                horizontal: "center",
-            });
+            showSnackbar({message: "Error al agregar movimiento", level: "error", vertical: "top", horizontal: "center",});
         }
         setOpenModal(false);
     };
@@ -70,7 +86,8 @@ function InventarioTotal() {
                     inventario_costo: Math.round(item.costo * item.cantidad_actual),
                     codigo_barras: item.codigo_barras,
                     ultima_actualizacion: fechaFormateada,
-                    marca: item.marca ? item.marca : 'Sin Marca'
+                    marca: item.marca ? item.marca : 'Sin Marca',
+                    estado:item.estado
                 };
             });
             setInventario(rows);
@@ -95,6 +112,22 @@ function InventarioTotal() {
         { field: 'codigo_barras', headerName: 'Codigo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'proveedor', headerName: 'Proveedor', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'marca', headerName: 'Marca', width: 130, headerAlign: 'center', align: 'center' },
+        {
+            field: 'estado',
+            headerName: 'Estado',
+            width: 130,
+            headerAlign: 'center',
+            align: 'center',
+            renderCell: (params) => (
+                <Button
+                    variant="outlined"
+                    color={params.value === "activo" ? "success" : "error"}
+                    onClick={() => handleEstadoClick(params.row)}
+                >
+                    {params.value === "activo" ? "Activo" : "Inactivo"}
+                </Button>
+            ),
+        },
          { field: 'cantidad_actual', headerName: 'Cantidad', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'precio', headerName: 'Precio Venta', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'costo', headerName: 'Costo', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
@@ -147,6 +180,12 @@ function InventarioTotal() {
                     handleClose={() => setOpenModal(false)}
                     articulo={articulo}
                     onSubmit={handleSave}
+                />
+                <CambiarEstadoModal
+                    open={openEstadoModal}
+                    handleClose={() => setOpenEstadoModal(false)}
+                    articulo={articuloSeleccionado}
+                    onSubmit={handleCambiarEstado}
                 />
             </div>
         </div>

@@ -53,7 +53,7 @@ export const ventaSchema = Yup.object().shape({
     cliente_nombre: Yup.string().max(100, "Máximo 100 caracteres").nullable(),
     cliente_razon_social: Yup.string().max(150, "Máximo 150 caracteres").nullable(),
     cliente_direccion: Yup.string().max(250, "Máximo 250 caracteres").nullable(),
-    cliente_telefono: Yup.string().matches(/^\+?[0-9\s\-]*$/, "Teléfono inválido").nullable(),
+    cliente_telefono: Yup.string().matches(/^\+?[0-9\s-]*$/, "Teléfono inválido").nullable(),
     cliente_correo: Yup.string().email("Correo inválido").nullable(),
     requiere_factura: Yup.boolean(),
 
@@ -72,4 +72,8 @@ export const ventaSchema = Yup.object().shape({
         .min(1, "Debe agregar al menos un artículo"),
 
     notas: Yup.string().max(500, "Máximo 500 caracteres").nullable(),
+});
+
+export const cambiarEstadoSchema = Yup.object().shape({
+    estado: Yup.string().required("Debes seleccionar un estado"),
 });

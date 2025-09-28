@@ -13,7 +13,7 @@ import ComprasHome from "./components/compras/ComprasHome.jsx";
 import RegistrarCompra from "./components/compras/RegistrarCompra.jsx";
 import ComprasTotales from "./components/compras/ComprasTotales.jsx";
 import Compra from "./components/compras/CompraDetalle.jsx";
-import EditarCompra from "./components/compras/editarCompra.jsx";
+import EditarCompra from "./components/compras/EditarCompra.jsx";
 import Categorias from "./components/categorias/Categorias.jsx";
 import TomaFisica from "./components/inventarios/TomaFisica.jsx";
 import FolioInventario from "./components/inventarios/FolioInventario.jsx";

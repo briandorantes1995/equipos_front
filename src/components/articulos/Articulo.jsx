@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import obtenerArticulo from "../../Functions/obtenerArticulo.js";
-import eliminarArticulo from "../../Functions/eliminarArticulo.js";
-import BasicCard from './Card.jsx'
 import { useNavigate, useParams } from "react-router-dom";
-import LinearProgress from "@mui/material/LinearProgress";
 import Button from '@mui/material/Button';
 import { useSelector, useDispatch } from "react-redux";
 import { addItem } from "../../store/cartSlice.jsx";
 import styled from "styled-components";
-
-
+import inactivarArticulo from "../../Functions/inactivarArticulo.js";
+import LinearProgress from "@mui/material/LinearProgress";
+import obtenerArticulo from "../../Functions/obtenerArticulo.js";
+import BasicCard from './Card.jsx';
 
 const StyledCard = styled.div`
-  width: fit-content;
-  max-width: 90vw;
-  border: 1px solid #ccc;
+    width: fit-content;
+    max-width: 90vw;
+    border: 1px solid #ccc;
     border-radius: 8px;
     margin-top: 80px;
     padding: 16px;
-  background-color: rgb(223, 240, 255);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+    background-color: rgb(223, 240, 255);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 `;
 
 function Articulo() {
@@ -36,7 +34,6 @@ function Articulo() {
         async function cargarArticulo(id) {
             try {
                 const data = await obtenerArticulo(id);
-                console.log("Artículo cargado:", data);
                 setMostrarArticulo(data);
             } catch (error) {
                 console.error('Error al obtener el artículo:', error);
@@ -46,21 +43,27 @@ function Articulo() {
         cargarArticulo(articuloId);
     }, [articuloId]);
 
-    async function borrar() {
+    // Función toggle: activa o inactiva el artículo
+    async function toggleEstado() {
+        if (!mostrarArticulo) return;
+
         try {
-            await eliminarArticulo(articuloId, token);
-            navigate('/articulos');
+            const nuevoEstado = mostrarArticulo.estado === "activo" ? "inactivo" : "activo";
+
+            await inactivarArticulo(mostrarArticulo, nuevoEstado, token);
+
+            setMostrarArticulo({ ...mostrarArticulo, estado: nuevoEstado });
         } catch (error) {
-            console.error('No se pudo borrar el artículo:', error);
+            console.error('No se pudo cambiar el estado del artículo:', error);
         }
     }
+
 
     function editar() {
         navigate(`/editarArticulo/${articuloId}`);
     }
 
-       function agregarAlCarrito() {
-        console.log("Agregar al carrito:", mostrarArticulo);
+    function agregarAlCarrito() {
         if (!mostrarArticulo) return;
         dispatch(addItem({
             id: mostrarArticulo.id,
@@ -68,7 +71,7 @@ function Articulo() {
             descripcion: mostrarArticulo.descripcion,
             precio: mostrarArticulo.precio_venta,
             cantidad: 1,
-             ...(mostrarArticulo.marca && { marca: mostrarArticulo.marca })
+            ...(mostrarArticulo.marca && { marca: mostrarArticulo.marca })
         }));
     }
 
@@ -86,8 +89,9 @@ function Articulo() {
         >
             {mostrarArticulo ? (
                 <StyledCard>
-                    <BasicCard articulo={mostrarArticulo}/>
-                   {rol === "admin" ? (
+                    <BasicCard articulo={mostrarArticulo} />
+
+                    {rol === "admin" ? (
                         <>
                             <Button
                                 variant="contained"
@@ -96,13 +100,14 @@ function Articulo() {
                             >
                                 Editar
                             </Button>
+
                             <Button
                                 variant="contained"
                                 size="large"
-                                color="error"
-                                onClick={borrar}
+                                color={mostrarArticulo.estado === "activo" ? "error" : "success"}
+                                onClick={toggleEstado}
                             >
-                                Borrar
+                                {mostrarArticulo.estado === "activo" ? "Inactivar" : "Activar"}
                             </Button>
                         </>
                     ) : (
@@ -117,10 +122,11 @@ function Articulo() {
                     )}
                 </StyledCard>
             ) : (
-                <LinearProgress/>
+                <LinearProgress />
             )}
         </div>
     );
 }
 
 export default Articulo;
+
