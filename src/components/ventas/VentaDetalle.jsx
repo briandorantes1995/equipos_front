@@ -42,7 +42,6 @@ function Venta() {
         async function cargarVenta(id) {
             try {
                 const data = await obtenerVenta(id, token);
-                console.log(data);
                 if (data.length > 0) {
                     const venta = {
                         venta_id: data[0].venta_id,
@@ -51,7 +50,9 @@ function Venta() {
                         cliente_nombre: data[0].cliente_nombre,
                         cliente_correo: data[0].cliente_correo,
                         cliente_telefono: data[0].cliente_telefono,
+                        cliente_razon_social: data[0].cliente_razon_social,
                         cliente_direccion: data[0].cliente_direccion,
+                        monto_pagado:data[0].monto_pagado,
                         detalles: data.map(d => ({
                             detalle_id: d.detalle_id,
                             articulo_nombre: d.articulo_nombre,
@@ -62,7 +63,6 @@ function Venta() {
                             subtotal: d.subtotal
                         }))
                     };
-                    console.log(venta);
                     setVentaDetalle(venta);
                 }
             } catch (error) {

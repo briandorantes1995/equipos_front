@@ -37,6 +37,7 @@ function VentasTotales() {
                     return {
                         id: item.venta_id,
                         cliente:item.cliente_nombre,
+                        estado: item.estado,
                         articulos_totales: item.articulos_totales,
                         total_precio: item.total_precio,
                         notas: item.notas,
@@ -56,6 +57,7 @@ function VentasTotales() {
 
     const columns = [
         { field: 'fecha', headerName: 'Fecha', width: 120, headerAlign: 'center', align: 'center' },
+        { field: 'estado', headerName: 'Estatus', width: 120, headerAlign: 'center', align: 'center' },
         { field: 'cliente', headerName: 'Cliente', width: 120, headerAlign: 'center', align: 'center' },
         { field: 'articulos_totales', headerName: 'Total Artículos', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
         { field: 'total_precio', headerName: 'Costo Total', type: 'number', width: 130, headerAlign: 'center', align: 'center' },
