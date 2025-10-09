@@ -108,7 +108,7 @@ function EditarCompra() {
               compra_id: compraExistente.compra_id,
               articulos: compraExistente.detalles.map((d) => {
                 const articuloEncontrado = articulos.find(
-                  (a) => a.id === d.articulo_id
+                  (a) => a.id === d.articulo_id || a.nombre === d.articulo_nombre
                 );
                 return {
                   articulo: d.articulo_id || "",
