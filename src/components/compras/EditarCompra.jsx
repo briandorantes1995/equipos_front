@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { useSnackbar } from "../../ui/snackBar/useSnackBar.js";
 import "./compras.css";
 
-function EditarCompraFormulario() {
+function EditarCompra() {
   const { compraId } = useParams();
   const token = useSelector((state) => state.user.token);
   const navigate = useNavigate();
@@ -88,12 +88,12 @@ function EditarCompraFormulario() {
     } catch (error) {
       console.error("Error al editar la compra:", error);
       actions.setSubmitting(false);
-      showSnackbar({message: "Error al editar la compra",level: "error",vertical: "top",horizontal: "center",
-      });
+      showSnackbar({message: "Error al editar la compra",level: "error",vertical: "top",horizontal: "center",});
     }
   };
 
-  if (isLoading || !compraExistente || articulos.length === 0) return <p>Cargando compra...</p>;
+  if (isLoading || !compraExistente || articulos.length === 0)
+    return <p>Cargando compra...</p>;
 
   return (
     <MDBContainer className="my-5 compras-form">
@@ -110,8 +110,8 @@ function EditarCompraFormulario() {
                 );
                 return {
                   articulo: d.articulo_id || "",
-                  categoria: articuloEncontrado?.categoria_nombre || "",
-                  proveedor: d.articulo_proveedor || articuloEncontrado?.proveedor || "",
+                  proveedor:
+                    d.articulo_proveedor || articuloEncontrado?.proveedor || "",
                   cantidad: d.cantidad,
                   precio_unitario: d.precio_unitario,
                 };
@@ -129,38 +129,14 @@ function EditarCompraFormulario() {
                     <>
                       {values.articulos.map((item, index) => {
                         let articulosFiltrados = [...articulos];
-                        if (item.categoria) {
-                          articulosFiltrados = articulosFiltrados.filter(
-                            (a) => a.categoria_nombre === item.categoria
-                          );
-                        }
                         if (item.proveedor) {
                           articulosFiltrados = articulosFiltrados.filter(
                             (a) => a.proveedor === item.proveedor
                           );
                         }
 
-                        const categoriasDisponibles = [
-                          ...new Set(
-                            articulos
-                              .filter(
-                                (a) =>
-                                  !item.proveedor ||
-                                  a.proveedor === item.proveedor
-                              )
-                              .map((a) => a.categoria_nombre)
-                          ),
-                        ];
                         const proveedoresDisponibles = [
-                          ...new Set(
-                            articulos
-                              .filter(
-                                (a) =>
-                                  !item.categoria ||
-                                  a.categoria_nombre === item.categoria
-                              )
-                              .map((a) => a.proveedor)
-                          ),
+                          ...new Set(articulos.map((a) => a.proveedor)),
                         ];
 
                         return (
@@ -169,7 +145,7 @@ function EditarCompraFormulario() {
                             className="row g-2 align-items-end mb-3"
                           >
                             {/* Artículo */}
-                            <div className="col-md-3">
+                            <div className="col-md-4">
                               <CustomLista
                                 label="Artículo"
                                 name={`articulos[${index}].articulo`}
@@ -190,10 +166,30 @@ function EditarCompraFormulario() {
                                       `articulos[${index}].precio_unitario`,
                                       articuloSeleccionado.costo
                                     );
+                                    setFieldValue(
+                                      `articulos[${index}].proveedor`,
+                                      articuloSeleccionado.proveedor
+                                    );
                                   }
                                 }}
                               >
                                 <option value="">Seleccione un artículo</option>
+
+                                {/* Asegurar que el artículo actual siempre aparezca */}
+                                {!articulosFiltrados.some(
+                                  (a) => a.id === Number(item.articulo)
+                                ) &&
+                                  item.articulo && (
+                                    <option value={item.articulo}>
+                                      {
+                                        articulos.find(
+                                          (a) =>
+                                            a.id === Number(item.articulo)
+                                        )?.nombre || "Artículo seleccionado"
+                                      }
+                                    </option>
+                                  )}
+
                                 {articulosFiltrados.map((a) => (
                                   <option key={a.id} value={a.id}>
                                     {a.nombre}
@@ -202,30 +198,8 @@ function EditarCompraFormulario() {
                               </CustomLista>
                             </div>
 
-                            {/* Categoría */}
-                            <div className="col-md-2">
-                              <CustomLista
-                                label="Categoría"
-                                name={`articulos[${index}].categoria`}
-                                value={item.categoria}
-                                onChange={(e) =>
-                                  setFieldValue(
-                                    `articulos[${index}].categoria`,
-                                    e.target.value
-                                  )
-                                }
-                              >
-                                <option value="">Todos</option>
-                                {categoriasDisponibles.map((c, idx) => (
-                                  <option key={idx} value={c}>
-                                    {c}
-                                  </option>
-                                ))}
-                              </CustomLista>
-                            </div>
-
                             {/* Proveedor */}
-                            <div className="col-md-2">
+                            <div className="col-md-3">
                               <CustomLista
                                 label="Proveedor"
                                 name={`articulos[${index}].proveedor`}
@@ -247,7 +221,7 @@ function EditarCompraFormulario() {
                             </div>
 
                             {/* Cantidad */}
-                            <div className="col-md-1">
+                            <div className="col-md-2">
                               <CustomInput
                                 label="Cantidad"
                                 name={`articulos[${index}].cantidad`}
@@ -271,7 +245,7 @@ function EditarCompraFormulario() {
                             {/* Botón eliminar */}
                             <div className="col-md-1 d-flex align-items-end">
                               <MDBBtn
-                                color="danger"
+                                color="dark"
                                 onClick={() => remove(index)}
                                 type="button"
                               >
@@ -283,12 +257,11 @@ function EditarCompraFormulario() {
                       })}
 
                       <MDBBtn
-                        color="success"
+                        color="dark"
                         type="button"
                         onClick={() =>
                           push({
                             articulo: "",
-                            categoria: "",
                             proveedor: "",
                             cantidad: "",
                             precio_unitario: "",
@@ -325,7 +298,8 @@ function EditarCompraFormulario() {
   );
 }
 
-export default EditarCompraFormulario;
+export default EditarCompra;
+
 
 
 
