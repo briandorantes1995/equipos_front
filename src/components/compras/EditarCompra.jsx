@@ -27,6 +27,7 @@ function EditarCompra() {
       try {
         const data = await obtenerArticulos();
         setArticulos(data);
+        console.log("Artículos obtenidos:", data);
       } catch (error) {
         console.error("Error al obtener artículos:", error);
       }
@@ -55,6 +56,7 @@ function EditarCompra() {
             })),
           };
           setCompraExistente(compra);
+          console.log("Compra existente:", compra);
         }
       } catch (error) {
         console.error("Error al obtener la compra:", error);
@@ -109,8 +111,8 @@ function EditarCompra() {
                   (a) => a.id === d.articulo_id
                 );
                 return {
-                  articulo: d.articulo || "",
-                  categoria: articuloEncontrado?.categoria || "",
+                  articulo: d.articulo_id || "",
+                  categoria: articuloEncontrado?.categoria_nombre || "",
                   proveedor: d.articulo_proveedor || articuloEncontrado?.proveedor || "",
                   cantidad: d.cantidad,
                   precio_unitario: d.precio_unitario,
@@ -325,7 +327,7 @@ function EditarCompra() {
   );
 }
 
-export default EditarCompra;
+export default EditarCompraFormulario;
 
 
 
