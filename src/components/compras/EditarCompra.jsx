@@ -111,7 +111,7 @@ function EditarCompra() {
                   (a) => a.id === d.articulo_id || a.nombre === d.articulo_nombre
                 );
                 return {
-                  articulo: d.articulo_id || "",
+                  articulo: articuloEncontrado?.id || "",
                   categoria: articuloEncontrado?.categoria_nombre || "",
                   proveedor: d.articulo_proveedor || articuloEncontrado?.proveedor || "",
                   cantidad: d.cantidad,
