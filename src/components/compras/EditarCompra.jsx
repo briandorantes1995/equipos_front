@@ -109,8 +109,8 @@ function EditarCompra() {
                   (a) => a.id === d.articulo_id
                 );
                 return {
-                  articulo: d.articulo_id || "",
-                  categoria: articuloEncontrado?.categoria_nombre || "",
+                  articulo: d.articulo || "",
+                  categoria: articuloEncontrado?.categoria || "",
                   proveedor: d.articulo_proveedor || articuloEncontrado?.proveedor || "",
                   cantidad: d.cantidad,
                   precio_unitario: d.precio_unitario,
