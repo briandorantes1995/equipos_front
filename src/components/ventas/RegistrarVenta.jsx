@@ -32,7 +32,7 @@ function RegistrarVenta() {
 
     const onSubmit = async (values, actions) => {
         try {
-            // Mapear detalle de artículos
+            // Mapear detalle de articulos
             const detalle = values.articulos.map(({ articulo, cantidad, precio_unitario }) => ({
                 articulo_id: Number(articulo.id),
                 cantidad: Number(cantidad),
@@ -46,7 +46,7 @@ function RegistrarVenta() {
             const pagos = [
                 {
                     monto: total,
-                    metodo_pago: values.pagoMetodo || "efectivo", // default
+                    metodo_pago: values.pagoMetodo || "efectivo",
                 },
             ];
 
@@ -63,10 +63,7 @@ function RegistrarVenta() {
                 notas: values.notas || "",
                 total: total,
             };
-            console.log(data);
             const response = await registrarVenta(data, token);
-            console.log("Venta registrada:", response);
-
             actions.resetForm();
             showSnackbar({message: "Venta registrada con éxito", level: "success", vertical: "top", horizontal: "center",});
 

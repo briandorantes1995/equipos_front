@@ -104,13 +104,18 @@ function EditarCompraFormulario() {
           <Formik
             initialValues={{
               compra_id: compraExistente.compra_id,
-              articulos: compraExistente.detalles.map((d) => ({
-                articulo: d.articulo_id || "",
-                categoria: "",
-                proveedor: d.articulo_proveedor || "",
-                cantidad: d.cantidad,
-                precio_unitario: d.precio_unitario,
-              })),
+              articulos: compraExistente.detalles.map((d) => {
+                const articuloEncontrado = articulos.find(
+                  (a) => a.id === d.articulo_id
+                );
+                return {
+                  articulo: d.articulo_id || "",
+                  categoria: articuloEncontrado?.categoria_nombre || "",
+                  proveedor: d.articulo_proveedor || articuloEncontrado?.proveedor || "",
+                  cantidad: d.cantidad,
+                  precio_unitario: d.precio_unitario,
+                };
+              }),
               notas: compraExistente.notas || "",
             }}
             validationSchema={compraSchema}
