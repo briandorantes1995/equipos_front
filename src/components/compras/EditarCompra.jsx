@@ -327,7 +327,7 @@ function EditarCompra() {
   );
 }
 
-export default EditarCompraFormulario;
+export default EditarCompra;
 
 
 
