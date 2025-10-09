@@ -93,7 +93,7 @@ function EditarCompraFormulario() {
     }
   };
 
-  if (isLoading || !compraExistente) return <p>Cargando compra...</p>;
+  if (isLoading || !compraExistente || articulos.length === 0) return <p>Cargando compra...</p>;
 
   return (
     <MDBContainer className="my-5 compras-form">
