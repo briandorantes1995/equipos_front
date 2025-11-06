@@ -66,48 +66,51 @@ export default function CardVentaDetalle({ venta }) {
   );
 
   return (
-    <StyledCard>
-      <CardTitle variant="h6">Venta #{venta.venta_id}</CardTitle>
+    <div id="venta-card">
+      <StyledCard>
+        <CardTitle variant="h6">Venta #{venta.venta_id}</CardTitle>
 
-      {venta.fecha && (
-        <SmallInfo>Fecha: {new Date(venta.fecha).toLocaleDateString()}</SmallInfo>
-      )}
-      {venta.cliente_nombre && <SmallInfo>Cliente: {venta.cliente_nombre}</SmallInfo>}
-      {venta.cliente_correo && <SmallInfo>Correo: {venta.cliente_correo}</SmallInfo>}
-      {venta.cliente_telefono && <SmallInfo>Teléfono: {venta.cliente_telefono}</SmallInfo>}
-      {venta.cliente_direccion && <SmallInfo>Dirección: {venta.cliente_direccion}</SmallInfo>}
-      {venta.notas && <SmallInfo>Notas: {venta.notas}</SmallInfo>}
+        {venta.fecha && (
+          <SmallInfo>Fecha: {new Date(venta.fecha).toLocaleDateString()}</SmallInfo>
+        )}
+        {venta.cliente_nombre && <SmallInfo>Cliente: {venta.cliente_nombre}</SmallInfo>}
+        {venta.cliente_correo && <SmallInfo>Correo: {venta.cliente_correo}</SmallInfo>}
+        {venta.cliente_telefono && <SmallInfo>Teléfono: {venta.cliente_telefono}</SmallInfo>}
+        {venta.cliente_direccion && <SmallInfo>Dirección: {venta.cliente_direccion}</SmallInfo>}
+        {venta.notas && <SmallInfo>Notas: {venta.notas}</SmallInfo>}
 
-      <Table>
-        <TableHeader>
-          <span>Artículo</span>
-          <span>Marca</span>
-          <span>Proveedor</span>
-          <span>Cant.</span>
-          <span>Precio</span>
-          <span>Subtotal</span>
-        </TableHeader>
+        <Table>
+          <TableHeader>
+            <span>Artículo</span>
+            <span>Marca</span>
+            <span>Proveedor</span>
+            <span>Cant.</span>
+            <span>Precio</span>
+            <span>Subtotal</span>
+          </TableHeader>
 
-        {venta.detalles.map((detalle) => (
-          <TableRow key={detalle.detalle_id}>
-            <span>{detalle.articulo_nombre}</span>
-            <span>{detalle.articulo_marca}</span>
-            <span>{detalle.articulo_proveedor}</span>
-            <span>{detalle.cantidad}</span>
-            <span>${detalle.precio_unitario}</span>
-            <span>${detalle.subtotal}</span>
+          {venta.detalles.map((detalle) => (
+            <TableRow key={detalle.detalle_id}>
+              <span>{detalle.articulo_nombre}</span>
+              <span>{detalle.articulo_marca}</span>
+              <span>{detalle.articulo_proveedor}</span>
+              <span>{detalle.cantidad}</span>
+              <span>${detalle.precio_unitario}</span>
+              <span>${detalle.subtotal}</span>
+            </TableRow>
+          ))}
+
+          <TableRow style={{ fontWeight: 'bold' }}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span>Total</span>
+            <span>${total}</span>
           </TableRow>
-        ))}
-
-        <TableRow style={{ fontWeight: 'bold' }}>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span>Total</span>
-          <span>${total}</span>
-        </TableRow>
-      </Table>
-    </StyledCard>
+        </Table>
+      </StyledCard>
+    </div>
   );
 }
+
