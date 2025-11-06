@@ -23,7 +23,8 @@ export const cartSlice = createSlice({
           descripcion: item.descripcion,
           precio: item.precio,
           cantidad: item.cantidad,
-          ...(item.marca && { marca: item.marca }) // 👈 solo si existe
+          ...(item.marca && { marca: item.marca }),
+          ...(item.imagen && { imagen: item.imagen }),
         });
       }
 
