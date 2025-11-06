@@ -4,6 +4,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Button from '@mui/material/Button';
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { exportToPDF } from '../../utils/exportToPDF';
 import obtenerCompra from "../../Functions/obtenerCompra.js";
 import CardCompraDetalle from "./CardCompra.jsx";
 import eliminarCompra from "../../Functions/eliminarCompra.js";
@@ -82,6 +83,12 @@ function Compra() {
         navigate(`/compras/editar/${compraId}`, { state: { compra: compraDetalle } });
     };
 
+    const descargarPDF = () => {
+            if (compraDetalle) {
+                exportToPDF('compra-card', `Venta_${compraDetalle.compra_id}.pdf`);
+            }
+    };
+
     return (
         <div className="main-content">
             <div className="container-fluid v">
@@ -96,10 +103,20 @@ function Compra() {
                             <Button
                                 variant="contained"
                                 size="large"
+                                color="secondary"
+                                onClick={descargarPDF}
+                                >
+                                Descargar PDF
+                            </Button>
+                        
+                            <Button
+                                variant="contained"
+                                size="large"
                                 onClick={editarCompra}
                             >
                                 Editar
                             </Button>
+
                             <Button
                                 variant="contained"
                                 size="large"

@@ -92,10 +92,10 @@ function Venta() {
     };
 
     const descargarPDF = () => {
-    if (ventaDetalle) {
-        exportToPDF('venta-card', `Venta_${ventaDetalle.venta_id}.pdf`);
-    }
-};
+        if (ventaDetalle) {
+            exportToPDF('venta-card', `Venta_${ventaDetalle.venta_id}.pdf`);
+        }
+    };
 
     return (
         <div className="main-content">
