@@ -33,7 +33,7 @@ const SmallInfo = styled(Typography)`
 
 const Table = styled.div`
   width: 100%;
-  margin-top: 8px;
+  margin-top: 12px;
   display: flex;
   flex-direction: column;
   border-top: 1px solid #ccc;
@@ -42,64 +42,72 @@ const Table = styled.div`
 const TableRow = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 4px 0;
+  padding: 8px 0; /* Aumentado el padding */
   border-bottom: 1px solid #eee;
+
+  span {
+    flex: 1;              /* Misma anchura para cada columna */
+    text-align: center;   /* Centrado horizontal */
+    font-size: 14px;
+  }
 `;
 
 const TableHeader = styled(TableRow)`
   font-weight: bold;
+  background-color: #fafafa; /* Pequeño fondo para resaltar el header */
+  border-bottom: 2px solid #ccc;
 `;
 
 export default function CardVentaDetalle({ venta }) {
 
-    const total = venta.detalles.reduce(
-        (acc, detalle) => acc + Number(detalle.subtotal),
-        0
-    );
+  const total = venta.detalles.reduce(
+    (acc, detalle) => acc + Number(detalle.subtotal),
+    0
+  );
 
-    return (
-        <StyledCard>
-            <CardTitle variant="h6">Venta #{venta.venta_id}</CardTitle>
+  return (
+    <StyledCard>
+      <CardTitle variant="h6">Venta #{venta.venta_id}</CardTitle>
 
-            {venta.fecha && (
-                <SmallInfo>Fecha: {new Date(venta.fecha).toLocaleDateString()}</SmallInfo>
-            )}
-            {venta.cliente_nombre && <SmallInfo>Cliente: {venta.cliente_nombre}</SmallInfo>}
-            {venta.cliente_correo && <SmallInfo>Correo: {venta.cliente_correo}</SmallInfo>}
-            {venta.cliente_telefono && <SmallInfo>Teléfono: {venta.cliente_telefono}</SmallInfo>}
-            {venta.cliente_direccion && <SmallInfo>Dirección: {venta.cliente_direccion}</SmallInfo>}
-            {venta.notas && <SmallInfo>Notas: {venta.notas}</SmallInfo>}
+      {venta.fecha && (
+        <SmallInfo>Fecha: {new Date(venta.fecha).toLocaleDateString()}</SmallInfo>
+      )}
+      {venta.cliente_nombre && <SmallInfo>Cliente: {venta.cliente_nombre}</SmallInfo>}
+      {venta.cliente_correo && <SmallInfo>Correo: {venta.cliente_correo}</SmallInfo>}
+      {venta.cliente_telefono && <SmallInfo>Teléfono: {venta.cliente_telefono}</SmallInfo>}
+      {venta.cliente_direccion && <SmallInfo>Dirección: {venta.cliente_direccion}</SmallInfo>}
+      {venta.notas && <SmallInfo>Notas: {venta.notas}</SmallInfo>}
 
-            <Table>
-                <TableHeader>
-                    <span>Artículo</span>
-                    <span>Marca</span>
-                    <span>Proveedor</span>
-                    <span>Cant.</span>
-                    <span>Precio</span>
-                    <span>Subtotal</span>
-                </TableHeader>
+      <Table>
+        <TableHeader>
+          <span>Artículo</span>
+          <span>Marca</span>
+          <span>Proveedor</span>
+          <span>Cant.</span>
+          <span>Precio</span>
+          <span>Subtotal</span>
+        </TableHeader>
 
-                {venta.detalles.map((detalle) => (
-                    <TableRow key={detalle.detalle_id}>
-                        <span>{detalle.articulo_nombre}</span>
-                        <span>{detalle.articulo_marca}</span>
-                        <span>{detalle.articulo_proveedor}</span>
-                        <span>{detalle.cantidad}</span>
-                        <span>${detalle.precio_unitario}</span>
-                        <span>${detalle.subtotal}</span>
-                    </TableRow>
-                ))}
+        {venta.detalles.map((detalle) => (
+          <TableRow key={detalle.detalle_id}>
+            <span>{detalle.articulo_nombre}</span>
+            <span>{detalle.articulo_marca}</span>
+            <span>{detalle.articulo_proveedor}</span>
+            <span>{detalle.cantidad}</span>
+            <span>${detalle.precio_unitario}</span>
+            <span>${detalle.subtotal}</span>
+          </TableRow>
+        ))}
 
-                <TableRow style={{fontWeight: 'bold'}}>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span>Total</span>
-                    <span>${total}</span>
-                </TableRow>
-            </Table>
-        </StyledCard>
-    );
+        <TableRow style={{ fontWeight: 'bold' }}>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span>Total</span>
+          <span>${total}</span>
+        </TableRow>
+      </Table>
+    </StyledCard>
+  );
 }
