@@ -103,7 +103,7 @@ function Venta() {
                 <h3 className="fw-bold my-4 pb-3">Detalle Venta</h3>
                 <StyledContainer>
                     {ventaDetalle ? (
-                        <StyledCardWrapper>
+                        <StyledCardWrapper id="venta-card">
                             <CardVentaDetalle venta={ventaDetalle} />
 
                             {rol === "admin" && (
