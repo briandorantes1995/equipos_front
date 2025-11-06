@@ -71,9 +71,7 @@ export default function Card({ articulo }) {
                 )}
 
 
-                {articulo?.marca && (
-                    <SmallInfo>Marca: {articulo.marca}</SmallInfo>
-                )}
+              <SmallInfo>Marca: {articulo.marca ? articulo.marca : '\u00A0'}</SmallInfo>
 
                 {articulo.precio_venta !== undefined && (
                     <SmallInfo>Precio: ${articulo.precio_venta}</SmallInfo>
@@ -83,9 +81,7 @@ export default function Card({ articulo }) {
                     <SmallInfo>Inventario: {articulo.inventario}</SmallInfo>
                 )}
 
-                {articulo.descripcion && (
-                    <Description>{articulo.descripcion}</Description>
-                )}
+                <Description>{articulo.descripcion ? articulo.descripcion : '\u00A0'}</Description>
             </Content>
         </StyledCard>
     );
