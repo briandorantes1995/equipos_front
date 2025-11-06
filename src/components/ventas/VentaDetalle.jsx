@@ -91,9 +91,11 @@ function Venta() {
         navigate(`/ventas/editar/${ventaId}`, { state: { venta: ventaDetalle } });
     };
 
-    const descargarPDF = (layout = "A4") => {
-        exportToPDF('venta-card', `Venta_${ventaDetalle.venta_id}.pdf`, layout);
-    };
+    const descargarPDF = () => {
+    if (ventaDetalle) {
+        exportToPDF('venta-card', `Venta_${ventaDetalle.venta_id}.pdf`);
+    }
+};
 
     return (
         <div className="main-content">
@@ -106,13 +108,14 @@ function Venta() {
 
                             {rol === "admin" && (
                                 <div style={{ display: 'flex', gap: '12px' }}>
-                                 <Button
-                                    variant="outlined"
-                                    size="large"
-                                    onClick={() => descargarPDF("A4")}
-                                >
-                                    Descargar PDF
-                                </Button>
+                                    <Button
+                                        variant="contained"
+                                        size="large"
+                                        color="secondary"
+                                        onClick={descargarPDF}
+                                        >
+                                        Descargar PDF
+                                    </Button>
                                     <Button
                                         variant="contained"
                                         size="large"
