@@ -67,6 +67,7 @@ function Articulo() {
         if (!mostrarArticulo) return;
         dispatch(addItem({
             id: mostrarArticulo.id,
+            imagen: mostrarArticulo.imagen,
             nombre: mostrarArticulo.nombre,
             descripcion: mostrarArticulo.descripcion,
             precio: mostrarArticulo.precio_venta,
