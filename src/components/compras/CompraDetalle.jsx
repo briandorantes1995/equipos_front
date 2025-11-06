@@ -85,7 +85,7 @@ function Compra() {
 
     const descargarPDF = () => {
             if (compraDetalle) {
-                exportToPDF('compra-card', `Venta_${compraDetalle.compra_id}.pdf`);
+                exportToPDF('compra-card', `Compra_${compraDetalle.compra_id}.pdf`);
             }
     };
 
