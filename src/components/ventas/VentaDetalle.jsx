@@ -4,9 +4,11 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Button from '@mui/material/Button';
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { exportToPDF } from '../../utils/exportToPDF';
 import obtenerVenta from "../../Functions/obtenerVenta.js";
 import CardVentaDetalle from "./CardVenta.jsx";
 import eliminarVenta from "../../Functions/eliminarVenta.js";
+
 
 const StyledContainer = styled.div`
     width: 100%;
@@ -89,6 +91,10 @@ function Venta() {
         navigate(`/ventas/editar/${ventaId}`, { state: { venta: ventaDetalle } });
     };
 
+    const descargarPDF = (layout = "A4") => {
+        exportToPDF('venta-card', `Venta_${ventaDetalle.venta_id}.pdf`, layout);
+    };
+
     return (
         <div className="main-content">
             <div className="container-fluid">
@@ -100,6 +106,13 @@ function Venta() {
 
                             {rol === "admin" && (
                                 <div style={{ display: 'flex', gap: '12px' }}>
+                                 <Button
+                                    variant="outlined"
+                                    size="large"
+                                    onClick={() => descargarPDF("A4")}
+                                >
+                                    Descargar PDF
+                                </Button>
                                     <Button
                                         variant="contained"
                                         size="large"
