@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function descargarCatalogoPDF() {
+export async function obtenerCatalogoPDF() {
   const response = await axios.get(
     `${import.meta.env.VITE_BACKEND_URL}/api/articulos/catalogo-pdf`,
     { responseType: "blob" }
