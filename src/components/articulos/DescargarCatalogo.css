@@ -32,8 +32,20 @@
   inset: 0;
   width: 210mm;
   height: 297mm;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  z-index: -1;
+  overflow: auto;
+  background: white;
+  transform: scale(0.6);
+  transform-origin: top center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
+
+/* MODO OCULTO */
+.catalogo-hidden {
+  display: none;
+}
+
+/* MODO PREVIEW */
+.catalogo-preview {
+  display: block;
+}
+
