@@ -29,23 +29,23 @@
 
 .catalogo-oculto {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 210mm;
-  height: 297mm;
-  overflow: auto;
+  min-height: 297mm;
   background: white;
-  transform: scale(0.6);
-  transform-origin: top center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  overflow: visible;
+  z-index: 9999;
 }
 
-/* MODO OCULTO */
+/* oculto por defecto */
 .catalogo-hidden {
   display: none;
 }
 
-/* MODO PREVIEW */
+/* visible para preview / captura */
 .catalogo-preview {
   display: block;
 }
+
 
