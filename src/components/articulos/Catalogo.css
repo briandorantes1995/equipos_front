@@ -34,3 +34,76 @@
   }
 }
 
+/* CONTENIDO PDF */
+.pdf-root {
+  max-width: 210mm;
+  margin: 0 auto;
+  padding: 20mm;
+  background: white;
+}
+
+/* SALTO DE PÁGINA CONTROLADO */
+.page-break {
+  page-break-after: always;
+}
+
+/* PORTADA */
+.portada {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 140px;
+  margin-bottom: 24px;
+}
+
+.portada h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #555;
+}
+
+/* GRID DE PRODUCTOS (2 columnas) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* CARD */
+.card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  break-inside: avoid;
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.card h3 {
+  font-size: 16px;
+  margin: 0 0 8px 0;
+}
+
+.card p {
+  font-size: 13px;
+  margin: 2px 0;
+  color: #444;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  font-size: 14px;
+}
