@@ -24,6 +24,7 @@
     "date-fns": "^4.1.0",
     "formik": "^2.4.6",
     "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.14.0",
     "jspdf": "^3.0.3",
     "lucide-react": "^0.544.0",
     "mdb-react-ui-kit": "^9.0.0",

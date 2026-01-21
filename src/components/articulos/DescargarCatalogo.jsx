@@ -1,28 +1,38 @@
 import React from "react";
-import { obtenerCatalogoPDF } from "../../Functions/obtenerCatalogo";
+import html2pdf from "html2pdf.js";
+import "./DescargarCatalogo.css";
 
 export default function DescargarCatalogo() {
-    const handleDownload = async () => {
-        try {
-            const pdfBlob = await obtenerCatalogoPDF();
+    const handleDownload = () => {
+        const element = document.getElementById("catalogo-pdf");
 
-            const url = window.URL.createObjectURL(pdfBlob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = "catalogo_equipos_medicos.pdf";
-            document.body.appendChild(link);
-            link.click();
-
-            link.remove();
-            window.URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error("Error descargando catálogo:", error);
+        if (!element) {
+            alert("Primero abre el catálogo para generar el PDF.");
+            return;
         }
+
+        html2pdf().set({
+            margin: 10,
+            filename: "catalogo_equipos_medicos.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+        }).from(element).save();
     };
 
     return (
-        <button onClick={handleDownload}>
-            Descargar catálogo PDF
-        </button>
+        <div className="descargar-container">
+            <h2>Catálogo en PDF</h2>
+            <p>
+                Genera el catálogo actualizado para enviarlo a tus clientes
+                por correo o WhatsApp.
+            </p>
+
+            <button onClick={handleDownload} className="btn-descargar">
+                Descargar catálogo PDF
+            </button>
+        </div>
     );
 }
+
+

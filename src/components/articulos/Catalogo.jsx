@@ -14,7 +14,7 @@ export default function Catalogo() {
   }, []);
 
   return (
-    <div className="pdf-root">
+    <div className="pdf-root" id="catalogo-pdf">
       {/* PORTADA */}
       <div className="pdf-page portada">
         <img src="/logo.png" className="logo" />
@@ -42,8 +42,8 @@ export default function Catalogo() {
 
       {/* FOOTER */}
       <div className="pdf-page footer">
-        <p>Contacto: ventas@tudominio.com</p>
-        <p>Tel / WhatsApp: +52 xxx xxx xxxx</p>
+        <p>Contacto: ventas@equiposmedicosmty.com</p>
+        <p>Tel / WhatsApp: +52 8114175468</p>
       </div>
     </div>
   );
