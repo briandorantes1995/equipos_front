@@ -24,6 +24,7 @@ import VentasTotales from "./components/ventas/VentasTotales.jsx";
 import Venta from "./components/ventas/VentaDetalle.jsx";
 import EditarVenta from "./components/ventas/EditarVenta.jsx";
 import Catalogo from "./components/articulos/Catalogo.jsx";
+import DescargarCatalogo from "./components/articulos/DescargarCatalogo.jsx";
 
 function App() {
     return (
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/carrito" element={<Carrito />} />
                 <Route path="/articulos/:articuloId" element={<Articulo />} />
                 <Route path="/articulos/buscar/:busqueda" element={<BusquedaArticulos />} />
+                <Route path="/articulos/catalogo" element={<Catalogo/>} />
 
                 <Route element={<RequireAuth allowedRoles={["admin"]} />}>
                     <Route path="/agregarArticulo" element={<CrearArticulo />} />
@@ -55,7 +57,7 @@ function App() {
                     <Route path="/ventas/totales" element={<VentasTotales/>} />
                     <Route path="/ventas/:ventaId" element={<Venta/>} />
                     <Route path="/ventas/editar/:ventaId" element={<EditarVenta/>} />
-                    <Route path="/ventas/catalogo" element={<Catalogo/>} />
+                    <Route path="/ventas/descargar-catalogo" element={<DescargarCatalogo/>} />
                 </Route>
             </Route>
         </Routes>

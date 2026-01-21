@@ -18,7 +18,7 @@ export default function Catalogo() {
       {/* PORTADA */}
       <div className="pdf-page portada">
         <img src="/logo.png" className="logo" />
-        <h1>Catálogo de Equipos Médicos</h1>
+        <h1>Catálogo de Equipos Médicos MTY</h1>
         <p className="subtitle">Soluciones profesionales para tu clínica y hospital</p>
       </div>
 

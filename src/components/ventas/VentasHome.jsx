@@ -32,7 +32,7 @@ function VentasHome() {
                         <Link to="/ventas/registro" style={{textDecoration: 'none'}}>
                             <Item>Registrar Ventas</Item>
                         </Link>
-                        <Link to="/ventas/catalogo" style={{textDecoration: 'none'}}>
+                        <Link to="/ventas/descargar-catalogo" style={{textDecoration: 'none'}}>
                             <Item>Catalogo de Ventas</Item>
                         </Link>
                     </Stack>
