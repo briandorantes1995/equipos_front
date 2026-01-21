@@ -1,5 +1,6 @@
 import React from "react";
 import html2pdf from "html2pdf.js";
+import Catalogo from "./Catalogo.jsx";
 import "./DescargarCatalogo.css";
 
 export default function DescargarCatalogo() {
@@ -7,7 +8,7 @@ export default function DescargarCatalogo() {
         const element = document.getElementById("catalogo-pdf");
 
         if (!element) {
-            alert("Primero abre el catálogo para generar el PDF.");
+            alert("No se pudo generar el PDF.");
             return;
         }
 
@@ -31,6 +32,11 @@ export default function DescargarCatalogo() {
             <button onClick={handleDownload} className="btn-descargar">
                 Descargar catálogo PDF
             </button>
+
+            {/* CATÁLOGO OCULTO (CLAVE) */}
+            <div className="catalogo-oculto">
+                <Catalogo />
+            </div>
         </div>
     );
 }

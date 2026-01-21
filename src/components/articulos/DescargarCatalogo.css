@@ -26,3 +26,10 @@
     font-weight: 600;
     cursor: pointer;
 }
+
+.catalogo-oculto {
+    position: absolute;
+    left: -10000px;
+    top: 0;
+    width: 210mm;
+}
