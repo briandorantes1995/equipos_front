@@ -16,27 +16,40 @@ export default function Catalogo() {
   }, []);
 
   const handleDownload = async () => {
-    const element = document.getElementById("catalogo-pdf");
-    if (!element) return;
+  const element = document.getElementById("catalogo-pdf");
+  if (!element) return;
 
-    // pequeño delay para asegurar render
-    await new Promise((r) => setTimeout(r, 300));
+  // 🔑 activar modo PDF
+  document.body.classList.add("pdf-mode");
 
-    html2pdf()
-      .set({
-        margin: 10,
-        filename: "catalogo_equipos_medicos_mty.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: "#ffffff",
-        },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      })
-      .from(element)
-      .save();
-  };
+  // subir al inicio
+  window.scrollTo(0, 0);
+
+  // esperar repaint real
+  await new Promise((r) => setTimeout(r, 600));
+
+  await html2pdf()
+    .set({
+      margin: 10,
+      filename: "catalogo_equipos_medicos_mty.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        scrollY: 0,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight
+      },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+    })
+    .from(element)
+    .save();
+
+  // 🔑 salir de modo PDF
+  document.body.classList.remove("pdf-mode");
+};
+
 
   return (
     <>

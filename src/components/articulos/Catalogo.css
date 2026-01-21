@@ -107,3 +107,18 @@
   text-align: center;
   font-size: 14px;
 }
+
+#catalogo-pdf {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* OCULTAR LAYOUT GLOBAL EN PDF */
+body.pdf-mode header,
+body.pdf-mode nav,
+body.pdf-mode footer,
+body.pdf-mode .navbar,
+body.pdf-mode .chat-widget,
+body.pdf-mode .no-pdf {
+  display: none !important;
+}
