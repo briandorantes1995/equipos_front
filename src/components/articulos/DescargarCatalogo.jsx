@@ -20,31 +20,38 @@ export default function DescargarCatalogo() {
   };
 
   const handleDownload = async () => {
-    const element = document.getElementById("catalogo-pdf");
-    if (!element) {
-      alert("No se encontró el catálogo para generar el PDF.");
-      return;
-    }
+  const element = document.getElementById("catalogo-pdf");
+  if (!element) {
+    alert("No se encontró el catálogo para generar el PDF.");
+    return;
+  }
 
-    // mostrar para captura
-    setMostrarPreview(true);
-    await new Promise((r) => setTimeout(r, 300));
-    await waitForImages(element);
+  // mostrar para captura
+  setMostrarPreview(true);
 
-    await html2pdf()
-      .set({
-        margin: 10,
-        filename: "catalogo_equipos_medicos.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, allowTaint: true },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      })
-      .from(element)
-      .save();
+  // ⏳ esperar render REAL
+  await new Promise((r) => requestAnimationFrame(r));
+  await new Promise((r) => setTimeout(r, 800));
+  await waitForImages(element);
 
-    // ocultar otra vez
-    setMostrarPreview(false);
-  };
+  await html2pdf()
+    .set({
+      margin: 10,
+      filename: "catalogo_equipos_medicos.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff"
+      },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+    })
+    .from(element)
+    .save();
+
+  setMostrarPreview(false);
+};
+
 
   return (
     <div className="descargar-container">
