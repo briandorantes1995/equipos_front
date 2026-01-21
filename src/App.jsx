@@ -23,6 +23,7 @@ import RegistrarVenta from "./components/ventas/RegistrarVenta.jsx";
 import VentasTotales from "./components/ventas/VentasTotales.jsx";
 import Venta from "./components/ventas/VentaDetalle.jsx";
 import EditarVenta from "./components/ventas/EditarVenta.jsx";
+import Catalogo from "./components/articulos/Catalogo.jsx";
 
 function App() {
     return (
@@ -54,6 +55,7 @@ function App() {
                     <Route path="/ventas/totales" element={<VentasTotales/>} />
                     <Route path="/ventas/:ventaId" element={<Venta/>} />
                     <Route path="/ventas/editar/:ventaId" element={<EditarVenta/>} />
+                    <Route path="/ventas/catalogo" element={<Catalogo/>} />
                 </Route>
             </Route>
         </Routes>
