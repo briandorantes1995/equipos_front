@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import obtenerArticulos from "../../Functions/obtenerArticulos";
+import logo from '../../assets/logo2.png';
 import "./Catalogo.css";
 
 export default function Catalogo() {
@@ -17,7 +18,7 @@ export default function Catalogo() {
     <div className="pdf-root" id="catalogo-pdf">
       {/* PORTADA */}
       <div className="pdf-page portada">
-        <img src="/logo.png" className="logo" />
+        <img src={logo} className="logo" />
         <h1>Catálogo de Equipos Médicos MTY</h1>
         <p className="subtitle">Soluciones profesionales para tu clínica y hospital</p>
       </div>
