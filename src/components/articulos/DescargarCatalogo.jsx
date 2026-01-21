@@ -4,22 +4,41 @@ import Catalogo from "./Catalogo.jsx";
 import "./DescargarCatalogo.css";
 
 export default function DescargarCatalogo() {
-    const handleDownload = () => {
-        const element = document.getElementById("catalogo-pdf");
+  const waitForImages = async (rootEl) => {
+  const imgs = Array.from(rootEl.querySelectorAll("img"));
+  await Promise.all(
+    imgs.map((img) => {
+      if (img.complete) return Promise.resolve();
+      return new Promise((res) => {
+        img.onload = () => res();
+        img.onerror = () => res(); // no bloquear si falla una imagen
+      });
+    })
+  );
+};
 
-        if (!element) {
-            alert("No se pudo generar el PDF.");
-            return;
-        }
+const handleDownload = async () => {
+  const element = document.getElementById("catalogo-pdf");
+  if (!element) {
+    alert("No se encontró el catálogo para generar el PDF.");
+    return;
+  }
 
-        html2pdf().set({
-            margin: 10,
-            filename: "catalogo_equipos_medicos.pdf",
-            image: { type: "jpeg", quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
-        }).from(element).save();
-    };
+  await new Promise((r) => setTimeout(r, 700));
+  await waitForImages(element);
+
+  html2pdf()
+    .set({
+      margin: 10,
+      filename: "catalogo_equipos_medicos.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, allowTaint: true },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    })
+    .from(element)
+    .save();
+};
+
 
     return (
         <div className="descargar-container">

@@ -28,8 +28,12 @@
 }
 
 .catalogo-oculto {
-    position: absolute;
-    left: -10000px;
-    top: 0;
-    width: 210mm;
+  position: fixed;
+  inset: 0;
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
 }
