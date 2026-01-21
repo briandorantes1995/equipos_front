@@ -86,3 +86,12 @@ body {
   text-align: center;
   font-size: 14px;
 }
+
+.pdf-root {
+  display: block !important;
+}
+
+.pdf-page {
+  page-break-after: always;
+  break-after: page;
+}
