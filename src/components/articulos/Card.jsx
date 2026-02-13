@@ -73,11 +73,11 @@ export default function Card({ articulo }) {
 
               <SmallInfo>Marca: {articulo.marca ? articulo.marca : '\u00A0'}</SmallInfo>
 
-                {articulo.precio_venta !== undefined && (
+                {articulo.precio_venta !== undefined && rol === "admin" && (
                     <SmallInfo>Precio: ${articulo.precio_venta}</SmallInfo>
                 )}
 
-                {articulo.inventario !== undefined && (
+                {articulo.inventario !== undefined && rol === "admin" && (
                     <SmallInfo>Inventario: {articulo.inventario}</SmallInfo>
                 )}
 

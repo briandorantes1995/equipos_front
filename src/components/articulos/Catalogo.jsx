@@ -49,7 +49,6 @@ export default function Catalogo() {
             />
             <h3>{articulo.nombre}</h3>
             <p><strong>Marca:</strong> {articulo.marca || "—"}</p>
-            <p><strong>Proveedor:</strong> {articulo.proveedor || "—"}</p>
           </article>
         ))}
       </section>
